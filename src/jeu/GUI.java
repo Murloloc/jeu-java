@@ -54,9 +54,9 @@ public class GUI implements ActionListener
         JPanel panel = new JPanel();
         image = new JLabel();
 
-        image.setMaximumSize(new Dimension((int)(920), (int)(740)));
-        image.setPreferredSize(new Dimension((int)(920), (int)(740)));
-        image.setMinimumSize(new Dimension((int)(920), (int)(740)));
+//        image.setMaximumSize(new Dimension((int)(920), (int)(740)));
+//        image.setPreferredSize(new Dimension((int)(920), (int)(740)));
+//        image.setMinimumSize(new Dimension((int)(920), (int)(740)));
 
         listScroller.setMaximumSize(new Dimension(920, 740));
         listScroller.setPreferredSize(new Dimension(620, 740));
