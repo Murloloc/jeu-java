@@ -72,8 +72,8 @@ public class GUI implements ActionListener
         fenetre.getContentPane().add(panel, BorderLayout.CENTER);
         fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        fenetre.setPreferredSize(new Dimension(1540, 740));
-        fenetre.setMinimumSize(new Dimension(1540, 740));
+        fenetre.setPreferredSize(new Dimension(widthS, 740));
+        fenetre.setMinimumSize(new Dimension(widthS, 740));
 
         entree.addActionListener(this);
 

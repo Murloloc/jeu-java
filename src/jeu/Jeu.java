@@ -106,7 +106,7 @@ public class Jeu {
     private void afficherMessageDeBienvenue() {
         gui.afficher("Bienvenue !");
         gui.afficher();
-        gui.afficher("Tapez '?' pour obtenir de l'aide.");
+        gui.afficher("Tapez '?' pour obtenir de l'aide");
         gui.afficher();
         afficherLocalisation();
         gui.afficheImage(zoneCourante.nomImage());
@@ -154,12 +154,11 @@ public class Jeu {
     }
 
     private void afficherAide() {
-        gui.afficher("Etes-vous perdu ?");
-        gui.afficher();
-        gui.afficher("Les commandes autorisées sont :");
-        gui.afficher();
+        gui.afficher("Etes-vous perdu ?\n");
+        gui.afficher("Les commandes autorisées sont :\n");
         gui.afficher(Commande.toutesLesDescriptions().toString());
-        gui.afficher();
+        gui.afficher("\nVous pouvez utiliser le nom ou l'abréviation");
+
     }
 
     private void allerEn(String direction) {

@@ -1,11 +1,11 @@
 package jeu;
+
 import java.util.HashMap;
 
-public class Zone 
-{
+public class Zone {
     private String description;
     private String nomImage;
-    private HashMap<String,Zone> sorties;   
+    private HashMap<String, Zone> sorties;
 
     public Zone(String description, String image) {
         this.description = description;
@@ -20,12 +20,12 @@ public class Zone
     public String nomImage() {
         return nomImage;
     }
-     
+
     public String toString() {
         return description;
     }
 
-    public String descriptionLongue()  {
+    public String descriptionLongue() {
         return "Vous êtes dans " + description + "\nSorties : " + sorties();
     }
 
@@ -34,7 +34,7 @@ public class Zone
     }
 
     public Zone obtientSortie(String direction) {
-    	return sorties.get(direction);
+        return sorties.get(direction);
     }
 }
 
