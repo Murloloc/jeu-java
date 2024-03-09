@@ -17,27 +17,27 @@ public class Jeu {
 
     private void creerCarte() {
         Zone[] zones = new Zone[20];
-        // zones[] = new Zone("", ".jpg");
+        // zones[] = new Zone("","",".jpg");
 
         //étage -1
-        zones[0] = new Zone("Donjon centre", "Donjon.jpg");
-        zones[1] = new Zone("La prison", "Prison.jpg");
-        zones[2] = new Zone("Escalier nord", "EscalierNord.jpg");
-        zones[3] = new Zone("Couloir", "Couloir.jpg");
-        zones[4] = new Zone("Salle des coffres", "SalleDesCoffres.jpg");
+        zones[0] = new Zone("au centre du donjon", "Après avoir été fait prisonnier vous vous retrouvez au milieu d'un donjon", "Donjon.jpg");
+        zones[1] = new Zone("dans la prison", "Des rochers vous bloquent ce qui vous semble être un chemin, peut être que le prisonnier\n sait ce qu'il se cache derrière", "Prison.jpg");
+        zones[2] = new Zone("à l'escalier nord", "Il fait trop noir pour monter ces escaliers", "EscalierNord.jpg");
+        zones[3] = new Zone("dans le couloir", "Peut être que quelque chose se cache dans ces vieux pots", "Couloir.jpg");
+        zones[4] = new Zone("dans la salle des coffres", "Un coffre jaune et un coffre bleu, une clé serait nécessaire pour les dévérouiller", "SalleDesCoffres.jpg");
 
         //RDC
-        zones[5] = new Zone("Escalier de gauche", "EscalierGauche.jpg");
-        zones[6] = new Zone("Entrée du château", "EntreeChateau.jpg");
-        zones[7] = new Zone("Bibliothèque", "Bibliotheque.jpg");
-        zones[8] = new Zone("Salle du trône", "SalleDuTrone.jpg");
-        zones[9] = new Zone("Escalier de droite", "EscalierDroite.jpg");
-        zones[10] = new Zone("Armurerie", "Armurerie.jpg");
-        zones[11] = new Zone("Cuisine", "Cuisine.jpg");
-        zones[12] = new Zone("Entrée chambre de la Princesse", "EntreeChambrePrincesse.jpg");
-        zones[13] = new Zone("Galerie", "Galerie.jpg");
-        zones[14] = new Zone("Entrée tour de gauche", "EntreeTourGauche.jpg");
-        zones[15] = new Zone("Salle à manger", "SalleAManger.jpg");
+        zones[5] = new Zone("Escalier de gauche", "Vous appercevez l'entrée du château", "EscalierGauche.jpg");
+        zones[6] = new Zone("Entrée du château", "C'est l'entrée du château, comment s'en échapper ? ", "EntreeChateau.jpg");
+        zones[7] = new Zone("Bibliothèque", "Peut être que des informations sur le château sont écrites ici", "Bibliotheque.jpg");
+        zones[8] = new Zone("Salle du trône", "On apperçoit le trône du Roi, il vaudrait mieux ne pas s'asseoir dessus", "SalleDuTrone.jpg");
+        zones[9] = new Zone("Escalier de droite", "Vous appercevez l'entrée du château", "EscalierDroite.jpg");
+        zones[10] = new Zone("Armurerie", "Il y a des armes partout", "Armurerie.jpg");
+        zones[11] = new Zone("Cuisine", "Il semblerait que quelque chose se cache derrière ce comptoir", "Cuisine.jpg");
+        zones[12] = new Zone("Entrée chambre de la Princesse", "Cette entrée est bloquée", "EntreeChambrePrincesse.jpg");
+        zones[13] = new Zone("Galerie", "", "Galerie.jpg");
+        zones[14] = new Zone("Entrée tour de gauche", "Cette entrée est bloquée", "EntreeTourGauche.jpg");
+        zones[15] = new Zone("Salle à manger", "", "SalleAManger.jpg");
 
         //étage - 1
         zones[0].ajouteSortie(Sortie.EST, zones[1]);

@@ -3,18 +3,20 @@ package jeu;
 import java.util.HashMap;
 
 public class Zone {
-    private String description;
-    private String nomImage;
-    private HashMap<String, Zone> sorties;
+    private final String nomPiece;
+    private final String description;
+    private final String nomImage;
+    private final HashMap<String, Zone> sorties;
 
-    public Zone(String description, String image) {
+    public Zone(String nomPiece, String description, String image) {
+        this.nomPiece = nomPiece;
         this.description = description;
-        nomImage = image;
-        sorties = new HashMap<>();
+        this.nomImage = image;
+        this.sorties = new HashMap<>();
     }
 
     public void ajouteSortie(Sortie sortie, Zone zoneVoisine) {
-        sorties.put(sortie.name(), zoneVoisine);
+        this.sorties.put(sortie.name(), zoneVoisine);
     }
 
     public String nomImage() {
@@ -22,11 +24,11 @@ public class Zone {
     }
 
     public String toString() {
-        return description;
+        return ("Vous êtes " + this.nomPiece +".\n" + this.description);
     }
 
     public String descriptionLongue() {
-        return "Vous êtes dans " + description + "\nSorties : " + sorties();
+        return this + "\nSorties : " + sorties();
     }
 
     private String sorties() {
