@@ -43,8 +43,6 @@ public class GUI implements ActionListener
     private void creerGUI() {
 
         Dimension tailleEcran = Toolkit.getDefaultToolkit().getScreenSize();
-        int widthS = (int)tailleEcran.getWidth();
-        int heightS = (int)tailleEcran.getHeight();
         fenetre = new JFrame("Jeu");
         entree = new JTextField(34);
         texte = new JTextArea();
@@ -53,10 +51,6 @@ public class GUI implements ActionListener
         JScrollPane listScroller = new JScrollPane(texte);
         JPanel panel = new JPanel();
         image = new JLabel();
-
-//        image.setMaximumSize(new Dimension((int)(920), (int)(740)));
-//        image.setPreferredSize(new Dimension((int)(920), (int)(740)));
-//        image.setMinimumSize(new Dimension((int)(920), (int)(740)));
 
         listScroller.setMaximumSize(new Dimension(920, 740));
         listScroller.setPreferredSize(new Dimension(620, 740));
@@ -72,8 +66,8 @@ public class GUI implements ActionListener
         fenetre.getContentPane().add(panel, BorderLayout.CENTER);
         fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        fenetre.setPreferredSize(new Dimension(widthS, 740));
-        fenetre.setMinimumSize(new Dimension(widthS, 740));
+        fenetre.setPreferredSize(new Dimension(1540, 740));
+        fenetre.setMinimumSize(new Dimension(1540, 740));
 
         entree.addActionListener(this);
 

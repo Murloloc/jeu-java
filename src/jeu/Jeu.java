@@ -1,9 +1,12 @@
 package jeu;
 
+import jeu.personnages.*;
+
+
 public class Jeu {
 
     private GUI gui;
-    private Zone zoneCourante;
+    private Piece pieceCourante;
 
     public Jeu() {
         creerCarte();
@@ -16,90 +19,107 @@ public class Jeu {
     }
 
     private void creerCarte() {
-        Zone[] zones = new Zone[20];
-        // zones[] = new Zone("","",".jpg");
+        //création des pièces
+        Piece[] pieces = new Piece[20];
+        // piece sans PNJ et sans item : pieces[] = new Piece("nom","description",".jpg");
+        // piece avec PNJ et/ou item : pieces[] = new Piece("nom","description",".jpg","etat")
 
         //étage -1
-        zones[0] = new Zone("au centre du donjon", "Après avoir été fait prisonnier vous vous retrouvez au milieu d'un donjon", "Donjon.jpg");
-        zones[1] = new Zone("dans la prison", "Des rochers vous bloquent ce qui vous semble être un chemin, peut être que le prisonnier\n sait ce qu'il se cache derrière", "Prison.jpg");
-        zones[2] = new Zone("à l'escalier nord", "Il fait trop noir pour monter ces escaliers", "EscalierNord.jpg");
-        zones[3] = new Zone("dans le couloir", "Peut être que quelque chose se cache dans ces vieux pots", "Couloir.jpg");
-        zones[4] = new Zone("dans la salle des coffres", "Un coffre jaune et un coffre bleu, une clé serait nécessaire pour les dévérouiller", "SalleDesCoffres.jpg");
+        pieces[0] = new Piece("au centre du donjon", "C'est l'endroit où vous vous êtes réveillé", "Donjon.jpg");
+        pieces[1] = new Piece("dans la prison", "Des rochers vous bloquent ce qui vous semble être un chemin, peut être que le prisonnier\nsait ce qu'il se cache derrière", "Prison.jpg", 1);
+        pieces[2] = new Piece("à l'escalier nord", "Il fait trop noir pour monter ces escaliers", "EscalierNord.jpg");
+        pieces[3] = new Piece("dans le couloir", "Peut être que quelque chose se cache dans ces vieux pots", "Couloir.jpg");
+        pieces[4] = new Piece("dans la salle des coffres", "Un coffre jaune et un coffre bleu, une clé serait nécessaire pour les dévérouiller", "SalleDesCoffres.jpg");
 
         //RDC
-        zones[5] = new Zone("Escalier de gauche", "Vous appercevez l'entrée du château", "EscalierGauche.jpg");
-        zones[6] = new Zone("Entrée du château", "C'est l'entrée du château, comment s'en échapper ? ", "EntreeChateau.jpg");
-        zones[7] = new Zone("Bibliothèque", "Peut être que des informations sur le château sont écrites ici", "Bibliotheque.jpg");
-        zones[8] = new Zone("Salle du trône", "On apperçoit le trône du Roi, il vaudrait mieux ne pas s'asseoir dessus", "SalleDuTrone.jpg");
-        zones[9] = new Zone("Escalier de droite", "Vous appercevez l'entrée du château", "EscalierDroite.jpg");
-        zones[10] = new Zone("Armurerie", "Il y a des armes partout", "Armurerie.jpg");
-        zones[11] = new Zone("Cuisine", "Il semblerait que quelque chose se cache derrière ce comptoir", "Cuisine.jpg");
-        zones[12] = new Zone("Entrée chambre de la Princesse", "Cette entrée est bloquée", "EntreeChambrePrincesse.jpg");
-        zones[13] = new Zone("Galerie", "", "Galerie.jpg");
-        zones[14] = new Zone("Entrée tour de gauche", "Cette entrée est bloquée", "EntreeTourGauche.jpg");
-        zones[15] = new Zone("Salle à manger", "", "SalleAManger.jpg");
+        pieces[5] = new Piece("Escalier de gauche", "Vous appercevez l'entrée du château", "EscalierGauche.jpg");
+        pieces[6] = new Piece("Entrée du château", "C'est l'entrée du château, comment s'en échapper ? ", "EntreeChateau.jpg");
+        pieces[7] = new Piece("Bibliothèque", "Peut être que des informations sur le château sont écrites ici", "Bibliotheque.jpg");
+        pieces[8] = new Piece("Salle du trône", "On apperçoit le trône du Roi, il vaudrait mieux ne pas s'asseoir dessus", "SalleDuTrone.jpg");
+        pieces[9] = new Piece("Escalier de droite", "Vous appercevez l'entrée du château", "EscalierDroite.jpg");
+        pieces[10] = new Piece("Armurerie", "Il y a des armes partout", "Armurerie.jpg");
+        pieces[11] = new Piece("Cuisine", "Il semblerait que quelque chose se cache derrière ce comptoir", "Cuisine.jpg");
+        pieces[12] = new Piece("Entrée chambre de la Princesse", "Cette entrée est bloquée", "EntreeChambrePrincesse.jpg");
+        pieces[13] = new Piece("Galerie", "", "Galerie.jpg");
+        pieces[14] = new Piece("Entrée tour de gauche", "Cette entrée est bloquée", "EntreeTourGauche.jpg");
+        pieces[15] = new Piece("Salle à manger", "", "SalleAManger.jpg");
 
-        //étage - 1
-        zones[0].ajouteSortie(Sortie.EST, zones[1]);
-        zones[0].ajouteSortie(Sortie.NORD, zones[2]);
-        zones[0].ajouteSortie(Sortie.OUEST, zones[3]);
-        zones[1].ajouteSortie(Sortie.OUEST, zones[0]);
+        //ajout des sorties
+        // étage - 1
+        pieces[0].ajouteSortie(Sortie.EST, pieces[1]);
+        pieces[0].ajouteSortie(Sortie.NORD, pieces[2]);
+        pieces[0].ajouteSortie(Sortie.OUEST, pieces[3]);
+        pieces[1].ajouteSortie(Sortie.OUEST, pieces[0]);
         //to do : la version de la pièce sans rocher qui débloque la sortir descendre
         //zones[1].ajouteSortie(Sortie.DESCENDRE, zones[?]);
-        zones[2].ajouteSortie(Sortie.MONTER, zones[5]);
-        zones[2].ajouteSortie(Sortie.SUD, zones[0]);
-        zones[3].ajouteSortie(Sortie.EST, zones[0]);
-        zones[3].ajouteSortie(Sortie.SUD, zones[4]);
-        zones[4].ajouteSortie(Sortie.OUEST, zones[3]);
+        pieces[2].ajouteSortie(Sortie.MONTER, pieces[5]);
+        pieces[2].ajouteSortie(Sortie.SUD, pieces[0]);
+        pieces[3].ajouteSortie(Sortie.EST, pieces[0]);
+        pieces[3].ajouteSortie(Sortie.SUD, pieces[4]);
+        pieces[4].ajouteSortie(Sortie.OUEST, pieces[3]);
 
         //rdc
-        zones[5].ajouteSortie(Sortie.DESCENDRE, zones[2]);
-        zones[5].ajouteSortie(Sortie.EST, zones[6]);
-        zones[5].ajouteSortie(Sortie.NORD, zones[7]);
+        pieces[5].ajouteSortie(Sortie.DESCENDRE, pieces[2]);
+        pieces[5].ajouteSortie(Sortie.EST, pieces[6]);
+        pieces[5].ajouteSortie(Sortie.NORD, pieces[7]);
 
-        zones[6].ajouteSortie(Sortie.OUEST, zones[5]);
-        zones[6].ajouteSortie(Sortie.NORD, zones[8]);
-        zones[6].ajouteSortie(Sortie.EST, zones[9]);
+        pieces[6].ajouteSortie(Sortie.OUEST, pieces[5]);
+        pieces[6].ajouteSortie(Sortie.NORD, pieces[8]);
+        pieces[6].ajouteSortie(Sortie.EST, pieces[9]);
 
-        zones[7].ajouteSortie(Sortie.SUD, zones[5]);
-        zones[7].ajouteSortie(Sortie.NORD, zones[15]);
+        pieces[7].ajouteSortie(Sortie.SUD, pieces[5]);
+        pieces[7].ajouteSortie(Sortie.NORD, pieces[15]);
 
-        zones[8].ajouteSortie(Sortie.SUD, zones[6]);
+        pieces[8].ajouteSortie(Sortie.SUD, pieces[6]);
 
         //zones[9].ajouteSortie(Sortie.DESCENDRE, zones[?]);
-        zones[9].ajouteSortie(Sortie.OUEST, zones[6]);
-        zones[9].ajouteSortie(Sortie.NORD, zones[10]);
+        pieces[9].ajouteSortie(Sortie.OUEST, pieces[6]);
+        pieces[9].ajouteSortie(Sortie.NORD, pieces[10]);
 
-        zones[10].ajouteSortie(Sortie.SUD, zones[9]);
-        zones[10].ajouteSortie(Sortie.NORD, zones[11]);
+        pieces[10].ajouteSortie(Sortie.SUD, pieces[9]);
+        pieces[10].ajouteSortie(Sortie.NORD, pieces[11]);
 
         //to do la liaison 15 11
         //zones[11].ajouteSortie(Sortie., zones[15]);
-        zones[11].ajouteSortie(Sortie.SUD, zones[10]);
-        zones[11].ajouteSortie(Sortie.NORD, zones[12]);
+        pieces[11].ajouteSortie(Sortie.SUD, pieces[10]);
+        pieces[11].ajouteSortie(Sortie.NORD, pieces[12]);
 
-        zones[12].ajouteSortie(Sortie.SUD, zones[11]);
-        zones[12].ajouteSortie(Sortie.OUEST, zones[13]);
+        pieces[12].ajouteSortie(Sortie.SUD, pieces[11]);
+        pieces[12].ajouteSortie(Sortie.OUEST, pieces[13]);
         //zones[12].ajouteSortie(Sortie.MONTER, zones[?]);
 
-        zones[13].ajouteSortie(Sortie.EST, zones[12]);
-        zones[13].ajouteSortie(Sortie.OUEST, zones[14]);
+        pieces[13].ajouteSortie(Sortie.EST, pieces[12]);
+        pieces[13].ajouteSortie(Sortie.OUEST, pieces[14]);
 
-        zones[14].ajouteSortie(Sortie.SUD, zones[15]);
-        zones[14].ajouteSortie(Sortie.EST, zones[13]);
+        pieces[14].ajouteSortie(Sortie.SUD, pieces[15]);
+        pieces[14].ajouteSortie(Sortie.EST, pieces[13]);
         //zones[14].ajouteSortie(Sortie.MONTER, zones[,]);
 
-        zones[15].ajouteSortie(Sortie.SUD, zones[7]);
-        zones[15].ajouteSortie(Sortie.NORD, zones[14]);
+        pieces[15].ajouteSortie(Sortie.SUD, pieces[7]);
+        pieces[15].ajouteSortie(Sortie.NORD, pieces[14]);
         //to do pareil que la cusine
         //zones[14].ajouteSortie(Sortie., zones[11]);
 
+        //ajout des personnages
 
-        this.zoneCourante = zones[0];
+        Prisonnier prisonnier = new Prisonnier("Jacques");
+
+        /*
+        Garde garde1 = new Garde();
+        Garde garde2 = new Garde();
+        Garde garde3 = new Garde();
+        Princesse princesse = new Princesse();
+        Boss boss = new Boss();
+        */
+
+        pieces[1].ajouterPNJ(prisonnier);
+
+
+        this.pieceCourante = pieces[0];
     }
 
     private void afficherLocalisation() {
-        gui.afficher(zoneCourante.descriptionLongue());
+        gui.afficher(pieceCourante.descriptionLongue());
         gui.afficher();
     }
 
@@ -108,8 +128,9 @@ public class Jeu {
         gui.afficher();
         gui.afficher("Tapez '?' pour obtenir de l'aide");
         gui.afficher();
+        gui.afficher("Après avoir été fait prisonnier vous vous retrouvez au milieu d'un donjon\n");
         afficherLocalisation();
-        gui.afficheImage(zoneCourante.nomImage());
+        gui.afficheImage(pieceCourante.nomImage());
     }
 
     public void traiterCommande(String commandeLue) {
@@ -147,6 +168,10 @@ public class Jeu {
             case "QUITTER":
                 terminer();
                 break;
+            case "P":
+            case "PARLER":
+                parler();
+                break;
             default:
                 gui.afficher("Commande inconnue");
                 break;
@@ -158,19 +183,28 @@ public class Jeu {
         gui.afficher("Les commandes autorisées sont :\n");
         gui.afficher(Commande.toutesLesDescriptions().toString());
         gui.afficher("\nVous pouvez utiliser le nom ou l'abréviation");
-
     }
 
     private void allerEn(String direction) {
-        Zone nouvelle = zoneCourante.obtientSortie(direction);
+        Piece nouvelle = pieceCourante.obtientSortie(direction);
         if (nouvelle == null) {
             gui.afficher("Pas de sortie " + direction);
             gui.afficher();
         } else {
-            zoneCourante = nouvelle;
-            gui.afficher(zoneCourante.descriptionLongue());
+            pieceCourante = nouvelle;
+            gui.afficher(pieceCourante.descriptionLongue());
             gui.afficher();
-            gui.afficheImage(zoneCourante.nomImage());
+            gui.afficheImage(pieceCourante.nomImage());
+        }
+    }
+
+    private void parler() {
+        if (pieceCourante.getEtat() == 1 || pieceCourante.getEtat() == 3) {
+            for (PNJ pnj : pieceCourante.getListePNJ()) {
+                gui.afficher(pnj.dialogue());
+            }
+        } else {
+            gui.afficher("Il n'y a personne avec qui parler");
         }
     }
 
@@ -178,4 +212,6 @@ public class Jeu {
         gui.afficher("Au revoir...");
         gui.enable(false);
     }
+
+
 }
