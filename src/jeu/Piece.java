@@ -19,17 +19,9 @@ public class Piece {
         this.nomPiece = nomPiece;
         this.description = description;
         this.nomImage = image;
-        this.sorties = new HashMap<>();
-    }
-
-    public Piece(String nomPiece, String description, String image, int etat) { //constructeur avec PNJ et/ou Item etat sert juste à changer la signature pour éviter de créer des listes dans les pieces qui n'en n'ont pas besoin
-        this.nomPiece = nomPiece;
-        this.description = description;
-        this.nomImage = image;
-        this.sorties = new HashMap<>();
         this.listePNJ = new ArrayList<PNJ>();
         this.listeItem = new ArrayList<Item>();
-        this.etat = etat;
+        this.sorties = new HashMap<>();
     }
 
 
@@ -58,20 +50,29 @@ public class Piece {
     }
 
     public void ajouterPNJ(PNJ pnj) {
-        this.listePNJ.add(pnj);
+        this.getListePNJ().add(pnj);
     }
 
     public void retirerPNJ(PNJ pnj) {
-        this.listePNJ.remove(pnj);
+        this.getListePNJ().remove(pnj);
     }
 
     public ArrayList<PNJ> getListePNJ() {
         return listePNJ;
     }
 
-    public int getEtat() {
-        return etat;
+    public void ajouterItem(Item item){
+        this.getListeItem().add(item);
     }
+
+    public void retirerItem(Item item){
+        this.getListeItem().remove(item);
+    }
+
+    public ArrayList<Item> getListeItem() {
+        return listeItem;
+    }
+
 
 
 }

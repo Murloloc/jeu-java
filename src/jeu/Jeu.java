@@ -1,6 +1,9 @@
 package jeu;
 
+import jeu.objets.*;
 import jeu.personnages.*;
+
+import java.util.ArrayList;
 
 
 public class Jeu {
@@ -18,6 +21,11 @@ public class Jeu {
         afficherMessageDeBienvenue();
     }
 
+
+    Inventaire inventaire = new Inventaire();
+    Joueur joueur = new Joueur("Tyrion", inventaire.getListeInventaire());
+
+
     private void creerCarte() {
         //création des pièces
         Piece[] pieces = new Piece[20];
@@ -26,7 +34,7 @@ public class Jeu {
 
         //étage -1
         pieces[0] = new Piece("au centre du donjon", "C'est l'endroit où vous vous êtes réveillé", "Donjon.jpg");
-        pieces[1] = new Piece("dans la prison", "Des rochers vous bloquent ce qui vous semble être un chemin, peut être que le prisonnier\nsait ce qu'il se cache derrière", "Prison.jpg", 1);
+        pieces[1] = new Piece("dans la prison", "Des rochers vous bloquent ce qui vous semble être un chemin, peut être que le prisonnier\nsait ce qu'il se cache derrière", "Prison.jpg");
         pieces[2] = new Piece("à l'escalier nord", "Il fait trop noir pour monter ces escaliers", "EscalierNord.jpg");
         pieces[3] = new Piece("dans le couloir", "Peut être que quelque chose se cache dans ces vieux pots", "Couloir.jpg");
         pieces[4] = new Piece("dans la salle des coffres", "Un coffre jaune et un coffre bleu, une clé serait nécessaire pour les dévérouiller", "SalleDesCoffres.jpg");
@@ -115,6 +123,12 @@ public class Jeu {
         pieces[1].ajouterPNJ(prisonnier);
 
 
+        //ajout des objets
+
+        Item baton = new Item("baton", "sert à construire un objet");
+
+        pieces[3].ajouterItem(baton);
+
         this.pieceCourante = pieces[0];
     }
 
@@ -172,6 +186,14 @@ public class Jeu {
             case "PARLER":
                 parler();
                 break;
+            case "F":
+            case "FOUILLER":
+                fouiller();
+                break;
+            case "I":
+            case "INVENTAIRE":
+                consulterInventaire();
+                break;
             default:
                 gui.afficher("Commande inconnue");
                 break;
@@ -199,7 +221,7 @@ public class Jeu {
     }
 
     private void parler() {
-        if (pieceCourante.getEtat() == 1 || pieceCourante.getEtat() == 3) {
+        if (!pieceCourante.getListePNJ().isEmpty()) {
             for (PNJ pnj : pieceCourante.getListePNJ()) {
                 gui.afficher(pnj.dialogue());
             }
@@ -208,10 +230,21 @@ public class Jeu {
         }
     }
 
+    private void fouiller() {
+        if (pieceCourante.getListeItem().isEmpty()) {
+            gui.afficher("Il n'y a pas d'item à récupérer dans cette pièce");
+        } else {
+            for (Item item : pieceCourante.getListeItem()) {
+                inventaire.ajouterInventaire(item);
+                gui.afficher(item.getNom() + " a été ajouté à l'inventaire");
+                pieceCourante.retirerItem(item);
+            }
+        }
+    }
+
     private void terminer() {
         gui.afficher("Au revoir...");
         gui.enable(false);
     }
-
 
 }
