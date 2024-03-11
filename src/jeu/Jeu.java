@@ -242,6 +242,11 @@ public class Jeu {
         }
     }
 
+    private void consulterInventaire() {
+        gui.afficher(inventaire.afficherInventaire());
+
+    }
+
     private void terminer() {
         gui.afficher("Au revoir...");
         gui.enable(false);
