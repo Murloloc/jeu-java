@@ -251,5 +251,4 @@ public class Jeu {
         gui.afficher("Au revoir...");
         gui.enable(false);
     }
-
 }
