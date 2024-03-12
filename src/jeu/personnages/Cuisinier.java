@@ -10,4 +10,4 @@ public class Cuisinier extends PNJ{
                 "La clé pour la tour de droite se trouve certainement quelque-part à l’étage 0.\n");
     }
 
-}
+}//fin de la classe

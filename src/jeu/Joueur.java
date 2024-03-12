@@ -12,4 +12,4 @@ public class Joueur {
         this.inventaire = inventaire;
     }
 
-}
+}//fin de la classe

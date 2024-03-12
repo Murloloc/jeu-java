@@ -81,4 +81,4 @@ public enum Commande {
         }
         return resultat;
     }
-}
+}//fin de l'enum

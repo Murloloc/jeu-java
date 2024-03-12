@@ -6,4 +6,4 @@ public class Main {
         GUI gui = new GUI(jeu);
         jeu.setGUI(gui);
     }
-}
+}//fin de la classe

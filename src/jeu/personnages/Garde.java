@@ -9,5 +9,5 @@ public class Garde extends PNJ {
     public String dialogue() {
         return (this + ", .");
     }
-}
+}//fin de la classe
 

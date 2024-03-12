@@ -78,7 +78,7 @@ public class Piece {
 
 
 
-}
+}//fin de la classe
 
 
 

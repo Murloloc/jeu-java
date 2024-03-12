@@ -39,4 +39,4 @@ public class Inventaire {
     }
 
 
-}
+}//fin de la classe

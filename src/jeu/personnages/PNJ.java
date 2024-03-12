@@ -30,4 +30,4 @@ public abstract class PNJ {
         return toString();
     }
 
-}
+}//fin de la classe

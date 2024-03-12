@@ -26,4 +26,4 @@ public class Item {
     public String toString() {
         return this.nom;
     }
-}
+}//fin de la classe

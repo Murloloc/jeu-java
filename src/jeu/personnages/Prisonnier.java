@@ -31,4 +31,4 @@ public class Prisonnier extends PNJ {
         return "Tiens voici la clé Bleue";
     }
 
-}
+}//fin de la classe
