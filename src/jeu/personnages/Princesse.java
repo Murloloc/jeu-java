@@ -3,7 +3,7 @@ package jeu.personnages;
 public class Princesse extends PNJ {
 
     public Princesse(String nom) {
-        super();
+        super(nom);
     }
 
     public String dialogue() {

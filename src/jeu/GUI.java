@@ -85,4 +85,5 @@ public class GUI implements ActionListener
         entree.setText("");
         jeu.traiterCommande( commandeLue);
     }
+
 }

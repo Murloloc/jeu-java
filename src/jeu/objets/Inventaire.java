@@ -24,7 +24,7 @@ public class Inventaire {
 
     @Override
     public String toString() {
-        return "Inventaire : ";
+        return "Inventaire : \n";
     }
 
     public String afficherInventaire() {

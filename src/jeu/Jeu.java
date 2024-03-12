@@ -115,7 +115,8 @@ public class Jeu {
         //ajout des personnages
 
         Prisonnier prisonnier = new Prisonnier("Jacques");
-
+        Cuisinier cuisinier = new Cuisinier("Jacquelin");
+        Servante servante = new Servante("Jacqueline");
         /*
         Garde garde1 = new Garde();
         Garde garde2 = new Garde();
@@ -125,15 +126,17 @@ public class Jeu {
         */
 
         pieces[1].ajouterPNJ(prisonnier);
+        pieces[6].ajouterPNJ(cuisinier);
+        pieces[14].ajouterPNJ(servante);
 
 
         //ajout des objets
 
         Item baton = new Item("baton", "sert à construire un objet");
-        Item bata = new Item("bata", "sert à construire un objet");
+        Item teteDePioche = new Item("Tete de pioche", "sert à construire un objet");
 
         pieces[3].ajouterItem(baton);
-        pieces[3].ajouterItem(bata);
+        pieces[3].ajouterItem(teteDePioche);
 
         this.pieceCourante = pieces[0];
     }
@@ -200,6 +203,9 @@ public class Jeu {
             case "INVENTAIRE":
                 consulterInventaire();
                 break;
+//            case "CR":
+//            case "CRAFTER":
+//                crafter();
             default:
                 gui.afficher("Commande inconnue");
                 break;
@@ -251,6 +257,79 @@ public class Jeu {
     private void consulterInventaire() {
         gui.afficher(inventaire.afficherInventaire());
     }
+
+//    private void crafter() {
+//        String obj1 = "baton";
+//        String obj2 = "TeteDePioche";
+//        boolean obj1present = false;
+//        boolean obj2present = false;
+//
+//        String obj3 = "charbon";
+//        boolean obj3present = false;
+//        int a = 3;
+//        if (a != 3) {
+//            gui.afficher("Il n'y a pas d'établi dans cette pièce");
+//        } else {
+//            for (Item item : inventaire.getListeInventaire()) {
+//                if (item.getNom().equals(obj1)) {
+//                    obj1present = true;
+//                }
+//                if (item.getNom().equals(obj2)) {
+//                    obj2present = true;
+//                }
+//                if (obj1present && obj2present) {
+//                    break;
+//                }
+//            }
+//            for (Item item : inventaire.getListeInventaire()) {
+//                if (item.getNom().equals(obj1)) {
+//                    obj1present = true;
+//                }
+//                if (item.getNom().equals(obj3)) {
+//                    obj3present = true;
+//                }
+//                if (obj1present && obj3present) {
+//                    break;
+//                }
+//            }
+//        }
+//        if (obj1present && obj2present) {
+//            for (Item item : inventaire.getListeInventaire()) {
+//                if (item.getNom().equals("baton")) {
+//                    inventaire.retirerInventaire(item);
+//                }
+//                if (item.getNom().equals("TeteDePioche")) {
+//                    inventaire.retirerInventaire(item);
+//                }
+//            }
+//
+//        } else if (obj1present && obj3present) {
+//            for (Item item : inventaire.getListeInventaire()) {
+//                if (item.getNom().equals("baton")) {
+//                    inventaire.retirerInventaire(item);
+//                }
+//                if (item.getNom().equals("charbon")) {
+//                    inventaire.retirerInventaire(item);
+//                }
+//            }
+//        } else {
+//            gui.afficher("Vous ne pouvez pas crafter d'objet, car il vous manque des objets");
+//        }
+//    }
+//
+//
+//    public boolean equals(Object obj) {
+//        if ((obj == null) || (this.getClass() != obj.getClass()))
+//            return (false);
+//        else {
+//            if (this == obj) {
+//                return (true);
+//            } else {
+//                Jeu inventaire = (Jeu) obj;
+//                return (this.inventaire == inventaire.inventaire);
+//            }
+//        }
+//    }
 
     private void terminer() {
         gui.afficher("Au revoir...");
