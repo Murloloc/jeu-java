@@ -16,6 +16,10 @@ public class Jeu {
         gui = null;
     }
 
+    public GUI getGUI() {
+        return gui;
+    }
+
     public void setGUI(GUI g) {
         gui = g;
         afficherMessageDeBienvenue();
@@ -126,8 +130,10 @@ public class Jeu {
         //ajout des objets
 
         Item baton = new Item("baton", "sert à construire un objet");
+        Item bata = new Item("bata", "sert à construire un objet");
 
         pieces[3].ajouterItem(baton);
+        pieces[3].ajouterItem(bata);
 
         this.pieceCourante = pieces[0];
     }
@@ -244,7 +250,6 @@ public class Jeu {
 
     private void consulterInventaire() {
         gui.afficher(inventaire.afficherInventaire());
-
     }
 
     private void terminer() {

@@ -10,8 +10,8 @@ public class Piece {
     private final String nomPiece;
     private final String description;
     private final String nomImage;
-    private ArrayList<PNJ> listePNJ;
-    private ArrayList<Item> listeItem;
+    private final ArrayList<PNJ> listePNJ;
+    private final ArrayList<Item> listeItem;
     private final HashMap<String, Piece> sorties;
     private int etat; //1=que un ou des pnj //2 = que un ou des item //3=un/des items ET un/des pnj
 
@@ -23,7 +23,6 @@ public class Piece {
         this.listeItem = new ArrayList<Item>();
         this.sorties = new HashMap<>();
     }
-
 
     public String nomImage() {
         return nomImage;
@@ -61,19 +60,17 @@ public class Piece {
         return listePNJ;
     }
 
-    public void ajouterItem(Item item){
+    public void ajouterItem(Item item) {
         this.getListeItem().add(item);
     }
 
-    public void retirerItem(Item item){
+    public void retirerItem(Item item) {
         this.getListeItem().remove(item);
     }
 
     public ArrayList<Item> getListeItem() {
         return listeItem;
     }
-
-
 
 }
 
