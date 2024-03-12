@@ -27,7 +27,7 @@ public class Prisonnier extends PNJ {
 
     }
 
-    public String dialogueBleue(){
+    public String dialogueBleu() {
         return "Tiens voici la clé Bleue";
     }
 

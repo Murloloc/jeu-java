@@ -271,6 +271,31 @@ public class Jeu {
         }
     }
 
+
+    private void donnerCle(String commandeLue) {
+        if (commandeLue.equals("JAU") || commandeLue.equals("JAUNE")) {
+            inventaire.ajouterInventaire(new Item("Clé Jaune", "Sert à dévérouiller le coffre jaune"));
+            gui.afficher("La clé Jaune a été ajouté à l'inventaire");
+            for (PNJ pnj : pieceCourante.getListePNJ()) {
+                if (pnj.getEtat() == 0) {
+                    gui.afficher(((Prisonnier) pnj).dialogueJaune());
+                    pnj.setEtat(1);
+                }
+            }
+        } else {
+            inventaire.ajouterInventaire(new Item("Clé Bleue", "Sert à dévérouiller le coffre bleu"));
+            gui.afficher("La clé Bleue a été ajouté à l'inventaire");
+            for (PNJ pnj : pieceCourante.getListePNJ()) {
+                if (pnj.getEtat() == 0) {
+                    gui.afficher(((Prisonnier) pnj).dialogueBleu());
+                    pnj.setEtat(1);
+                }
+            }
+        }
+        this.etatCommande = 0;
+    }
+
+
     private void fouiller() {
         if (pieceCourante.getListeItem().isEmpty()) {
             gui.afficher("Il n'y a pas d'item à récupérer dans cette pièce");
