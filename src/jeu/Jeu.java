@@ -11,9 +11,12 @@ public class Jeu {
     private GUI gui;
     private Piece pieceCourante;
 
+    private int etatCommande;
+
     public Jeu() {
         creerCarte();
-        gui = null;
+        this.gui = null;
+        this.etatCommande = 0;
     }
 
     public GUI getGUI() {
@@ -25,6 +28,9 @@ public class Jeu {
         afficherMessageDeBienvenue();
     }
 
+    public Piece getPieceCourante() {
+        return pieceCourante;
+    }
 
     Inventaire inventaire = new Inventaire();
     Joueur joueur = new Joueur("Tyrion", inventaire.getListeInventaire());
@@ -139,6 +145,7 @@ public class Jeu {
         pieces[3].ajouterItem(teteDePioche);
 
         this.pieceCourante = pieces[0];
+
     }
 
     private void afficherLocalisation() {
@@ -157,57 +164,75 @@ public class Jeu {
     }
 
     public void traiterCommande(String commandeLue) {
-        gui.afficher("> " + commandeLue + "\n");
-        switch (commandeLue.toUpperCase()) {
-            case "?":
-            case "AIDE":
-                afficherAide();
-                break;
-            case "N":
-            case "NORD":
-                allerEn("NORD");
-                break;
-            case "S":
-            case "SUD":
-                allerEn("SUD");
-                break;
-            case "E":
-            case "EST":
-                allerEn("EST");
-                break;
-            case "O":
-            case "OUEST":
-                allerEn("OUEST");
-                break;
-            case "M":
-            case "MONTER":
-                allerEn("MONTER");
-                break;
-            case "D":
-            case "DESCENDRE":
-                allerEn("DESCENDRE");
-                break;
-            case "Q":
-            case "QUITTER":
-                terminer();
-                break;
-            case "P":
-            case "PARLER":
-                parler();
-                break;
-            case "F":
-            case "FOUILLER":
-                fouiller();
-                break;
-            case "I":
-            case "INVENTAIRE":
-                consulterInventaire();
-                break;
-//            case "CR":
-//            case "CRAFTER":
+        switch (etatCommande) {
+            case 0:
+                gui.afficher("> " + commandeLue + "\n");
+                switch (commandeLue.toUpperCase()) {
+                    case "?":
+                    case "AIDE":
+                        afficherAide();
+                        break;
+                    case "N":
+                    case "NORD":
+                        allerEn("NORD");
+                        break;
+                    case "S":
+                    case "SUD":
+                        allerEn("SUD");
+                        break;
+                    case "E":
+                    case "EST":
+                        allerEn("EST");
+                        break;
+                    case "O":
+                    case "OUEST":
+                        allerEn("OUEST");
+                        break;
+                    case "M":
+                    case "MONTER":
+                        allerEn("MONTER");
+                        break;
+                    case "D":
+                    case "DESCENDRE":
+                        allerEn("DESCENDRE");
+                        break;
+                    case "Q":
+                    case "QUITTER":
+                        terminer();
+                        break;
+                    case "P":
+                    case "PARLER":
+                        parler();
+                        break;
+                    case "F":
+                    case "FOUILLER":
+                        fouiller();
+                        break;
+                    case "I":
+                    case "INVENTAIRE":
+                        consulterInventaire();
+                        break;
+//                  case "CR":
+//                  case "CRAFTER":
 //                crafter();
-            default:
-                gui.afficher("Commande inconnue");
+//                break;
+                    default:
+                        gui.afficher("Commande inconnue");
+                        break;
+                }
+                break;
+            case 1:
+                switch (commandeLue.toUpperCase()) {
+                    case "JAU":
+                    case "JAUNE":
+                    case "BLE":
+                    case "BLEUE":
+                        donnerCle(commandeLue.toUpperCase());
+                        break;
+                    default:
+                        gui.afficher("Commande invalide");
+                        break;
+                }
                 break;
         }
     }
@@ -236,6 +261,10 @@ public class Jeu {
         if (!pieceCourante.getListePNJ().isEmpty()) {
             for (PNJ pnj : pieceCourante.getListePNJ()) {
                 gui.afficher(pnj.dialogue());
+                if (pnj instanceof Prisonnier && pnj.getEtat() == 0) {
+                    gui.afficher("JAU pour la clé Jaune\nBLE pour la clé Bleue");
+                    etatCommande = 1;
+                }
             }
         } else {
             gui.afficher("Il n'y a personne avec qui parler");
@@ -267,7 +296,7 @@ public class Jeu {
 //        String obj3 = "charbon";
 //        boolean obj3present = false;
 //        int a = 3;
-//        if (a != 3) {
+//        if (pieceCourante.getNomPiece() != "dans le couloir") {
 //            gui.afficher("Il n'y a pas d'établi dans cette pièce");
 //        } else {
 //            for (Item item : inventaire.getListeInventaire()) {
@@ -292,35 +321,35 @@ public class Jeu {
 //                    break;
 //                }
 //            }
-//        }
-//        if (obj1present && obj2present) {
-//            for (Item item : inventaire.getListeInventaire()) {
-//                if (item.getNom().equals("baton")) {
-//                    inventaire.retirerInventaire(item);
-//                }
-//                if (item.getNom().equals("TeteDePioche")) {
-//                    inventaire.retirerInventaire(item);
-//                }
-//            }
 //
-//        } else if (obj1present && obj3present) {
-//            for (Item item : inventaire.getListeInventaire()) {
-//                if (item.getNom().equals("baton")) {
-//                    inventaire.retirerInventaire(item);
+//            if (obj1present && obj2present) {
+//                for (Item item : inventaire.getListeInventaire()) {
+//                    if (item.getNom().equals("baton")) {
+//                        inventaire.retirerInventaire(item);
+//                    }
+//                    if (item.getNom().equals("TeteDePioche")) {
+//                        inventaire.retirerInventaire(item);
+//                    }
 //                }
-//                if (item.getNom().equals("charbon")) {
-//                    inventaire.retirerInventaire(item);
+//
+//            } else if (obj1present && obj3present) {
+//                for (Item item : inventaire.getListeInventaire()) {
+//                    if (item.getNom().equals("baton")) {
+//                        inventaire.retirerInventaire(item);
+//                    }
+//                    if (item.getNom().equals("charbon")) {
+//                        inventaire.retirerInventaire(item);
+//                    }
 //                }
+//            } else {
+//                gui.afficher("Vous ne pouvez pas crafter d'objet, car il vous manque des objets");
 //            }
-//        } else {
-//            gui.afficher("Vous ne pouvez pas crafter d'objet, car il vous manque des objets");
 //        }
 //    }
 //
 //
 //    public boolean equals(Object obj) {
-//        if ((obj == null) || (this.getClass() != obj.getClass()))
-//            return (false);
+//        if ((obj == null) || (this.getClass() != obj.getClass())) return (false);
 //        else {
 //            if (this == obj) {
 //                return (true);
@@ -335,6 +364,4 @@ public class Jeu {
         gui.afficher("Au revoir...");
         gui.enable(false);
     }
-}//fin de la classe
-
-
+}
