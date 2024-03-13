@@ -212,7 +212,7 @@ public class Jeu {
                     case "INVENTAIRE":
                         consulterInventaire();
                         break;
-                    case"OUV":
+                    case "OUV":
                     case "OUVRIR":
                         ouvrirCoffre();
                         break;
@@ -391,17 +391,14 @@ public class Jeu {
 //
 //    }
 
-    private void ouvrirCoffre(){
-        if(pieceCourante.getNomPiece() != "dans la salle des coffres"){
+    private void ouvrirCoffre() {
+        if (pieceCourante.getNomPiece() != "dans la salle des coffres") {
             gui.afficher("Il n'y a pas de coffre dans cette pièce");
-        }
-        else if(inventaire.presenceItem("Clé Jaune")){
-
-        }
+        } else if (inventaire.presenceItem("Clé Jaune")) {
 
 
-            for(Item item : inventaire.getListeInventaire()){
-                if(item.getNom().equals("Clé Jaune")){
+            for (Item item : inventaire.getListeInventaire()) {
+                if (item.getNom().equals("Clé Jaune")) {
                     gui.afficher("Vous avez ouvert le coffre jaune.\n");
                     inventaire.ajouterInventaire(new Item("teteDePioche", "sert à construire un objet"));
                     gui.afficher("La tête de pioche a été ajouté à l'inventaire\n");
@@ -409,8 +406,8 @@ public class Jeu {
                     break;
                 }
             }
-            for(Item item : inventaire.getListeInventaire()){
-                if(item.getNom().equals("Clé Bleue")){
+            for (Item item : inventaire.getListeInventaire()) {
+                if (item.getNom().equals("Clé Bleue")) {
                     gui.afficher("Vous avez ouvert le coffre bleue.\n");
                     inventaire.ajouterInventaire(new Item("charbon", "sert à construire un objet"));
                     gui.afficher("Le charbon a été ajouté à l'inventaire\n");
@@ -418,8 +415,7 @@ public class Jeu {
                     break;
                 }
             }
-        }
-        else{
+        } else {
             gui.afficher("Vous ne pouvez pas ouvrir le coffre\n");
         }
     }
