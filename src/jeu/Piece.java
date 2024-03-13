@@ -31,7 +31,6 @@ public class Piece {
     public String getNomPiece() {
         return nomPiece;
     }
-
     public String toString() {
         return ("Vous êtes " + this.nomPiece + ".\n" + this.description);
     }
@@ -76,9 +75,7 @@ public class Piece {
         return listeItem;
     }
 
-
-
-}//fin de la classe
+}
 
 
 

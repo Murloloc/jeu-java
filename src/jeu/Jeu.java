@@ -139,7 +139,7 @@ public class Jeu {
         //ajout des objets
 
         Item baton = new Item("baton", "sert à construire un objet");
-        Item teteDePioche = new Item("Tete de pioche", "sert à construire un objet");
+        Item teteDePioche = new Item("teteDePioche", "sert à construire un objet");
 
         pieces[3].ajouterItem(baton);
         pieces[3].ajouterItem(teteDePioche);
@@ -211,6 +211,10 @@ public class Jeu {
                     case "I":
                     case "INVENTAIRE":
                         consulterInventaire();
+                        break;
+                    case"OUV":
+                    case "OUVRIR":
+                        ouvrirCoffre();
                         break;
 //                  case "CR":
 //                  case "CRAFTER":
@@ -313,77 +317,113 @@ public class Jeu {
     }
 
 //    private void crafter() {
-//        String obj1 = "baton";
-//        String obj2 = "TeteDePioche";
 //        boolean obj1present = false;
 //        boolean obj2present = false;
-//
-//        String obj3 = "charbon";
 //        boolean obj3present = false;
-//        int a = 3;
+//
+//
 //        if (pieceCourante.getNomPiece() != "dans le couloir") {
 //            gui.afficher("Il n'y a pas d'établi dans cette pièce");
 //        } else {
 //            for (Item item : inventaire.getListeInventaire()) {
-//                if (item.getNom().equals(obj1)) {
+//                if (item.getNom().equals("baton")) {
 //                    obj1present = true;
 //                }
-//                if (item.getNom().equals(obj2)) {
-//                    obj2present = true;
-//                }
-//                if (obj1present && obj2present) {
+//                if (obj1present) {
 //                    break;
 //                }
 //            }
 //            for (Item item : inventaire.getListeInventaire()) {
-//                if (item.getNom().equals(obj1)) {
-//                    obj1present = true;
+//                if (item.getNom().equals("teteDePioche")) {
+//                    obj2present = true;
 //                }
-//                if (item.getNom().equals(obj3)) {
-//                    obj3present = true;
-//                }
-//                if (obj1present && obj3present) {
+//                if (obj2present) {
 //                    break;
 //                }
 //            }
+//        }
 //
-//            if (obj1present && obj2present) {
-//                for (Item item : inventaire.getListeInventaire()) {
-//                    if (item.getNom().equals("baton")) {
-//                        inventaire.retirerInventaire(item);
-//                    }
-//                    if (item.getNom().equals("TeteDePioche")) {
-//                        inventaire.retirerInventaire(item);
-//                    }
-//                }
+////            for (Item item : inventaire.getListeInventaire()) {
+////                if (item.getNom().equals("baton")) {
+////                    obj1present = true;
+////                }
+////            }
+////            for (Item item : inventaire.getListeInventaire()) {
+////                if (item.getNom().equals("charbon")) {
+////                    obj3present = true;
+////                }
+////                if (obj1present && obj3present) {
+////                    break;
+////                }
+////            }
 //
-//            } else if (obj1present && obj3present) {
-//                for (Item item : inventaire.getListeInventaire()) {
-//                    if (item.getNom().equals("baton")) {
-//                        inventaire.retirerInventaire(item);
-//                    }
-//                    if (item.getNom().equals("charbon")) {
-//                        inventaire.retirerInventaire(item);
-//                    }
+//        if (obj1present && obj2present) {
+//            for (Item item : inventaire.getListeInventaire()) {
+//                if (item.getNom().equals("baton")) {
+//                    inventaire.retirerInventaire(item);
+//                    obj1present = false;
 //                }
-//            } else {
+//            }
+//            for(Item item : inventaire.getListeInventaire()) {
+//                if (item.getNom().equals("teteDePioche")) {
+//                    inventaire.retirerInventaire(item);
+//                    obj2present = false;
+//                }
+//            }
+//            if(!obj1present && !obj2present){
+//                inventaire.ajouterInventaire(new Item ("pioche", "sert à casser les rochers"));
+//                gui.afficher("La pioche a été ajouté à l'inventaire");
+//            }
+//
+//        } else if (obj1present && obj3present) {
+//            for (Item item : inventaire.getListeInventaire()) {
+//                if (item.getNom().equals("baton")) {
+//                    inventaire.retirerInventaire(item);
+//                }
+//                if (item.getNom().equals("charbon")) {
+//                    inventaire.retirerInventaire(item);
+//                }
+//                gui.afficher("La torche a été ajouté à l'inventaire");
+//            }
+//        } else {
 //                gui.afficher("Vous ne pouvez pas crafter d'objet, car il vous manque des objets");
 //            }
-//        }
-//    }
 //
-//
-//    public boolean equals(Object obj) {
-//        if ((obj == null) || (this.getClass() != obj.getClass())) return (false);
-//        else {
-//            if (this == obj) {
-//                return (true);
-//            } else {
-//                Jeu inventaire = (Jeu) obj;
-//                return (this.inventaire == inventaire.inventaire);
-//            }
-//        }
 //    }
+
+    private void ouvrirCoffre(){
+        if(pieceCourante.getNomPiece() != "dans la salle des coffres"){
+            gui.afficher("Il n'y a pas de coffre dans cette pièce");
+        }
+        else if(inventaire.presenceItem("Clé Jaune")){
+
+        }
+
+
+            for(Item item : inventaire.getListeInventaire()){
+                if(item.getNom().equals("Clé Jaune")){
+                    gui.afficher("Vous avez ouvert le coffre jaune.\n");
+                    inventaire.ajouterInventaire(new Item("teteDePioche", "sert à construire un objet"));
+                    gui.afficher("La tête de pioche a été ajouté à l'inventaire\n");
+                    inventaire.retirerInventaire(item);
+                    break;
+                }
+            }
+            for(Item item : inventaire.getListeInventaire()){
+                if(item.getNom().equals("Clé Bleue")){
+                    gui.afficher("Vous avez ouvert le coffre bleue.\n");
+                    inventaire.ajouterInventaire(new Item("charbon", "sert à construire un objet"));
+                    gui.afficher("Le charbon a été ajouté à l'inventaire\n");
+                    inventaire.retirerInventaire(item);
+                    break;
+                }
+            }
+        }
+        else{
+            gui.afficher("Vous ne pouvez pas ouvrir le coffre\n");
+        }
+    }
+
 
     private void terminer() {
         gui.afficher("Au revoir...");

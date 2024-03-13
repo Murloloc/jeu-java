@@ -38,5 +38,15 @@ public class Inventaire {
 
     }
 
+    public boolean presenceItem(String nom){
+        for(Item item : listeInventaire){
+            if(item.getNom().equals(nom));{
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 
 }//fin de la classe
