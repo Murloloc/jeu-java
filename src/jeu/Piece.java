@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Piece {
-    private final String nomPiece;
-    private final String description;
-    private final String nomImage;
-    private final ArrayList<PNJ> listePNJ;
-    private final ArrayList<Item> listeItem;
-    private final HashMap<String, Piece> sorties;
+    private String nomPiece;
+    private String description;
+    private String nomImage;
+    private ArrayList<PNJ> listePNJ;
+    private ArrayList<Item> listeItem;
+    private HashMap<String, Piece> sorties;
     private int etat; //1=que un ou des pnj //2 = que un ou des item //3=un/des items ET un/des pnj
 
     public Piece(String nomPiece, String description, String image) { //constructeur sans PNJ et sans Item
@@ -28,9 +28,19 @@ public class Piece {
         return nomImage;
     }
 
+
     public String getNomPiece() {
         return nomPiece;
     }
+
+    public void setNomPiece(String nomPiece) {
+        this.nomPiece = nomPiece;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String toString() {
         return ("Vous êtes " + this.nomPiece + ".\n" + this.description);
     }

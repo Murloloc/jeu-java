@@ -141,6 +141,7 @@ public class Jeu {
         Item baton = new Item("baton", "sert à construire un objet");
         Item teteDePioche = new Item("teteDePioche", "sert à construire un objet");
 
+
         pieces[3].ajouterItem(baton);
         pieces[3].ajouterItem(teteDePioche);
 
@@ -392,34 +393,38 @@ public class Jeu {
 //    }
 
     private void ouvrirCoffre() {
-        if (pieceCourante.getNomPiece() != "dans la salle des coffres") {
-            gui.afficher("Il n'y a pas de coffre dans cette pièce");
-        } else if (inventaire.presenceItem("Clé Jaune")) {
+        if (pieceCourante.getNomPiece() == ("dans la salle des coffres")) {
+            if (inventaire.getListeInventaire().isEmpty()) {
+                gui.afficher("Il vous faudrait une clé afin de pouvoir ouvrir un de ces coffres \n");
+            } else {
+                for (Item item : inventaire.getListeInventaire()) {
+                    if (item.getNom() == "Clé Jaune") {
+                        inventaire.retirerInventaire(item);
+                        inventaire.ajouterInventaire(new Item("Tête de pioche", "combiné avec un baton je peux peut être en faire une pioche afin de casser les rochers"));
+                        gui.afficher("Le coffre jaune a été ouvert\n");
+                        gui.afficher("La tête de pioche a été ajouté à l'inventaire\n");
+                        pieceCourante.setNomPiece("dans la salle des coffres (ouverts)");
+                        pieceCourante.setDescription("Il n'y a plus rien à faire ici");
 
+                    } else if (item.getNom() == "Clé Bleue") {
+                        inventaire.retirerInventaire(item);
+                        inventaire.ajouterInventaire(new Item("Charbon", "combiné avec un baton je peux peut être en faire une torche afin d'éclaire l'escalier"));
+                        gui.afficher("Le coffre bleu a été ouvert\n");
+                        gui.afficher("Du charbon a été ajouté à l'inventaire\n");
+                        pieceCourante.setNomPiece("dans la salle des coffres (ouverts)");
+                        pieceCourante.setDescription("Il n'y a plus rien à faire ici");
 
-            for (Item item : inventaire.getListeInventaire()) {
-                if (item.getNom().equals("Clé Jaune")) {
-                    gui.afficher("Vous avez ouvert le coffre jaune.\n");
-                    inventaire.ajouterInventaire(new Item("teteDePioche", "sert à construire un objet"));
-                    gui.afficher("La tête de pioche a été ajouté à l'inventaire\n");
-                    inventaire.retirerInventaire(item);
-                    break;
+                    } else {
+                        gui.afficher("Il vous faudrait une clé afin de pouvoir ouvrir un de ces coffres \n");
+                    }
                 }
             }
-            for (Item item : inventaire.getListeInventaire()) {
-                if (item.getNom().equals("Clé Bleue")) {
-                    gui.afficher("Vous avez ouvert le coffre bleue.\n");
-                    inventaire.ajouterInventaire(new Item("charbon", "sert à construire un objet"));
-                    gui.afficher("Le charbon a été ajouté à l'inventaire\n");
-                    inventaire.retirerInventaire(item);
-                    break;
-                }
-            }
+        } else if (pieceCourante.getNomPiece() == "dans la salle des coffres (ouverts)") {
+            gui.afficher("Vous avez déjà ouvert un coffre");
         } else {
-            gui.afficher("Vous ne pouvez pas ouvrir le coffre\n");
+            gui.afficher("Il n'y a rien à ouvrir ici");
         }
     }
-
 
     private void terminer() {
         gui.afficher("Au revoir...");

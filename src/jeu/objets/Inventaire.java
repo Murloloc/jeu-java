@@ -6,7 +6,7 @@ public class Inventaire {
 
     private ArrayList<Item> listeInventaire;
 
-    public Inventaire(){
+    public Inventaire() {
         this.listeInventaire = new ArrayList<Item>();
     }
 
@@ -35,18 +35,6 @@ public class Inventaire {
             for (Item item : this.getListeInventaire())
                 chaine = chaine + item.getNom() + " : " + item.getDescription() + "\n";
         return chaine;
-
     }
-
-    public boolean presenceItem(String nom){
-        for(Item item : listeInventaire){
-            if(item.getNom().equals(nom));{
-                return true;
-            }
-        }
-        return false;
-    }
-
-
 
 }//fin de la classe
