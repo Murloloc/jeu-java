@@ -37,4 +37,14 @@ public class Inventaire {
         return chaine;
     }
 
+    public Item getItemByName(String nom) {
+        Item var = null;
+        for (Item item : this.listeInventaire) {
+            if (item.getNom().equals(nom)) {
+                var = item;
+            }
+        }
+        return var;
+    }
+
 }//fin de la classe
