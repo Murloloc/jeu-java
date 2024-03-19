@@ -53,6 +53,10 @@ public class Piece {
         this.sorties.put(sortie.name(), pieceVoisine);
     }
 
+    public void supprimerSortie(Sortie sortie){
+        this.sorties.remove(sortie.name());
+    }
+
     private String sorties() {
         return sorties.keySet().toString();
     }

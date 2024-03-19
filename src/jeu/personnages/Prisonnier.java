@@ -16,19 +16,19 @@ public class Prisonnier extends PNJ {
 
     public String dialogue() {
         if (this.etat == 0) {
-            return (this + ", je suis ici depuis des années.\nJ'ai essayé de m'échapper sans jamais avoir réussi.\nDans mes tentatives j'ai trouvé une clé bleue et une clé jaune mais aucune d'elle ne dévérouille ma cellule\nJe vais t'en donner une, essaye de trouver ce qu'elle dévérouille");
+            return (this + ", je suis ici depuis des années.\nJ'ai essayé de m'échapper sans jamais avoir réussi.\nDans mes tentatives j'ai trouvé une clé bleue et une clé jaune mais\naucune d'elle ne dévérouille ma cellule\nJe vais t'en donner une, essaye de trouver ce qu'elle dévérouille.\n");
         } else {
-            return ("Alors tu as trouvé à quoi servait la clé ?");
+            return ("\nAlors tu as trouvé à quoi servait la clé ?");
         }
     }
 
     public String dialogueJaune() {
-        return "Tiens voici la clé Jaune";
+        return "\nTiens voici la clé Jaune";
 
     }
 
     public String dialogueBleu() {
-        return "Tiens voici la clé Bleue";
+        return "\nTiens voici la clé Bleue";
     }
 
 }//fin de la classe

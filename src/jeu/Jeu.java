@@ -10,7 +10,7 @@ public class Jeu {
 
     private GUI gui;
     private Piece pieceCourante;
-
+    private Piece[] map;
     private int etatCommande;
 
     public Jeu() {
@@ -37,86 +37,120 @@ public class Jeu {
 
 
     private void creerCarte() {
-        //création des pièces
-        Piece[] pieces = new Piece[20];
-        // piece sans PNJ et sans item : pieces[] = new Piece("nom","description",".jpg");
-        // piece avec PNJ et/ou item : pieces[] = new Piece("nom","description",".jpg","etat")
+
+        this.map = new Piece[24];
 
         //étage -1
-        pieces[0] = new Piece("au centre du donjon", "C'est l'endroit où vous vous êtes réveillé", "Donjon.jpg");
-        pieces[1] = new Piece("dans la prison", "Des rochers vous bloquent ce qui vous semble être un chemin, peut être que le prisonnier\nsait ce qu'il se cache derrière", "Prison.jpg");
-        pieces[2] = new Piece("à l'escalier nord", "Il fait trop noir pour monter ces escaliers", "EscalierNord.jpg");
-        pieces[3] = new Piece("dans le couloir", "Peut être que quelque chose se cache dans ces vieux pots", "Couloir.jpg");
-        pieces[4] = new Piece("dans la salle des coffres", "Un coffre jaune et un coffre bleu, une clé serait nécessaire pour les dévérouiller", "SalleDesCoffres.jpg");
+        map[0] = new Piece("au centre du donjon", "C'est l'endroit où vous vous êtes réveillé, sans souvenirs", "Donjon.jpg"); //centre
+        map[1] = new Piece("dans la prison", "Des rochers vous bloquent ce qui semble être un chemin, peut être que le prisonnier" + "\n" + "sait ce qu'il se cache derrière", "Prison.jpg"); //est
+        map[2] = new Piece("à l'escalier Nord", "Il fait trop noir pour monter ces escaliers", "EscalierNord.jpg"); //nord
+        map[3] = new Piece("dans le couloir", "Peut-être que quelque-chose se cache dans ces vieux pots...", "Couloir.jpg"); //ouest
+        map[4] = new Piece("dans la salle des coffres", "Vous voyez un coffre jaune et un coffre bleu vérouillés, une clé doit sûrement se cacher" + "\n" + "quelque-part...", "SalleDesCoffres.jpg"); //sud
 
-        //RDC
-        pieces[5] = new Piece("Escalier de gauche", "Vous appercevez l'entrée du château", "EscalierGauche.jpg");
-        pieces[6] = new Piece("Entrée du château", "C'est l'entrée du château, comment s'en échapper ? ", "EntreeChateau.jpg");
-        pieces[7] = new Piece("Bibliothèque", "Peut être que des informations sur le château sont écrites ici", "Bibliotheque.jpg");
-        pieces[8] = new Piece("Salle du trône", "On apperçoit le trône du Roi, il vaudrait mieux ne pas s'asseoir dessus", "SalleDuTrone.jpg");
-        pieces[9] = new Piece("Escalier de droite", "Vous appercevez l'entrée du château", "EscalierDroite.jpg");
-        pieces[10] = new Piece("Armurerie", "Il y a des armes partout", "Armurerie.jpg");
-        pieces[11] = new Piece("Cuisine", "Il semblerait que quelque chose se cache derrière ce comptoir", "Cuisine.jpg");
-        pieces[12] = new Piece("Entrée chambre de la Princesse", "Cette entrée est bloquée", "EntreeChambrePrincesse.jpg");
-        pieces[13] = new Piece("Galerie", "", "Galerie.jpg");
-        pieces[14] = new Piece("Entrée tour de gauche", "Cette entrée est bloquée", "EntreeTourGauche.jpg");
-        pieces[15] = new Piece("Salle à manger", "", "SalleAManger.jpg");
+        // RDC
+        map[5] = new Piece("à l'escalier de gauche", "Vous apercevez l'entrée du château", "EscalierGauche.jpg");
+        map[6] = new Piece("à l'entrée du château", "C'est l'entrée du château ! Comment faire pour s'échapper...", "EntreeChateau.jpg");
+        map[7] = new Piece("dans la bibliothèque", "Peut-être que des informations utiles sont gardées ici", "Bibliotheque.jpg");
+        map[8] = new Piece("dans la salle du trône", "On aperçoit le trône du Roi, cela serait osé de s'asseoir dessus en son absence...", "SalleDuTrone.jpg");
+        map[9] = new Piece("à l'escalier de droite", "Vous apercevez l'entrée du château", "EscalierDroite.jpg");
+        map[10] = new Piece("dans l'armurerie", "Il y a des armes partout ! Et personne ne les surveille...", "Armurerie.jpg");
+        map[11] = new Piece("dans la cuisine", "Il semblerait que quelque-chose se cache derrière ce comptoir...", "Cuisine.jpg");
+        map[12] = new Piece("devant la chambre de la Princesse", "Cette entrée est bloquée", "EntreeChambrePrincesse.jpg");
+        map[13] = new Piece("dans la galerie", "", "Galerie.jpg");
+        map[14] = new Piece("devant la tour de gauche", "Cette entrée est bloquée", "EntreeTourGauche.jpg");
+        map[15] = new Piece("dans la salle à manger", "Super, un coffre !", "SalleAManger.jpg");
+
+        // tour 1G
+        map[16] = new Piece("dans la salle des gardes", "Les gardes ont l'air féroces, on dirait qu'ils bloquent l'accès Nord", "SalleDesGardes.jpg");
+        map[17] = new Piece("dans la salle du Boss", "Le monstre du château se dresse devant-vous" + "\n" + "Qu'allez-vous faire... Fuir ou combattre ?", "SalleDuBoss.jpg");
+
+        // tour 1D
+        map[18] = new Piece("dans la chambre de la Princesse", "Ce qui semblait être un vieux grenier à l'air de faire office de chambre à coucher", "ChambrePrincesse.jpg");
+
+        // étage -2
+        map[19] = new Piece("dans les catacombes", "Le mur est en piteux état, on dirait que quelqu'un a écrit dessus", "Catacombes.jpg");
+        map[20] = new Piece("dans le labyrinthe", "Il fait tout noir ! Et le chemin est très étroit" + "\n" + "Il ne faudrait pas tomber dans le vide", "Labyrinthe.jpg");
+        map[21] = new Piece("à l'escalier", "Deux directions semblent se distinguer... Nord ou Sud ?", "EscalierCatacombes.jpg");
+        map[22] = new Piece("dans la salle des pots", "On doit forcément trouver des ressources parmi tous ces pots...", "SalleDesPots.jpg");
+
+        // étage -3
+        map[23] = new Piece("dans la grotte", "Il y a trois plaques de pression" + "\n" + "Si on les regarde de gauche à droite, elles sont de plus en plus épaisses" + "\n" + "Essayez-donc de poser des objets de plus en plus lourds dans ce même ordre", "Grotte.jpg");
 
         //ajout des sorties
         // étage - 1
-        pieces[0].ajouteSortie(Sortie.EST, pieces[1]);
-        pieces[0].ajouteSortie(Sortie.NORD, pieces[2]);
-        pieces[0].ajouteSortie(Sortie.OUEST, pieces[3]);
-        pieces[1].ajouteSortie(Sortie.OUEST, pieces[0]);
-        //to do : la version de la pièce sans rocher qui débloque la sortir descendre
-        //zones[1].ajouteSortie(Sortie.DESCENDRE, zones[?]);
-        pieces[2].ajouteSortie(Sortie.MONTER, pieces[5]);
-        pieces[2].ajouteSortie(Sortie.SUD, pieces[0]);
-        pieces[3].ajouteSortie(Sortie.EST, pieces[0]);
-        pieces[3].ajouteSortie(Sortie.SUD, pieces[4]);
-        pieces[4].ajouteSortie(Sortie.OUEST, pieces[3]);
+        map[0].ajouteSortie(Sortie.EST, map[1]);
+        map[0].ajouteSortie(Sortie.NORD, map[2]);
+        map[0].ajouteSortie(Sortie.OUEST, map[3]);
+        map[1].ajouteSortie(Sortie.OUEST, map[0]);
+        map[2].ajouteSortie(Sortie.SUD, map[0]);
+        map[3].ajouteSortie(Sortie.EST, map[0]);
+        map[3].ajouteSortie(Sortie.SUD, map[4]);
+        map[4].ajouteSortie(Sortie.OUEST, map[3]);
 
         //rdc
-        pieces[5].ajouteSortie(Sortie.DESCENDRE, pieces[2]);
-        pieces[5].ajouteSortie(Sortie.EST, pieces[6]);
-        pieces[5].ajouteSortie(Sortie.NORD, pieces[7]);
+        map[5].ajouteSortie(Sortie.DESCENDRE, map[2]);
+        map[5].ajouteSortie(Sortie.EST, map[6]);
+        map[5].ajouteSortie(Sortie.NORD, map[7]);
 
-        pieces[6].ajouteSortie(Sortie.OUEST, pieces[5]);
-        pieces[6].ajouteSortie(Sortie.NORD, pieces[8]);
-        pieces[6].ajouteSortie(Sortie.EST, pieces[9]);
+        map[6].ajouteSortie(Sortie.OUEST, map[5]);
+        map[6].ajouteSortie(Sortie.NORD, map[8]);
+        map[6].ajouteSortie(Sortie.EST, map[9]);
 
-        pieces[7].ajouteSortie(Sortie.SUD, pieces[5]);
-        pieces[7].ajouteSortie(Sortie.NORD, pieces[15]);
+        map[7].ajouteSortie(Sortie.SUD, map[5]);
+        map[7].ajouteSortie(Sortie.NORD, map[15]);
 
-        pieces[8].ajouteSortie(Sortie.SUD, pieces[6]);
+        map[8].ajouteSortie(Sortie.SUD, map[6]);
 
-        //zones[9].ajouteSortie(Sortie.DESCENDRE, zones[?]);
-        pieces[9].ajouteSortie(Sortie.OUEST, pieces[6]);
-        pieces[9].ajouteSortie(Sortie.NORD, pieces[10]);
+        map[9].ajouteSortie(Sortie.OUEST, map[6]);
+        map[9].ajouteSortie(Sortie.NORD, map[10]);
 
-        pieces[10].ajouteSortie(Sortie.SUD, pieces[9]);
-        pieces[10].ajouteSortie(Sortie.NORD, pieces[11]);
+        map[10].ajouteSortie(Sortie.SUD, map[9]);
+        map[10].ajouteSortie(Sortie.NORD, map[11]);
 
-        //to do la liaison 15 11
-        //zones[11].ajouteSortie(Sortie., zones[15]);
-        pieces[11].ajouteSortie(Sortie.SUD, pieces[10]);
-        pieces[11].ajouteSortie(Sortie.NORD, pieces[12]);
+        map[11].ajouteSortie(Sortie.SUD, map[10]);
+        map[11].ajouteSortie(Sortie.NORD, map[12]);
 
-        pieces[12].ajouteSortie(Sortie.SUD, pieces[11]);
-        pieces[12].ajouteSortie(Sortie.OUEST, pieces[13]);
-        //zones[12].ajouteSortie(Sortie.MONTER, zones[?]);
+        map[12].ajouteSortie(Sortie.SUD, map[11]);
+        map[12].ajouteSortie(Sortie.OUEST, map[13]);
+        map[12].ajouteSortie(Sortie.MONTER, map[18]);
 
-        pieces[13].ajouteSortie(Sortie.EST, pieces[12]);
-        pieces[13].ajouteSortie(Sortie.OUEST, pieces[14]);
+        map[13].ajouteSortie(Sortie.EST, map[12]);
+        map[13].ajouteSortie(Sortie.OUEST, map[14]);
 
-        pieces[14].ajouteSortie(Sortie.SUD, pieces[15]);
-        pieces[14].ajouteSortie(Sortie.EST, pieces[13]);
-        //zones[14].ajouteSortie(Sortie.MONTER, zones[,]);
+        map[14].ajouteSortie(Sortie.SUD, map[15]);
+        map[14].ajouteSortie(Sortie.EST, map[13]);
+        map[14].ajouteSortie(Sortie.MONTER,map[16]);
 
-        pieces[15].ajouteSortie(Sortie.SUD, pieces[7]);
-        pieces[15].ajouteSortie(Sortie.NORD, pieces[14]);
-        //to do pareil que la cusine
-        //zones[14].ajouteSortie(Sortie., zones[11]);
+        map[15].ajouteSortie(Sortie.SUD, map[7]);
+        map[15].ajouteSortie(Sortie.NORD, map[14]);
+
+        //tour 1G
+        map[16].ajouteSortie(Sortie.SUD, map[14]);
+        map[16].ajouteSortie(Sortie.NORD, map[17]);
+
+        map[17].ajouteSortie(Sortie.SUD, map[16]);
+
+        //tour 1D
+
+        map[18].ajouteSortie(Sortie.DESCENDRE,map[12]);
+
+        // étage -1
+
+        map[19].ajouteSortie(Sortie.MONTER, map[1]);
+        map[19].ajouteSortie(Sortie.NORD, map[20]);
+
+        map[20].ajouteSortie(Sortie.SUD, map[19]);
+        map[20].ajouteSortie(Sortie.OUEST, map[21]);
+
+        map[21].ajouteSortie(Sortie.MONTER, map[9]);
+        map[21].ajouteSortie(Sortie.SUD, map[22]);
+
+        map[22].ajouteSortie(Sortie.NORD, map[21]);
+        map[22].ajouteSortie(Sortie.DESCENDRE, map[23]);
+
+        // étage -2
+
+        map[23].ajouteSortie(Sortie.MONTER, map[22]);
 
         //ajout des personnages
 
@@ -131,19 +165,17 @@ public class Jeu {
         Boss boss = new Boss();
         */
 
-        pieces[1].ajouterPNJ(prisonnier);
-        pieces[6].ajouterPNJ(cuisinier);
-        pieces[14].ajouterPNJ(servante);
+        map[1].ajouterPNJ(prisonnier);
+        map[6].ajouterPNJ(cuisinier);
+        map[14].ajouterPNJ(servante);
 
         //ajout des objets
 
-        Item baton = new Item("baton", "sert à construire un objet");
-        Item bata = new Item("bata", "blabla");
+        Item baton = new Item("Baton", "sert à construire un objet");
 
-        pieces[3].ajouterItem(baton);
-        pieces[3].ajouterItem(bata);
+        map[3].ajouterItem(baton);
 
-        this.pieceCourante = pieces[0];
+        this.pieceCourante = map[19];
     }
 
     private void afficherLocalisation() {
@@ -218,12 +250,21 @@ public class Jeu {
                     case "CRAFTER":
                         crafter();
                         break;
+                    case "ECL":
+                    case "ECLAIRER":
+                        eclairer();
+                        break;
+                    case "CA":
+                    case "CASSER":
+                        casser();
+                        break;
                     default:
                         gui.afficher("Commande inconnue");
                         break;
                 }
                 break;
             case 1:
+                gui.afficher("> " + commandeLue + "\n");
                 switch (commandeLue.toUpperCase()) {
                     case "JAU":
                     case "JAUNE":
@@ -297,7 +338,6 @@ public class Jeu {
         this.etatCommande = 0;
     }
 
-
     private void fouiller() {
         if (pieceCourante.getListeItem().isEmpty()) {
             gui.afficher("Il n'y a pas d'item à récupérer dans cette pièce");
@@ -306,62 +346,14 @@ public class Jeu {
                 inventaire.ajouterInventaire(item);
                 gui.afficher(item.getNom() + " a été ajouté à l'inventaire");
                 pieceCourante.retirerItem(item);
+                if (pieceCourante.getListeItem().isEmpty()) //Merci à l'illustre Philippe Ramadour Andreoletti pour les traveux
+                    break;
             }
         }
     }
 
     private void consulterInventaire() {
         gui.afficher(inventaire.afficherInventaire());
-    }
-
-    private void crafter() {
-        boolean batonPresent = false;
-        boolean teteDePiochePresent = false;
-        boolean charbonPresent = false;
-
-
-        if (pieceCourante.getNomPiece() == "dans le couloir") {
-            for (Item item : inventaire.getListeInventaire()) {
-                if (item.getNom() == "baton") {
-                    batonPresent = true;
-                }
-                if (item.getNom() == "Tête de pioche") {
-                    teteDePiochePresent = true;
-                }
-                if (item.getNom() == "charbon") {
-                    charbonPresent = true;
-                }
-            }
-
-            if (batonPresent && teteDePiochePresent) {
-                for (Item item : inventaire.getListeInventaire()) {
-                    if (item.getNom() == "Tête de pioche") {
-                        inventaire.retirerInventaire(item);
-                    }
-                    if (item.getNom() == "baton") {
-                        inventaire.retirerInventaire(item);
-                    }
-
-                }
-                inventaire.ajouterInventaire(new Item("pioche", "sert à casser les rochers"));
-                gui.afficher("La pioche a été ajouté à l'inventaire");
-            } else if (batonPresent && charbonPresent) {
-                for (Item item : inventaire.getListeInventaire()) {
-                    if (item.getNom() == "baton") {
-                        inventaire.retirerInventaire(item);
-                    }
-                    if (item.getNom() == "charbon") {
-                        inventaire.retirerInventaire(item);
-                    }
-                }
-                inventaire.ajouterInventaire(new Item("torche", "sert à éclairer l'escalier"));
-                gui.afficher("La torche a été ajouté à l'inventaire");
-            } else {
-                gui.afficher("Vous ne pouvez pas crafter d'objet, car il vous manque des objets");
-            }
-        } else {
-            gui.afficher("Il n'y a pas d'établi dans cette pièce");
-        }
     }
 
     private void ouvrirCoffre() {
@@ -399,8 +391,69 @@ public class Jeu {
         } else {
             gui.afficher("Il n'y a rien à ouvrir ici");
         }
-
     }
+
+    private void crafter() {
+
+        if (pieceCourante.getNomPiece() == "dans le couloir") {
+            Item batonPresent = inventaire.getItemByName("Baton");
+            Item teteDePiochePresent = inventaire.getItemByName("Tête de pioche");
+            Item charbonPresent = inventaire.getItemByName("Charbon");
+
+            if (batonPresent != null && teteDePiochePresent != null) {
+                inventaire.retirerInventaire(batonPresent);
+                inventaire.retirerInventaire(teteDePiochePresent);
+                inventaire.ajouterInventaire(new Item("Pioche", "sert à casser les rochers"));
+                gui.afficher("La pioche a été ajouté à l'inventaire");
+
+            } else if (batonPresent != null && charbonPresent != null) {
+                inventaire.retirerInventaire(batonPresent);
+                inventaire.retirerInventaire(charbonPresent);
+                inventaire.ajouterInventaire(new Item("Torche", "sert à éclairer l'escalier"));
+                gui.afficher("La torche a été ajouté à l'inventaire");
+            } else {
+                gui.afficher("Vous ne pouvez pas crafter d'objet, car il vous manque des objets");
+            }
+        } else {
+            gui.afficher("Il n'y a pas d'établi dans cette pièce");
+        }
+    }
+
+    private void eclairer() {
+        if (pieceCourante.getNomPiece() == ("à l'escalier Nord")) {
+            if (inventaire.getListeInventaire().isEmpty()) {
+                gui.afficher("Vous ne possédez pas d'outil pour réaliser cette action\n");
+            } else {
+                Item torchePresent = inventaire.getItemByName("Torche");
+                if (torchePresent != null) {
+                    // gui.afficheImage(pieceCourante.nomImage("à compléter"));
+                    pieceCourante.ajouteSortie(Sortie.MONTER, map[5]);
+                    gui.afficher("Vous avez débloqué la sortie monter");
+                } else gui.afficher("Vous ne possédez pas la ressource pour réaliser cette action\n");
+            }
+        } else {
+            gui.afficher("Vous ne pouvez pas utiliser cette commande ici");
+        }
+    }
+
+    private void casser() {
+        if (pieceCourante.getNomPiece() == ("dans la prison")) {
+            if (inventaire.getListeInventaire().isEmpty()) {
+                gui.afficher("Vous ne possédez pas d'outil pour réaliser cette action\n");
+            } else {
+                Item piochePresent = inventaire.getItemByName("Pioche");
+                if (piochePresent != null) {
+                    //changer la map : sans cailloux
+                    pieceCourante.ajouteSortie(Sortie.DESCENDRE, map[19]);
+                    gui.afficher("Vous avez débloqué la sortie descendre");
+                } else gui.afficher("Vous ne possédez pas la ressource pour réaliser cette action\n");
+            }
+            //inventaire non vide mais pas de Pioche
+        } else {
+            gui.afficher("Vous ne pouvez pas utiliser cette commande ici");
+        }
+    }
+
     private void terminer() {
         gui.afficher("Au revoir...");
         gui.enable(false);
