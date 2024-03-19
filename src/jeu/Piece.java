@@ -94,12 +94,11 @@ public class Piece {
         return listeItem;
     }
 
-    public Item getPotByNum(int num) {
-        Item var = null;
+    public Pot getPotByNum(int num) {
+        Pot var = null;
         for (Item item : this.listeItem) {
             if (((Pot) item).getNum() == num) {
-                var = item;
-
+                var = ((Pot) item);
             }
         }
         return var;
