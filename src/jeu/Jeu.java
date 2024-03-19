@@ -38,7 +38,7 @@ public class Jeu {
 
     private void creerCarte() {
 
-        this.map = new Piece[24];
+        this.map = new Piece[25];
 
         //étage -1
         map[0] = new Piece("au centre du donjon", "C'est l'endroit où vous vous êtes réveillé, sans souvenirs", "Donjon.jpg"); //centre
@@ -58,7 +58,8 @@ public class Jeu {
         map[12] = new Piece("devant la chambre de la Princesse", "Cette entrée est bloquée", "EntreeChambrePrincesse.jpg");
         map[13] = new Piece("dans la galerie", "", "Galerie.jpg");
         map[14] = new Piece("devant la tour de gauche", "Cette entrée est bloquée", "EntreeTourGauche.jpg");
-        map[15] = new Piece("dans la salle à manger", "Super, un coffre !", "SalleAManger.jpg");
+        map[15] = new Piece("dans la salle à manger", "La cheminée est étrangement propre", "SalleAManger.jpg");
+        map[24] = new Piece("dans la cuisine, derrière le comptoir", "Vous êtes face à un coffre", "");
 
         // tour 1G
         map[16] = new Piece("dans la salle des gardes", "Les gardes ont l'air féroces, on dirait qu'ils bloquent l'accès Nord", "SalleDesGardes.jpg");
@@ -112,14 +113,14 @@ public class Jeu {
 
         map[12].ajouteSortie(Sortie.SUD, map[11]);
         map[12].ajouteSortie(Sortie.OUEST, map[13]);
-        map[12].ajouteSortie(Sortie.MONTER, map[18]);
+
 
         map[13].ajouteSortie(Sortie.EST, map[12]);
         map[13].ajouteSortie(Sortie.OUEST, map[14]);
 
         map[14].ajouteSortie(Sortie.SUD, map[15]);
         map[14].ajouteSortie(Sortie.EST, map[13]);
-        map[14].ajouteSortie(Sortie.MONTER,map[16]);
+        map[14].ajouteSortie(Sortie.MONTER, map[16]);
 
         map[15].ajouteSortie(Sortie.SUD, map[7]);
         map[15].ajouteSortie(Sortie.NORD, map[14]);
@@ -132,7 +133,7 @@ public class Jeu {
 
         //tour 1D
 
-        map[18].ajouteSortie(Sortie.DESCENDRE,map[12]);
+        map[18].ajouteSortie(Sortie.DESCENDRE, map[12]);
 
         // étage -1
 
@@ -172,10 +173,29 @@ public class Jeu {
         //ajout des objets
 
         Item baton = new Item("Baton", "sert à construire un objet");
+        Item epee = new Item("Epée", "sert à vous défendre");
+        Item lingot = new Item("Lingot", "est très lourd");
+        Item peluche = new Item("Peluche", "est très léger");
+
+
+        Pot.initialiserPot();
+
 
         map[3].ajouterItem(baton);
 
-        this.pieceCourante = map[19];
+        map[10].ajouterItem(epee);
+
+        map[23].ajouterItem(lingot);
+        map[23].ajouterItem(peluche);
+
+//        map[22].ajouterItem(pot1);
+//        map[22].ajouterItem(pot2);
+//        map[22].ajouterItem(pot3);
+//        map[22].ajouterItem(pot4);
+//        map[22].ajouterItem(pot5);
+//        map[22].ajouterItem(pot6);
+
+        this.pieceCourante = map[22];
     }
 
     private void afficherLocalisation() {
@@ -276,8 +296,34 @@ public class Jeu {
                         gui.afficher("Commande invalide");
                         break;
                 }
+            case 2:
+                gui.afficher("> " + commandeLue + "\n");
+                switch (commandeLue.toUpperCase()) {
+                    case "F1":
+                        fouillerPot(1);
+                        break;
+                    case "F2":
+                        fouillerPot(2);
+                        break;
+                    case "F3":
+                        fouillerPot(3);
+                        break;
+                    case "F4":
+                        fouillerPot(4);
+                        break;
+                    case "F5":
+                        fouillerPot(5);
+                        break;
+                    case "F6":
+                        fouillerPot(6);
+                        break;
+                    default:
+                        gui.afficher("Commande invalide");
+                        break;
+                }
                 break;
         }
+
     }
 
     private void afficherAide() {
@@ -339,7 +385,10 @@ public class Jeu {
     }
 
     private void fouiller() {
-        if (pieceCourante.getListeItem().isEmpty()) {
+        if (pieceCourante.getNomPiece() == "dans la salle des pots") {
+            gui.afficher("Quel pot voulez fouiller : F1 F2 F3 F4 F5 F6");
+            this.etatCommande = 2;
+        } else if (pieceCourante.getListeItem().isEmpty()) {
             gui.afficher("Il n'y a pas d'item à récupérer dans cette pièce");
         } else {
             for (Item item : pieceCourante.getListeItem()) {
@@ -414,6 +463,20 @@ public class Jeu {
             } else {
                 gui.afficher("Vous ne pouvez pas crafter d'objet, car il vous manque des objets");
             }
+        } else if (pieceCourante.getNomPiece() == "dans la salle des pots") {
+            Item baton1Present = inventaire.getItemByName("Baton4");
+            Item baton2Present = inventaire.getItemByName("Baton5");
+            Item baton3Present = inventaire.getItemByName("Baton6");
+
+            if (baton1Present != null && baton2Present != null && baton3Present != null) {
+                inventaire.retirerInventaire(baton1Present);
+                inventaire.retirerInventaire(baton2Present);
+                inventaire.retirerInventaire(baton3Present);
+                inventaire.ajouterInventaire(new Item("Echelle", "sert à descendre vers la grotte"));
+                gui.afficher("L'échelle a été ajouté à l'inventaire");
+            } else {
+                gui.afficher("Vous ne pouvez pas crafter d'objet, car il vous manque des objets");
+            }
         } else {
             gui.afficher("Il n'y a pas d'établi dans cette pièce");
         }
@@ -427,6 +490,7 @@ public class Jeu {
                 Item torchePresent = inventaire.getItemByName("Torche");
                 if (torchePresent != null) {
                     // gui.afficheImage(pieceCourante.nomImage("à compléter"));
+                    pieceCourante.setNomImage("EscalierEclaire.jpg");
                     pieceCourante.ajouteSortie(Sortie.MONTER, map[5]);
                     gui.afficher("Vous avez débloqué la sortie monter");
                 } else gui.afficher("Vous ne possédez pas la ressource pour réaliser cette action\n");
@@ -443,7 +507,8 @@ public class Jeu {
             } else {
                 Item piochePresent = inventaire.getItemByName("Pioche");
                 if (piochePresent != null) {
-                    //changer la map : sans cailloux
+                    pieceCourante.setNomImage("PrisonCassee.jpg");
+
                     pieceCourante.ajouteSortie(Sortie.DESCENDRE, map[19]);
                     gui.afficher("Vous avez débloqué la sortie descendre");
                 } else gui.afficher("Vous ne possédez pas la ressource pour réaliser cette action\n");
@@ -454,8 +519,63 @@ public class Jeu {
         }
     }
 
+    private void fouillerPot(int num) {
+        Pot temp = (Pot) pieceCourante.getPotByNum(num);
+        if (temp.getEtat() == 1) {
+            inventaire.ajouterInventaire(new Item("Baton" + num, "Sert à crafter une échelle"));
+            gui.afficher("Un baton a été ajouté à l'inventaire");
+            temp.setEtat(0);
+        } else {
+            gui.afficher("Le pot " + num + "est vide");
+        }
+        this.etatCommande = 0;
+    }
+
+    // private void poser(){
+
+    //}
+
+    private void inspecter() {
+        if (pieceCourante.getNomPiece() == ("dans la salle à manger")) {
+            // débloquer la sortie du passage secret vers cuisine
+            map[15].ajouteSortie(Sortie.DESCENDRE, map[11]);
+            // changer l'affichage de la pièce
+            // repaint : on arrive dans la cuisine et le perso est derrière le comptoir
+            pieceCourante.setNomPiece("dans la cuisine, de l'autre côté du comptoir");
+            pieceCourante.setDescription("Super, un coffre !");
+        }
+    }
+
+    private void déverrouiller() {
+        if (pieceCourante.getNomPiece() == ("devant la chambre de la Princesse")) {
+            if (inventaire.getListeInventaire().isEmpty()) {
+                gui.afficher("Vous ne possédez pas la clé pour réaliser cette action\n");
+            } else {
+                Item cleRDC = inventaire.getItemByName("Clé de la chambre");
+                if (cleRDC != null) {
+                    pieceCourante.ajouteSortie(Sortie.MONTER, map[18]);
+                    gui.afficher("Vous avez débloqué la sortie monter");
+                    // afficher la pièce sans la grille
+                } else gui.afficher("Vous ne possédez pas la ressource pour réaliser cette action\n");
+            }
+        }
+        //si pas dans la pièce courante :
+        else gui.afficher("Vous ne pouvez pas utiliser cette commande ici\n");
+    }
+
+
+    private void sAsseoir() {
+        if (pieceCourante.getNomPiece() == ("dans la salle du trône")) {
+            //game over
+            gui.afficher("GAME OVER    --- Vous avez perdu la partie\n");
+            //gérer le GUI et les fichiers
+        } else gui.afficher("Vous ne pouvez pas utiliser cette commande ici\n");
+    }
+
     private void terminer() {
         gui.afficher("Au revoir...");
         gui.enable(false);
     }
+
+
 } //fin de la classe

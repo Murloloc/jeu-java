@@ -86,4 +86,6 @@ public class GUI implements ActionListener
         jeu.traiterCommande( commandeLue);
     }
 
+
+
 }//fin de la classe

@@ -1,6 +1,7 @@
 package jeu;
 
 import jeu.objets.Item;
+import jeu.objets.Pot;
 import jeu.personnages.PNJ;
 
 import java.util.ArrayList;
@@ -28,6 +29,9 @@ public class Piece {
         return nomImage;
     }
 
+    public void setNomImage(String nomImage) {
+        this.nomImage = nomImage;
+    }
 
     public String getNomPiece() {
         return nomPiece;
@@ -36,6 +40,7 @@ public class Piece {
     public void setNomPiece(String nomPiece) {
         this.nomPiece = nomPiece;
     }
+
 
     public void setDescription(String description) {
         this.description = description;
@@ -53,7 +58,7 @@ public class Piece {
         this.sorties.put(sortie.name(), pieceVoisine);
     }
 
-    public void supprimerSortie(Sortie sortie){
+    public void supprimerSortie(Sortie sortie) {
         this.sorties.remove(sortie.name());
     }
 
@@ -87,6 +92,17 @@ public class Piece {
 
     public ArrayList<Item> getListeItem() {
         return listeItem;
+    }
+
+    public Item getPotByNum(int num) {
+        Item var = null;
+        for (Item item : this.listeItem) {
+            if (((Pot) item).getNum() == num) {
+                var = item;
+
+            }
+        }
+        return var;
     }
 
 }
