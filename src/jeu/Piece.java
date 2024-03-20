@@ -1,6 +1,7 @@
 package jeu;
 
 import jeu.objets.Item;
+import jeu.objets.Plaque;
 import jeu.objets.Pot;
 import jeu.personnages.PNJ;
 
@@ -99,6 +100,16 @@ public class Piece {
         for (Item item : this.listeItem) {
             if (((Pot) item).getNum() == num) {
                 var = ((Pot) item);
+            }
+        }
+        return var;
+    }
+
+    public Plaque getPlaqueByNum(int num) {
+        Plaque var = null;
+        for (Item item : this.listeItem) {
+            if (((Plaque) item).getNum() == num) {
+                var = ((Plaque) item);
             }
         }
         return var;

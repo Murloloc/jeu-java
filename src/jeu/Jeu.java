@@ -368,6 +368,7 @@ public class Jeu {
     private void fouillerPot(int num) {
         Pot temp = map.getPieceCourante().getPotByNum(num);
         if (temp.getEtat() == 1) {
+
             inventaire.ajouterInventaire(new Item("Baton" + num, "Sert à crafter une échelle"));
             gui.afficher("Un baton a été ajouté à l'inventaire");
             temp.setEtat(0);
