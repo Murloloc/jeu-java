@@ -1,6 +1,7 @@
 package jeu;
 
 import jeu.objets.Item;
+import jeu.objets.Plaque;
 import jeu.objets.Pot;
 import jeu.personnages.Cuisinier;
 import jeu.personnages.Prisonnier;
@@ -160,6 +161,10 @@ public class Map {
         Item epee = new Item("Epée", "sert à vous défendre");
         Item lingot = new Item("Lingot", "est très lourd");
         Item peluche = new Item("Peluche", "est très léger");
+
+        Plaque plaque1 = new Plaque(1,0);
+        Plaque plaque2 = new Plaque(2,0);
+        Plaque plaque3 = new Plaque(3,0);
 
 
         initialiserPot();

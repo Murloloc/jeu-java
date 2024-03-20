@@ -107,6 +107,10 @@ public class Jeu {
                     case "CASSER":
                         casser();
                         break;
+                    case "PO":
+                    case "POSER":
+                        poser();
+                        break;
                     default:
                         gui.afficher("Commande inconnue");
                         break;
@@ -152,7 +156,23 @@ public class Jeu {
                         break;
                 }
                 break;
+            case 3:
+                gui.afficher("> " + commandeLue + "\n");
+                if (commandeLue.equalsIgnoreCase("1") || commandeLue.equalsIgnoreCase("2") || commandeLue.equalsIgnoreCase("3")) {
+                    boolean etatPlaque = poserPlaque(Integer.parseInt(commandeLue));
+                    if (etatPlaque) {
+                        gui.afficher("\nIl y a deja un objet sur la plaque");
+                    } else {
+                        gui.afficher("\nQuel objet voulez vous poser sur cette plaque");
+                        String itemLue = gui.lireCommande();
+                        poserObjetSurPlaque(inventaire.getItemByName(itemLue), Integer.parseInt(commandeLue));
+                    }
+                } else {
+                    gui.afficher("\nNumero de plaque incorect");
+                }
+                break;
         }
+
     }
 
     private void afficherAide() {
@@ -357,9 +377,27 @@ public class Jeu {
         this.etatCommande = 0;
     }
 
-    // private void poser(){
+    private void poser() {
+        if (map.getPieceCourante().getNomPiece() == "dans la grotte") {
+            gui.afficher("Sur quel plaque voulez vous poser un item ? Tapez 1 2 3");
+            this.etatCommande = 3;
+        } else {
+            gui.afficher("\nVous ne pouvez pas poser d'objet dans cette pièce");
+        }
+    }
 
-    //}
+    private boolean poserPlaque(int num) {
+        return map.getPieceCourante().getPlaqueByNum(num).getEtat() == 1;
+    }
+
+    private void poserObjetSurPlaque(Item item, int num) {
+        if (item == null) {
+            gui.afficher("Vous n'avez pas cet item dans l'inventaire");
+        } else {
+
+        }
+
+    }
 
 //    private void inspecter() {
 //        if (map.getPieceCourante().getNomPiece() == ("dans la salle à manger")) {
