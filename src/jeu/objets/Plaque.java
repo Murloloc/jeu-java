@@ -1,6 +1,6 @@
 package jeu.objets;
 
-public class Plaque extends Item{
+public class Plaque extends Item {
     private int num;
     private int etat;
 

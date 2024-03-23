@@ -108,13 +108,16 @@ public class Piece {
     public Plaque getPlaqueByNum(int num) {
         Plaque var = null;
         for (Item item : this.listeItem) {
-            if (((Plaque) item).getNum() == num) {
-                var = ((Plaque) item);
+            if (item instanceof Plaque) {
+                if (((Plaque) item).getNum() == num) {
+                    var = ((Plaque) item);
+                }
             }
+
         }
         return var;
-    }
 
+    }
 }
 
 

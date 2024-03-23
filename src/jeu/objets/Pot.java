@@ -1,10 +1,5 @@
 package jeu.objets;
 
-import java.util.ArrayList;
-import java.util.Random;
-
-import jeu.Map;
-
 public class Pot extends Item {
 
     private int num;

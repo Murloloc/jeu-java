@@ -169,6 +169,10 @@ public class Map {
 
         initialiserPot();
 
+        map[23].ajouterItem(plaque1);
+        map[23].ajouterItem(plaque2);
+        map[23].ajouterItem(plaque3);
+
 
         map[3].ajouterItem(baton);
 
