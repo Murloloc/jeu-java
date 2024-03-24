@@ -3,14 +3,17 @@ package jeu;
 import jeu.objets.*;
 import jeu.personnages.*;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Jeu {
     private GUI gui;
     private int etatCommande;
+    private int var;
     Inventaire inventaire = new Inventaire();
     Joueur joueur = new Joueur("Tyrion", inventaire.getListeInventaire());
     Map map = new Map();
+
 
     public Jeu() {
         map.creerCarte();
@@ -111,8 +114,15 @@ public class Jeu {
                     case "POSER":
                         poser();
                         break;
+                    case "VERIF":
+                    case "VERIFIER":
+                        verifierPlaques();
+                        break;
+                    case "DEBUG":
+                        debug();
+                        break;
                     default:
-                        gui.afficher("Commande inconnue");
+                        gui.afficher("Commande inconnue\n");
                         break;
                 }
                 break;
@@ -126,7 +136,7 @@ public class Jeu {
                         donnerCle(commandeLue.toUpperCase());
                         break;
                     default:
-                        gui.afficher("Commande invalide");
+                        gui.afficher("Commande invalide\n");
                         break;
                 }
                 break;
@@ -152,7 +162,7 @@ public class Jeu {
                         fouillerPot(6);
                         break;
                     default:
-                        gui.afficher("Commande invalide");
+                        gui.afficher("Commande invalide\n");
                         break;
                 }
                 break;
@@ -160,15 +170,28 @@ public class Jeu {
                 gui.afficher("> " + commandeLue + "\n");
                 if (commandeLue.equalsIgnoreCase("1") || commandeLue.equalsIgnoreCase("2") || commandeLue.equalsIgnoreCase("3")) {
                     boolean etatPlaque = poserPlaque(Integer.parseInt(commandeLue));
+                    this.var = Integer.parseInt(commandeLue);
                     if (etatPlaque) {
-                        gui.afficher("\nIl y a deja un objet sur la plaque");
+                        gui.afficher("Il y a deja un objet sur la plaque\nRecommencez\n");
+                        this.etatCommande = 0;
                     } else {
-                        gui.afficher("\nQuel objet voulez vous poser sur cette plaque");
-                        String itemLue = gui.lireCommande();
-                        poserObjetSurPlaque(inventaire.getItemByName(itemLue), Integer.parseInt(commandeLue));
+                        gui.afficher("Quel objet voulez-vous poser sur cette plaque ?\nVeuillez écrire le nom complet de l'objet\n");
+                        this.etatCommande = 4;
                     }
                 } else {
-                    gui.afficher("\nNumero de plaque incorect");
+                    gui.afficher("Numero de plaque incorect\nRecommencez\n");
+                    this.etatCommande = 0;
+                }
+                break;
+            case 4:
+                switch (commandeLue.toUpperCase()) {
+                    case "PELUCHE", "PIOCHE", "LINGOT":
+                        poserObjetSurPlaque(var, commandeLue.toUpperCase());
+                        break;
+                    default:
+                        gui.afficher("Item invalide\nRecommencez\n");
+                        this.etatCommande = 0;
+                        break;
                 }
                 break;
         }
@@ -185,7 +208,7 @@ public class Jeu {
     private void allerEn(String direction) {
         Piece nouvelle = map.getPieceCourante().obtientSortie(direction);
         if (nouvelle == null) {
-            gui.afficher("Pas de sortie " + direction);
+            gui.afficher("\nPas de sortie " + direction);
             gui.afficher();
         } else {
             map.setPieceCourante(nouvelle);
@@ -200,19 +223,19 @@ public class Jeu {
             for (PNJ pnj : map.getPieceCourante().getListePNJ()) {
                 gui.afficher(pnj.dialogue());
                 if (pnj instanceof Prisonnier && pnj.getEtat() == 0) {
-                    gui.afficher("JAU pour la clé Jaune\nBLE pour la clé Bleue");
+                    gui.afficher("JAU pour la clé Jaune\nBLE pour la clé Bleue\n");
                     etatCommande = 1;
                 }
             }
         } else {
-            gui.afficher("Il n'y a personne avec qui parler");
+            gui.afficher("\nIl n'y a personne avec qui parler");
         }
     }
 
     private void donnerCle(String commandeLue) {
         if (commandeLue.equals("JAU") || commandeLue.equals("JAUNE")) {
             inventaire.ajouterInventaire(new Item("Clé Jaune", "Sert à dévérouiller le coffre jaune"));
-            gui.afficher("La clé Jaune a été ajouté à l'inventaire");
+            gui.afficher("\nLa clé Jaune a été ajouté à l'inventaire");
             for (PNJ pnj : map.getPieceCourante().getListePNJ()) {
                 if (pnj.getEtat() == 0) {
                     gui.afficher(((Prisonnier) pnj).dialogueJaune());
@@ -221,7 +244,7 @@ public class Jeu {
             }
         } else {
             inventaire.ajouterInventaire(new Item("Clé Bleue", "Sert à dévérouiller le coffre bleu"));
-            gui.afficher("La clé Bleue a été ajouté à l'inventaire");
+            gui.afficher("\nLa clé Bleue a été ajouté à l'inventaire");
             for (PNJ pnj : map.getPieceCourante().getListePNJ()) {
                 if (pnj.getEtat() == 0) {
                     gui.afficher(((Prisonnier) pnj).dialogueBleu());
@@ -234,18 +257,21 @@ public class Jeu {
 
     private void fouiller() {
         if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle des pots")) {
-            gui.afficher("Quel pot voulez fouiller : F1 F2 F3 F4 F5 F6");
+            gui.afficher("\nQuel pot voulez fouiller : F1 F2 F3 F4 F5 F6");
             this.etatCommande = 2;
-        } else if (map.getPieceCourante().getListeItem().isEmpty()) {
-            gui.afficher("Il n'y a pas d'item à récupérer dans cette pièce");
+        } else if (map.getPieceCourante().estVideDObjet()) {
+            gui.afficher("\nIl n'y a pas d'item à récupérer dans cette pièce");
         } else {
+            Item stock = null;
             for (Item item : map.getPieceCourante().getListeItem()) {
-                inventaire.ajouterInventaire(item);
-                gui.afficher(item.getNom() + " a été ajouté à l'inventaire");
-                map.getPieceCourante().retirerItem(item);
-                if (map.getPieceCourante().getListeItem().isEmpty()) //Merci à l'illustre Philippe Ramadour Andreoletti pour les traveux
+                if (item.getClass() == Item.class) {
+                    inventaire.ajouterInventaire(item);
+                    gui.afficher("\n" + item.getNom() + " a été ajouté à l'inventaire");
+                    stock = item;
                     break;
+                }
             }
+            map.getPieceCourante().retirerItem(stock);
         }
     }
 
@@ -311,14 +337,18 @@ public class Jeu {
                 gui.afficher("Vous ne pouvez pas crafter d'objet, car il vous manque des objets");
             }
         } else if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle des pots")) {
-            Item baton1Present = inventaire.getItemByName("Baton4");
-            Item baton2Present = inventaire.getItemByName("Baton5");
-            Item baton3Present = inventaire.getItemByName("Baton6");
-
-            if (baton1Present != null && baton2Present != null && baton3Present != null) {
-                inventaire.retirerInventaire(baton1Present);
-                inventaire.retirerInventaire(baton2Present);
-                inventaire.retirerInventaire(baton3Present);
+            int cptBaton = 0;
+            ArrayList<Item> batons = new ArrayList<Item>();
+            for (Item item : inventaire.getListeInventaire()) {
+                if (item.getNom().startsWith("Baton")) {
+                    cptBaton++;
+                    batons.add(item);
+                }
+            }
+            if (cptBaton == 3) {
+                for (Item baton : batons) {
+                    inventaire.retirerInventaire(baton);
+                }
                 inventaire.ajouterInventaire(new Item("Echelle", "sert à descendre vers la grotte"));
                 gui.afficher("L'échelle a été ajouté à l'inventaire");
             } else {
@@ -357,33 +387,41 @@ public class Jeu {
                     map.getPieceCourante().setNomImage("PrisonCassee.jpg");
                     gui.afficheImage("PrisonCassee.jpg");
                     map.getPieceCourante().ajouteSortie(Sortie.DESCENDRE, map.getMap()[19]);
-                    gui.afficher("Vous avez débloqué la sortie descendre");
+                    gui.afficher("Vous avez débloqué la sortie descendre\n");
                 } else gui.afficher("Vous ne possédez pas d'outil pour réaliser cette action\n");
             }
         } else {
-            gui.afficher("Vous ne pouvez pas utiliser cette commande ici");
+            gui.afficher("Vous ne pouvez pas utiliser cette commande ici\n");
         }
     }
 
     private void fouillerPot(int num) {
         Pot temp = map.getPieceCourante().getPotByNum(num);
         if (temp.getEtat() == 1) {
-
             inventaire.ajouterInventaire(new Item("Baton" + num, "Sert à crafter une échelle"));
-            gui.afficher("Un baton a été ajouté à l'inventaire");
+            gui.afficher("Un baton a été ajouté à l'inventaire\n");
             temp.setEtat(0);
         } else {
-            gui.afficher("Le pot " + num + "est vide");
+            gui.afficher("Le pot " + num + "est vide\n");
         }
         this.etatCommande = 0;
     }
 
     private void poser() {
-        if (map.getPieceCourante().getNomPiece() == "dans la grotte") {
-            gui.afficher("Sur quel plaque voulez vous poser un item ? Tapez 1 2 3");
+        if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la grotte")) {
+            gui.afficher("Sur quel plaque voulez vous poser un item ? Tapez 1 2 3\n");
             this.etatCommande = 3;
+        } else if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle des pots")) {
+            Item echelle = inventaire.getItemByName("Echelle");
+            if (echelle != null) {
+                inventaire.retirerInventaire(echelle);
+                map.getPieceCourante().ajouteSortie(Sortie.DESCENDRE, map.getMap()[23]);
+                gui.afficher("\nVous avez posé l'échelle sur et pouvez maintenant descendre");
+            } else {
+                gui.afficher("\nVous n'avez pas d'objet vous permettant de descendre");
+            }
         } else {
-            gui.afficher("\nVous ne pouvez pas poser d'objet dans cette pièce");
+            gui.afficher("Vous ne pouvez pas poser d'objet dans cette pièce\n");
         }
     }
 
@@ -391,13 +429,33 @@ public class Jeu {
         return map.getPieceCourante().getPlaqueByNum(num).getEtat() == 1;
     }
 
-    private void poserObjetSurPlaque(Item item, int num) {
+    private void poserObjetSurPlaque(int num, String commandeLue) {
+        Item item = inventaire.getItemByName(commandeLue);
         if (item == null) {
-            gui.afficher("Vous n'avez pas cet item dans l'inventaire");
+            gui.afficher("Vous n'avez pas cet item dans l'inventaire\n");
         } else {
-
+            map.getPieceCourante().getPlaqueByNum(num).setItem(item);
+            map.getPieceCourante().getPlaqueByNum(num).setEtat(1);
+            inventaire.retirerInventaire(item);
+            gui.afficher("Vous avez posé " + item.getNom() + " sur la plaque " + num + "\n");
         }
+        this.etatCommande = 0;
+    }
 
+    private void verifierPlaques() {
+        Plaque plaque1 = map.getPieceCourante().getPlaqueByNum(1);
+        Plaque plaque2 = map.getPieceCourante().getPlaqueByNum(2);
+        Plaque plaque3 = map.getPieceCourante().getPlaqueByNum(3);
+        if (plaque1.getEtat() == 1 && plaque2.getEtat() == 1 && plaque3.getEtat() == 1) {
+            if (plaque1.getItem().getNom().equals("Peluche") && plaque2.getItem().getNom().equals("Pioche") && plaque3.getItem().getNom().equals("Lingot")) {
+                map.getPieceCourante().ajouteSortie(Sortie.EST, map.getMap()[25]);
+                gui.afficher("Vous avez débloqué la sortie descendre\n");
+            } else {
+                gui.afficher("Les objets posés ne sont pas dans le bon orde\n");
+            }
+        } else {
+            gui.afficher("Il vous manque des objets sur les plaques\n");
+        }
     }
 
 //    private void inspecter() {
@@ -440,6 +498,13 @@ public class Jeu {
     private void terminer() {
         gui.afficher("Au revoir...");
         gui.enable(false);
+    }
+
+    private void debug() {
+        if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la grotte")) {
+            Plaque plaque = map.getPieceCourante().getPlaqueByNum(1);
+            System.out.println(plaque.getNum());
+        }
     }
 
 

@@ -82,14 +82,12 @@ public class GUI implements ActionListener
 
     private void executerCommande() {
         jeu.traiterCommande( lireCommande());
+        entree.setText("");
     }
 
     public String lireCommande(){
-        String commandeLue = entree.getText();
-        entree.setText("");
-        return commandeLue;
+        return entree.getText();
     }
-
 
 
 }//fin de la classe

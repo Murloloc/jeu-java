@@ -7,6 +7,7 @@ import jeu.personnages.Cuisinier;
 import jeu.personnages.Prisonnier;
 import jeu.personnages.Servante;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Map {
@@ -17,10 +18,8 @@ public class Map {
 
 
     public Map(){
-        this.map = new Piece[25];
+        this.map = new Piece[30];
     }
-
-
 
     public void creerCarte() {
 
@@ -54,13 +53,19 @@ public class Map {
 
         // étage -2
         map[19] = new Piece("dans les catacombes", "Le mur est en piteux état, on dirait que quelqu'un a écrit dessus", "Catacombes.jpg");
-        map[20] = new Piece("dans le labyrinthe", "Il fait tout noir ! Et le chemin est très étroit" + "\n" + "Il ne faudrait pas tomber dans le vide", "Labyrinthe.jpg");
+        Labyrinthe labyrinthe = new Labyrinthe("dans le labyrinthe", "Il fait tout noir ! Et le chemin est très étroit" + "\n" + "Il ne faudrait pas tomber dans le vide", "Labyrinthe.jpg");
+        labyrinthe.genererLabyrinthe(5);
+        map[20] = labyrinthe;
+
         map[21] = new Piece("à l'escalier", "Deux directions semblent se distinguer... Nord ou Sud ?", "EscalierCatacombes.jpg");
         map[22] = new Piece("dans la salle des pots", "On doit forcément trouver des ressources parmi tous ces pots...", "SalleDesPots.jpg");
 
         // étage -3
-        map[23] = new Piece("dans la grotte", "Il y a trois plaques de pression" + "\n" + "Si on les regarde de gauche à droite, elles sont de plus en plus épaisses" + "\n" + "Essayez-donc de poser des objets de plus en plus lourds dans ce même ordre", "Grotte.jpg");
+        map[23] = new Piece("dans la grotte", "Il y a trois plaques de pression" + "\n" + "Si on les regarde de gauche à droite, elles sont de plus en plus épaisses" + "\n" + "Essayez-donc de poser des objets de plus en plus lourds dans ce même ordre\nTapez VERIF quand vous pensez avoir fini\n", "Grotte.jpg");
 
+        //sortie gagnante
+
+        map[25] = new Piece("dans la foret","Vous avez réussi à vous échapper du château, félicitations !","Foret.jpg");
         //ajout des sorties
         // étage - 1
         map[0].ajouteSortie(Sortie.EST, map[1]);
@@ -125,14 +130,13 @@ public class Map {
         map[19].ajouteSortie(Sortie.NORD, map[20]);
 
         map[20].ajouteSortie(Sortie.SUD, map[19]);
-        map[20].ajouteSortie(Sortie.OUEST, map[21]);
+//        map[20].ajouteSortie(Sortie.OUEST, map[21]);
 
         map[21].ajouteSortie(Sortie.MONTER, map[9]);
         map[21].ajouteSortie(Sortie.EST,map[20]);
         map[21].ajouteSortie(Sortie.SUD, map[22]);
 
         map[22].ajouteSortie(Sortie.NORD, map[21]);
-        map[22].ajouteSortie(Sortie.DESCENDRE, map[23]);
 
         // étage -2
 
@@ -169,19 +173,26 @@ public class Map {
 
         initialiserPot();
 
+        map[23].ajouterItem(lingot);
+        map[23].ajouterItem(peluche);
+
         map[23].ajouterItem(plaque1);
         map[23].ajouterItem(plaque2);
         map[23].ajouterItem(plaque3);
 
 
+
+
+
         map[3].ajouterItem(baton);
+        Item bata = new Item("Bata", "sert à construire un objet");
+        map[3].ajouterItem(bata);
 
         map[10].ajouterItem(epee);
 
-        map[23].ajouterItem(lingot);
-        map[23].ajouterItem(peluche);
 
-        this.pieceCourante = map[22];
+
+        this.pieceCourante = map[19];
     }
 
 

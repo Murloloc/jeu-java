@@ -40,7 +40,7 @@ public class Inventaire {
     public Item getItemByName(String nom) {
         Item var = null;
         for (Item item : this.listeInventaire) {
-            if (item.getNom().equals(nom)) {
+            if (item.getNom().equalsIgnoreCase(nom)) {
                 var = item;
             }
         }

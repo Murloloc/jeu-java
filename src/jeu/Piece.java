@@ -15,9 +15,8 @@ public class Piece {
     private ArrayList<PNJ> listePNJ;
     private ArrayList<Item> listeItem;
     private HashMap<String, Piece> sorties;
-    private int etat; //1=que un ou des pnj //2 = que un ou des item //3=un/des items ET un/des pnj
 
-    public Piece(String nomPiece, String description, String image) { //constructeur sans PNJ et sans Item
+    public Piece(String nomPiece, String description, String image) {
         this.nomPiece = nomPiece;
         this.description = description;
         this.nomImage = image;
@@ -88,7 +87,9 @@ public class Piece {
     }
 
     public void retirerItem(Item item) {
+
         this.getListeItem().remove(item);
+
     }
 
     public ArrayList<Item> getListeItem() {
@@ -98,8 +99,10 @@ public class Piece {
     public Pot getPotByNum(int num) {
         Pot var = null;
         for (Item item : this.listeItem) {
-            if (((Pot) item).getNum() == num) {
-                var = ((Pot) item);
+            if (item instanceof Pot) {
+                if (((Pot) item).getNum() == num) {
+                    var = ((Pot) item);
+                }
             }
         }
         return var;
@@ -111,14 +114,25 @@ public class Piece {
             if (item instanceof Plaque) {
                 if (((Plaque) item).getNum() == num) {
                     var = ((Plaque) item);
+
                 }
             }
-
         }
         return var;
-
     }
-}
+
+    public boolean estVideDObjet() {
+        boolean a = true;
+        for (Item item : this.listeItem) {
+            if (item.getClass() == Item.class) {
+                a = false;
+                break;
+            }
+        }
+        return a;
+    }
+
+}//class
 
 
 
