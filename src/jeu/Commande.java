@@ -12,7 +12,6 @@ public enum Commande {
     OUEST("O", "O (aller à la sortie ouest)"),
     MONTER("M", "M (monter vers la pièce du dessus)"),
     DESCENDRE("D", "D (descendre vers la pièce du dessous)"),
-    QUITTER("Q", "Q (quitter)"),
     FOUILLER("F", "F (fouiller la pièce)"),
     INVENTAIRE("I", "I (consulter l'inventaire"),
     PARLER("P", "P (parler avec un personnage)"),
@@ -29,8 +28,10 @@ public enum Commande {
     ASSEOIR("AS", "AS (s'asseoir sur le trône)"),
     COMBATTRE("COM", "COM (engager le combat)"),
     FUIR("FU", "FU (prendre la fuite)"),
+    LANCER ("LANC", "LANC (lancer la partie)"),
     SAUVEGARDER("SAUV", "SAUV (sauvegarder la partie)"),
     CONTINUER ("CONT", "CONT (continuer la partie)"),
+    QUITTER ("QUITTER", "QUITTER (quitter la partie)"),
 
     ;
 

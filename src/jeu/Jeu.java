@@ -3,6 +3,9 @@ package jeu;
 import jeu.objets.*;
 import jeu.personnages.*;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -91,7 +94,6 @@ public class Jeu implements Serializable {
                     case "CONTINUER":
                         continuer();
                         break;
-                    case "Q":
                     case "QUITTER":
                         terminer();
                         break;
@@ -727,18 +729,16 @@ public class Jeu implements Serializable {
     }
 
     private void terminer() {
-        gui.afficher("Au revoir...");
+        gui.afficher("Au revoir...\n");
         gui.afficher("Fermeture du jeu dans 3 secondes");
-        fermeture();
-    }
 
-    private void fermeture() {
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace(System.err);
-        }
-        gui.fermer();
+        int delay = 3000; //milliseconds
+        ActionListener taskPerformer = new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                gui.fermer();
+            }
+        };
+        new Timer(delay, taskPerformer).start();
     }
 
     private void debug() {
