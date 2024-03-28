@@ -4,13 +4,15 @@ import jeu.objets.Item;
 import jeu.objets.Plaque;
 import jeu.objets.Pot;
 import jeu.personnages.Cuisinier;
+import jeu.personnages.Garde;
 import jeu.personnages.Prisonnier;
 import jeu.personnages.Servante;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Map {
+public class Map implements Serializable {
 
     private Piece[] map;
 
@@ -23,6 +25,7 @@ public class Map {
 
     public void creerCarte() {
 
+        map[29] = new Piece("dans le menu","LANCER pour commencer une nouvelle partie\nCONTINUER pour reprendre une partie sauvegardée\nQUITTER pour quitter le jeu","Menu.jpg");
         //étage -1
         map[0] = new Piece("au centre du donjon", "C'est l'endroit où vous vous êtes réveillé, sans souvenirs", "Donjon.jpg"); //centre
         map[1] = new Piece("dans la prison", "Des rochers vous bloquent ce qui semble être un chemin, peut être que le prisonnier" + "\n" + "sait ce qu'il se cache derrière", "Prison.jpg"); //est
@@ -38,6 +41,7 @@ public class Map {
         map[9] = new Piece("à l'escalier de droite", "Vous apercevez l'entrée du château", "EscalierDroite.jpg");
         map[10] = new Piece("dans l'armurerie", "Il y a des armes partout ! Et personne ne les surveille...", "Armurerie.jpg");
         map[11] = new Piece("dans la cuisine", "Il semblerait que quelque-chose se cache derrière ce comptoir...", "Cuisine.jpg");
+        map[26] = new Piece("dans la cuisine, derrière le comptoir", "Vous êtes face à un coffre", "Cuisine.jpg");
         map[12] = new Piece("devant la chambre de la Princesse", "Cette entrée est bloquée", "EntreeChambrePrincesse.jpg");
         map[13] = new Piece("dans la galerie", "", "Galerie.jpg");
         map[14] = new Piece("devant la tour de gauche", "Cette entrée est bloquée", "EntreeTourGauche.jpg");
@@ -147,10 +151,11 @@ public class Map {
         Prisonnier prisonnier = new Prisonnier("Jacques");
         Cuisinier cuisinier = new Cuisinier("Jacquelin");
         Servante servante = new Servante("Jacqueline");
+        Garde garde1 = new Garde("Rachid", "Quel est le deuxième plus grand Océan du monde ? 1)Atlantique, 2)Pacifique ou 3)Indien", "Dans le jeu Pokémon Version ''Noir et Blanc'', comment se nomme le Pokémon à l'apparence d'un écureuil ? 1)Ratentif, 2)Ecurieux ou 3)Squirwel", "Quel célèbre championnat sportif concerne le Football Américain : 1)Superbowl, 2)Top 14 ou 3)Ligue 1");
+        Garde garde2 = new Garde("Armando", "Parmi les catégories suivantes, laquelle a le plus petit taux d'espèces venimeuses/vénéneuses ? 1)Araignées, 2)Serpents ou 3)Champignons", "Lequel de ces 3 sports se pratique dans l'eau ? 1)Rafting, 2)Roundnet ou 3)Ringuette", "Quelle actrice joue la Black Widow dans le film éponyme sorti en 2021 ? 1)Scarlett Johanson, 2)Jennifer Lawrence ou 3)Julian Moore");
+        Garde garde3 = new Garde("Noa", "Quelle plante appelle-t-on ''l'arbre à fraises'' ? 1)Arbousier,  2)Néflier ou 3)Prunier", "Parmi les 6 personnages principaux de la série télévisée Friends, on retrouve un des trois personnages suivants : 1)Ross, 2)Stanley ou 3)Barney", "Quel personnage de jeu vidéo représente un hérisson ? 1)Sonic, 2)Yoshi ou 3)Donkey Kong");
         /*
-        Garde garde1 = new Garde();
-        Garde garde2 = new Garde();
-        Garde garde3 = new Garde();
+
         Princesse princesse = new Princesse();
         Boss boss = new Boss();
         */
@@ -158,6 +163,9 @@ public class Map {
         map[1].ajouterPNJ(prisonnier);
         map[6].ajouterPNJ(cuisinier);
         map[14].ajouterPNJ(servante);
+        map[16].ajouterPNJ(garde1);
+        map[16].ajouterPNJ(garde2);
+        map[16].ajouterPNJ(garde3);
 
         //ajout des objets
 
@@ -192,7 +200,7 @@ public class Map {
 
 
 
-        this.pieceCourante = map[19];
+        this.pieceCourante = map[29];
     }
 
 
@@ -219,6 +227,19 @@ public class Map {
         for (int i = 0; i < 6; i++) {
             map[22].ajouterItem(new Pot(i + 1, full[i]));
         }
+    }
+    public String tireLettreAleat() {
+        String lettre = "";
+        // parchemin qui indique une lettre de l'alphabet variable
+        // déclaration d'un tableau de caractères contenant les lettres de l'alphabet
+        String alphabet = "asr";
+        // création d'un objet Random
+        Random rand = new Random();
+        // ce rand va me servir à créer un index aléatoire qui prendra une valeur entre
+        // 0 et 25
+        int randomIndex = rand.nextInt(alphabet.length());
+        lettre = String.valueOf(alphabet.charAt(randomIndex));
+        return lettre;
     }
 
     public Piece[] getMap() {

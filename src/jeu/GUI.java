@@ -1,11 +1,12 @@
 package jeu;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.Serializable;
 import java.net.URL;
 
-public class GUI implements ActionListener
-{
+public class GUI implements ActionListener, Serializable {
     private Jeu jeu;
     private JFrame fenetre;
     private JTextField entree;
@@ -26,18 +27,22 @@ public class GUI implements ActionListener
         afficher("\n");
     }
 
-   public void afficheImage( String nomImage) {
-	   	URL imageURL = this.getClass().getClassLoader().getResource("jeu/images/" + nomImage);
-	   	if( imageURL != null ) {
-        	image.setIcon( new ImageIcon( imageURL ));
+    public void afficheImage(String nomImage) {
+        URL imageURL = this.getClass().getClassLoader().getResource("jeu/images/" + nomImage);
+        if (imageURL != null) {
+            image.setIcon(new ImageIcon(imageURL));
             fenetre.pack();
         }
-   }
+    }
 
     public void enable(boolean ok) {
         entree.setEditable(ok);
-        if ( ! ok )
+        if (!ok)
             entree.getCaret().setBlinkRate(0);
+    }
+
+    public void fermer() {
+        fenetre.dispose();
     }
 
     private void creerGUI() {
@@ -81,11 +86,11 @@ public class GUI implements ActionListener
     }
 
     private void executerCommande() {
-        jeu.traiterCommande( lireCommande());
+        jeu.traiterCommande(lireCommande());
         entree.setText("");
     }
 
-    public String lireCommande(){
+    public String lireCommande() {
         return entree.getText();
     }
 

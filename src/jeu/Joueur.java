@@ -1,9 +1,10 @@
 package jeu;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import jeu.objets.Item;
 
-public class Joueur {
+public class Joueur implements Serializable {
     private String nom;
     private ArrayList<Item> inventaire;
 

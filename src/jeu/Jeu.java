@@ -3,10 +3,12 @@ package jeu;
 import jeu.objets.*;
 import jeu.personnages.*;
 
+import java.io.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Jeu {
+public class Jeu implements Serializable {
     private GUI gui;
     private int etatCommande;
     private int var;
@@ -40,7 +42,6 @@ public class Jeu {
         gui.afficher();
         gui.afficher("Tapez '?' pour obtenir de l'aide");
         gui.afficher();
-        gui.afficher("Après avoir été fait prisonnier vous vous retrouvez au milieu d'un donjon\n");
         afficherLocalisation();
         gui.afficheImage(map.getPieceCourante().nomImage());
     }
@@ -77,6 +78,18 @@ public class Jeu {
                     case "D":
                     case "DESCENDRE":
                         allerEn("DESCENDRE");
+                        break;
+                    case "LANC":
+                    case "LANCER":
+                        lancer();
+                        break;
+                    case "SAUV":
+                    case "SAUVEGARDER":
+                        sauvegarder();
+                        break;
+                    case "CONT":
+                    case "CONTINUER":
+                        continuer();
                         break;
                     case "Q":
                     case "QUITTER":
@@ -120,6 +133,18 @@ public class Jeu {
                         break;
                     case "DEBUG":
                         debug();
+                        break;
+                    case "INS":
+                    case "INSPECTER":
+                        inspecter();
+                        break;
+                    case "DEV":
+                    case "DEVEROUILLER":
+                        deverrouiller();
+                        break;
+                    case "SAS":
+                    case "SASSEOIR":
+                        sAsseoir();
                         break;
                     default:
                         gui.afficher("Commande inconnue\n");
@@ -218,19 +243,208 @@ public class Jeu {
         }
     }
 
+    private void lancer() {
+        if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans le menu")) {
+            gui.afficher("Vous avez lancé le jeu\n");
+            gui.afficher("Après avoir été fait prisonnier vous vous retrouvez au milieu d'un donjon\n");
+            map.setPieceCourante(map.getMap()[0]);
+            this.gui.afficheImage(this.map.getPieceCourante().nomImage());
+//            this.gui.afficher(this.map.getPieceCourante().getNomPiece());
+//            this.gui.afficher();
+//            this.gui.afficher(this.map.getPieceCourante().getDescription());
+//            this.gui.afficher();
+            this.gui.afficher(this.map.getPieceCourante().descriptionLongue());
+        } else {
+            gui.afficher("Le jeu est déjà lancé");
+        }
+    }
+
+    private void sauvegarder() {
+        Jeu object = this;
+        File fichier = new File("save.ser");
+
+        try {
+            FileOutputStream file = new FileOutputStream(fichier);
+            ObjectOutputStream out = new ObjectOutputStream(file);
+            out.writeObject(object);
+            out.close();
+            file.close();
+            gui.afficher("Sauvegarde réussie");
+        } catch (IOException ioe) {
+            System.err.println("Erreur d'E/S.");
+            ioe.printStackTrace(System.err);
+        }
+    }
+
+    private void continuer() {
+        Jeu object1;
+        String filename = "save.ser";
+        try {
+            FileInputStream file = new FileInputStream(filename);
+            ObjectInputStream in = new ObjectInputStream(file);
+            object1 = (Jeu) in.readObject();
+            in.close();
+            file.close();
+            gui.afficher("Reprise sauvegarde\n");
+            this.map = object1.map;
+            this.gui.afficheImage(this.map.getPieceCourante().nomImage());
+            this.gui.afficher(this.map.getPieceCourante().descriptionLongue());
+            this.inventaire = object1.inventaire;
+        } catch (ClassNotFoundException cnfe) {
+            System.err.println("Erreur : classe non-trouvée");
+        } catch (EOFException eofe) {
+            System.out.println("Fin du fichier atteinte");
+        } catch (FileNotFoundException fnfe) {
+            System.err.println("Erreur de fichier");
+        } catch (IOException ioe) {
+            System.err.println("Erreur d'E/S");
+        }
+    }
+
     private void parler() {
         if (!map.getPieceCourante().getListePNJ().isEmpty()) {
             for (PNJ pnj : map.getPieceCourante().getListePNJ()) {
                 gui.afficher(pnj.dialogue());
                 if (pnj instanceof Prisonnier && pnj.getEtat() == 0) {
-                    gui.afficher("JAU pour la clé Jaune\nBLE pour la clé Bleue\n");
+                    gui.afficher("JAU pour la clé Jaune\nBLE pour la clé Bleue");
                     etatCommande = 1;
                 }
             }
+
+        } else if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle des gardes")) {
+//            parlerGarde();
         } else {
-            gui.afficher("\nIl n'y a personne avec qui parler");
+            gui.afficher("Il n'y a personne avec qui parler");
         }
     }
+
+//    private void parlerGarde() {
+//
+//        String letter = map.tireLettreAleat();
+//
+//        int vie = 3;
+//        while (vie > 0) {
+//            switch (letter) {
+//                case "A":
+//                    PNJ G1 = map.getPieceCourante().getListePNJ().getFirst();
+//                    gui.afficher(G1.dialogue());
+//                    gui.afficher(((Garde) G1).getQ1());
+//                    String commandeLue = gui.lireCommande();
+//                    while (!commandeLue.equals("1") || commandeLue.equals("2") || commandeLue.equals("3")) {
+//                        gui.afficher("Veuillez répondre à la question posée par 1, 2 ou 3\n");
+//                        if (commandeLue.equals("2") || commandeLue.equals("3")) {
+//                            gui.afficher("Mauvais réponse, vous perdez une vie");
+//                            vie--;
+//                        } else {
+//                            //gui.afficher("Je suis le deuxième garde Armando et je vais vous poser ma question : \n");
+//                            //gui.afficher(garde2[0]);
+//                            PNJ G2 = map.getPieceCourante().getListePNJ().get(1);
+//                            gui.afficher(((Garde) G2).dialogue());
+//                            gui.afficher(((Garde) G2).getQ1());
+//                            if (commandeLue.equals("2") || commandeLue.equals("3")) {
+//                                gui.afficher("Mauvais réponse, vous perdez une vie");
+//                                vie--;
+//                            } else {
+//                                //gui.afficher("Je suis le troisième garde Noa et je vais vous poser ma question : \n");
+//                                //gui.afficher(garde3[0]);
+//                                PNJ G3 = map.getPieceCourante().getListePNJ().get(2);
+//                                gui.afficher(((Garde) G3).dialogue());
+//                                gui.afficher(((Garde) G3).getQ1());
+//                                if (commandeLue.equals("2") || commandeLue.equals("3")) {
+//                                    gui.afficher("Mauvais réponse, vous perdez une vie");
+//                                    vie--;
+//                                }
+//                            }
+//                        }
+//
+//                    }//fin while
+//                    break;
+//                case "R":
+//                    //j'affiche pour les 3 gardes le contenu de l'indice 1
+//                    //gui.afficher("Je suis le premier garde Rachid et je vais vous poser ma question : \n");
+//                    //gui.afficher(garde1[1]);
+//                    PNJ G11 = map.getPieceCourante().getListePNJ().get(0);
+//                    gui.afficher(((Garde) G11).dialogue());
+//                    gui.afficher(((Garde) G11).getQ2());
+//                    commandeLue = gui.lireCommande();
+//                    while (!commandeLue.equals("1") || commandeLue.equals("2") || commandeLue.equals("3")) {
+//                        gui.afficher("Veuillez répondre à la question posée par 1, 2 ou 3\n");
+//                        if (commandeLue.equals("2") || commandeLue.equals("3")) {
+//                            gui.afficher("Mauvais réponse, vous perdez une vie");
+//                            vie--;
+//                        } else {
+//                            //gui.afficher("Je suis le deuxième garde Armando et je vais vous poser ma question : \n");
+//                            //gui.afficher(garde2[1]);
+//                            PNJ G12 = map.getPieceCourante().getListePNJ().get(1);
+//                            gui.afficher(((Garde) G12).dialogue());
+//                            gui.afficher(((Garde) G12).getQ2());
+//                            if (commandeLue.equals("2") || commandeLue.equals("3")) {
+//                                gui.afficher("Mauvais réponse, vous perdez une vie");
+//                                vie--;
+//                            } else {
+//                                //gui.afficher("Je suis le troisième garde Noa et je vais vous poser ma question : \n");
+//                                //gui.afficher(garde3[1]);
+//                                PNJ G13 = map.getPieceCourante().getListePNJ().get(2);
+//                                gui.afficher(((Garde) G13).dialogue());
+//                                gui.afficher(((Garde) G13).getQ2());
+//                                if (commandeLue.equals("2") || commandeLue.equals("3")) {
+//                                    gui.afficher("Mauvais réponse, vous perdez une vie");
+//                                    vie--;
+//                                }
+//                            }
+//                        }
+//                    }//fin while
+//                    break;
+//                case "S":
+//                    PNJ G21 = map.getPieceCourante().getListePNJ().get(0);
+//                    gui.afficher(((Garde) G21).dialogue());
+//                    gui.afficher(((Garde) G21).getQ3());
+//                    commandeLue = gui.lireCommande();
+//                    while (!commandeLue.equals("1") || commandeLue.equals("2") || commandeLue.equals("3")) {
+//                        gui.afficher("Veuillez répondre à la question posée par 1, 2 ou 3\n");
+//                        if (commandeLue.equals("2") || commandeLue.equals("3")) {
+//                            gui.afficher("Mauvais réponse, vous perdez une vie");
+//                            vie--;
+//                        } else {
+//                            //gui.afficher("Je suis le deuxième garde Armando et je vais vous poser ma question : \n");
+//                            //gui.afficher(garde2[2]);
+//                            PNJ G22 = map.getPieceCourante().getListePNJ().get(1);
+//                            gui.afficher(((Garde) G22).dialogue());
+//                            gui.afficher(((Garde) G22).getQ3());
+//                            if (commandeLue.equals("2") || commandeLue.equals("3")) {
+//                                gui.afficher("Mauvais réponse, vous perdez une vie");
+//                                vie--;
+//                            } else {
+//                                //gui.afficher("Je suis le troisième garde Noa et je vais vous poser ma question : \n");
+//                                //gui.afficher(garde3[2]);
+//                                PNJ G31 = map.getPieceCourante().getListePNJ().get(2);
+//                                gui.afficher(((Garde) G31).dialogue());
+//                                gui.afficher(((Garde) G31).getQ3());
+//                                if (commandeLue.equals("2") || commandeLue.equals("3")) {
+//                                    gui.afficher("Mauvais réponse, vous perdez une vie");
+//                                    vie--;
+//                                }
+//                            }
+//                        }
+//                    }//fin while
+//                    break;
+//                default:
+//                    gui.afficher("");
+//                    break;
+//            }//fin switch case
+//
+//
+//            if (vie == 0) {
+//                gui.afficher("Vous avez perdu toute vos vies - - - GAME OVER\n");
+//                //re direction à faire
+//            } else {
+//                //si tout ok : débloquer sortie vers salle du boss
+//                gui.afficher("Félicitations vous avez réussi toutes les énigmes... Nous vous laissons passer" + "\n" + "Et vous souhaitons bon courage.");
+//                map.getPieceCourante().ajouteSortie(Sortie.MONTER, map.getMap()[17]);
+//            }
+//        }
+//    }
+
 
     private void donnerCle(String commandeLue) {
         if (commandeLue.equals("JAU") || commandeLue.equals("JAUNE")) {
@@ -311,6 +525,14 @@ public class Jeu {
             }
         } else if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle des coffres (ouverts)")) {
             gui.afficher("Vous avez déjà ouvert un coffre");
+
+        } else if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la cuisine, derrière le comptoir")) {
+            inventaire.ajouterInventaire(new Item("Clé de la chambre", "Elle doit pouvoir ouvrir la grille en haut à droite"));
+            gui.afficher("La clé de la chambre a été ajoutée à l'inventaire\n");
+            map.getPieceCourante().setNomPiece("dans la cuisine, derrière le comptoir, le coffre est vide");
+            map.getPieceCourante().setDescription("Il n'y a plus rien à faire ici");
+        } else if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la cuisine, derrière le comptoir, le coffre est vide")) {
+            gui.afficher("Vous avez déjà ouvert le coffre");
         } else {
             gui.afficher("Il n'y a rien à ouvrir ici");
         }
@@ -458,33 +680,41 @@ public class Jeu {
         }
     }
 
-//    private void inspecter() {
-//        if (map.getPieceCourante().getNomPiece() == ("dans la salle à manger")) {
-//            // débloquer la sortie du passage secret vers cuisine
-//            map[15].ajouteSortie(Sortie.DESCENDRE, map[11]);
-//            // changer l'affichage de la pièce
-//            // repaint : on arrive dans la cuisine et le perso est derrière le comptoir
+    private void inspecter() {
+        if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle à manger")) {
+            map.getPieceCourante().ajouteSortie(Sortie.DESCENDRE, map.getMap()[26]);
+            map.getMap()[26].ajouteSortie(Sortie.DESCENDRE, map.getMap()[15]);
+            map.getPieceCourante().setNomPiece("dans la salle à manger débloquée");
+            map.getPieceCourante().setDescription("");
+
+            // changer l'affichage de la pièce
+            gui.afficher("Un chemin se cachait derrière la cheminée\nVous pouvez descendre\n");
+            // repaint : on arrive dans la cuisine et le perso est derrière le comptoir
 //            map.getPieceCourante().setNomPiece("dans la cuisine, de l'autre côté du comptoir");
 //            map.getPieceCourante().setDescription("Super, un coffre !");
-//        }
-//    }
+        } else if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle à mange débloquée")) {
+            gui.afficher("Vous avez déjà débloqué cette pièce\n");
+        } else {
+            gui.afficher("Vous ne pouvez pas utiliser cette commande ici\n");
+        }
+    }
 
-//    private void déverrouiller() {
-//        if (map.getPieceCourante().getNomPiece() == ("devant la chambre de la Princesse")) {
-//            if (inventaire.getListeInventaire().isEmpty()) {
-//                gui.afficher("Vous ne possédez pas la clé pour réaliser cette action\n");
-//            } else {
-//                Item cleRDC = inventaire.getItemByName("Clé de la chambre");
-//                if (cleRDC != null) {
-//                    map.getPieceCourante().ajouteSortie(Sortie.MONTER, map[18]);
-//                    gui.afficher("Vous avez débloqué la sortie monter");
-//                    // afficher la pièce sans la grille
-//                } else gui.afficher("Vous ne possédez pas la ressource pour réaliser cette action\n");
-//            }
-//        }
-//        //si pas dans la pièce courante :
-//        else gui.afficher("Vous ne pouvez pas utiliser cette commande ici\n");
-//    }
+    private void deverrouiller() {
+        if (Objects.equals(map.getPieceCourante().getNomPiece(), "devant la chambre de la Princesse")) {
+            if (inventaire.getListeInventaire().isEmpty()) {
+                gui.afficher("Vous ne possédez pas la clé pour réaliser cette action\n");
+            } else {
+                Item cleRDC = inventaire.getItemByName("Clé de la chambre");
+                if (cleRDC != null) {
+                    map.getPieceCourante().ajouteSortie(Sortie.MONTER, map.getMap()[18]);
+                    gui.afficher("Vous avez débloqué la sortie monter");
+                    // afficher la pièce sans la grille
+                } else gui.afficher("Il vous faudrait une clé pour ouvrir cette grille\n");
+            }
+        }
+        //si pas dans la pièce courante :
+        else gui.afficher("Vous ne pouvez pas utiliser cette commande ici\n");
+    }
 
 
     private void sAsseoir() {
@@ -492,12 +722,23 @@ public class Jeu {
             //game over
             gui.afficher("GAME OVER    --- Vous avez perdu la partie\n");
             //gérer le GUI et les fichiers
+            terminer();
         } else gui.afficher("Vous ne pouvez pas utiliser cette commande ici\n");
     }
 
     private void terminer() {
         gui.afficher("Au revoir...");
-        gui.enable(false);
+        gui.afficher("Fermeture du jeu dans 3 secondes");
+        fermeture();
+    }
+
+    private void fermeture() {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace(System.err);
+        }
+        gui.fermer();
     }
 
     private void debug() {

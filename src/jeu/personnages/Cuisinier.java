@@ -1,6 +1,8 @@
 package jeu.personnages;
 
-public class Cuisinier extends PNJ{
+import java.io.Serializable;
+
+public class Cuisinier extends PNJ implements Serializable {
 
     public Cuisinier(String nom) {
         super(nom);

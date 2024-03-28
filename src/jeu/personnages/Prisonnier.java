@@ -4,7 +4,9 @@ import jeu.GUI;
 import jeu.Jeu;
 import jeu.objets.Inventaire;
 
-public class Prisonnier extends PNJ {
+import java.io.Serializable;
+
+public class Prisonnier extends PNJ implements Serializable {
 
 
     public Prisonnier(String nom) {

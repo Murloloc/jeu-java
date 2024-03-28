@@ -1,8 +1,9 @@
 package jeu.objets;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Inventaire {
+public class Inventaire implements Serializable {
 
     private ArrayList<Item> listeInventaire;
 

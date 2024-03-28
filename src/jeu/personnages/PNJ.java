@@ -1,6 +1,8 @@
 package jeu.personnages;
 
-public abstract class PNJ {
+import java.io.Serializable;
+
+public abstract class PNJ implements Serializable {
 
     public String nom;
 
@@ -14,6 +16,10 @@ public abstract class PNJ {
     public PNJ() {
     }
 
+    public String getNom() {
+        return nom;
+    }
+
     public int getEtat() {
         return etat;
     }
@@ -21,6 +27,7 @@ public abstract class PNJ {
     public void setEtat(int etat) {
         this.etat = etat;
     }
+
     @Override
     public String toString() {
         return ("Je suis " + this.nom);

@@ -1,6 +1,8 @@
 package jeu.personnages;
 
-public class Servante extends PNJ {
+import java.io.Serializable;
+
+public class Servante extends PNJ implements Serializable {
 
     public Servante(String nom) {
         super(nom);

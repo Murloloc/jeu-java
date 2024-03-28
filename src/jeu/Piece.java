@@ -5,10 +5,11 @@ import jeu.objets.Plaque;
 import jeu.objets.Pot;
 import jeu.personnages.PNJ;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Piece {
+public class Piece implements Serializable {
     private String nomPiece;
     private String description;
     private String nomImage;
@@ -41,7 +42,9 @@ public class Piece {
         this.nomPiece = nomPiece;
     }
 
-
+    public String getDescription() {
+        return description;
+    }
     public void setDescription(String description) {
         this.description = description;
     }
