@@ -204,7 +204,7 @@ public class Map implements Serializable {
         map[3].ajouterItem(baton);
         map[10].ajouterItem(epee);
 
-        this.pieceCourante = map[15];
+        this.pieceCourante = map[27];
     }
 
 

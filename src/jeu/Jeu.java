@@ -95,6 +95,9 @@ public class Jeu implements Serializable {
                     case "CONTINUER":
                         continuer();
                         break;
+                    case "PAUSE" :
+                        pause();
+                        break;
                     case "QUITTER":
                         terminer();
                         break;
@@ -227,10 +230,8 @@ public class Jeu implements Serializable {
                 }
                 break;
             case 5:
-                switch (commandeLue.toUpperCase()) {
-                    case "DEPAUSE":
-                        //dePause();
-                        break;
+                if (commandeLue.equalsIgnoreCase("DEPAUSE")) {
+                    depause();
                 }
                 break;
         }
@@ -321,6 +322,17 @@ public class Jeu implements Serializable {
         } catch (IOException ioe) {
             System.err.println("Erreur d'E/S");
         }
+    }
+
+    private void pause(){
+        this.etatCommande = 5;
+        gui.afficher("Le jeu est en pause. Entrez depause pour continuer\n");
+        this.etatCommande = 5;
+    }
+
+    private void depause(){
+        this.etatCommande = 0;
+        gui.afficher("Le jeu reprend\n");
     }
 
     private void parler() {
@@ -732,13 +744,8 @@ public class Jeu implements Serializable {
             map.getMap()[26].ajouteSortie(Sortie.DESCENDRE, map.getMap()[15]);
             map.getPieceCourante().setNomPiece("dans la salle à manger débloquée");
             map.getPieceCourante().setDescription("");
-
-            // changer l'affichage de la pièce
             gui.afficher("Un chemin se cachait derrière la cheminée\nVous pouvez descendre\n");
-            // repaint : on arrive dans la cuisine et le perso est derrière le comptoir
-//            map.getPieceCourante().setNomPiece("dans la cuisine, de l'autre côté du comptoir");
-//            map.getPieceCourante().setDescription("Super, un coffre !");
-        } else if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle à mange débloquée")) {
+        } else if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle à manger débloquée")) {
             gui.afficher("Vous avez déjà débloqué cette pièce\n");
         } else {
             gui.afficher("Vous ne pouvez pas utiliser cette commande ici\n");
@@ -754,7 +761,7 @@ public class Jeu implements Serializable {
                 if (cleRDC != null) {
                     map.getPieceCourante().ajouteSortie(Sortie.MONTER, map.getMap()[18]);
                     gui.afficher("Vous avez débloqué la sortie monter");
-                    // afficher la pièce sans la grille
+                    map.getPieceCourante().setNomImage("EntreeChambrePrincesseOuverte.jpg");
                 } else gui.afficher("Il vous faudrait une clé pour ouvrir cette grille\n");
             }
         }
