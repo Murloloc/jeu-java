@@ -95,7 +95,7 @@ public class Jeu implements Serializable {
                     case "CONTINUER":
                         continuer();
                         break;
-                    case "PAUSE" :
+                    case "PAUSE":
                         pause();
                         break;
                     case "QUITTER":
@@ -324,13 +324,13 @@ public class Jeu implements Serializable {
         }
     }
 
-    private void pause(){
+    private void pause() {
         this.etatCommande = 5;
         gui.afficher("Le jeu est en pause. Entrez depause pour continuer\n");
         this.etatCommande = 5;
     }
 
-    private void depause(){
+    private void depause() {
         this.etatCommande = 0;
         gui.afficher("Le jeu reprend\n");
     }
@@ -353,130 +353,9 @@ public class Jeu implements Serializable {
     }
 
     private void parlerGarde() {
-//
-//        String letter = map.tireLettreAleat();
-//
-//        int vie = 3;
-//        while (vie > 0) {
-//            switch (letter) {
-//                case "A":
-//                    PNJ G1 = map.getPieceCourante().getListePNJ().getFirst();
-//                    gui.afficher(G1.dialogue());
-//                    gui.afficher(((Garde) G1).getQ1());
-//                    String commandeLue = gui.lireCommande();
-//                    while (!commandeLue.equals("1") || commandeLue.equals("2") || commandeLue.equals("3")) {
-//                        gui.afficher("Veuillez répondre à la question posée par 1, 2 ou 3\n");
-//                        if (commandeLue.equals("2") || commandeLue.equals("3")) {
-//                            gui.afficher("Mauvais réponse, vous perdez une vie");
-//                            vie--;
-//                        } else {
-//                            //gui.afficher("Je suis le deuxième garde Armando et je vais vous poser ma question : \n");
-//                            //gui.afficher(garde2[0]);
-//                            PNJ G2 = map.getPieceCourante().getListePNJ().get(1);
-//                            gui.afficher(((Garde) G2).dialogue());
-//                            gui.afficher(((Garde) G2).getQ1());
-//                            if (commandeLue.equals("2") || commandeLue.equals("3")) {
-//                                gui.afficher("Mauvais réponse, vous perdez une vie");
-//                                vie--;
-//                            } else {
-//                                //gui.afficher("Je suis le troisième garde Noa et je vais vous poser ma question : \n");
-//                                //gui.afficher(garde3[0]);
-//                                PNJ G3 = map.getPieceCourante().getListePNJ().get(2);
-//                                gui.afficher(((Garde) G3).dialogue());
-//                                gui.afficher(((Garde) G3).getQ1());
-//                                if (commandeLue.equals("2") || commandeLue.equals("3")) {
-//                                    gui.afficher("Mauvais réponse, vous perdez une vie");
-//                                    vie--;
-//                                }
-//                            }
-//                        }
-//
-//                    }//fin while
-//                    break;
-//                case "R":
-//                    //j'affiche pour les 3 gardes le contenu de l'indice 1
-//                    //gui.afficher("Je suis le premier garde Rachid et je vais vous poser ma question : \n");
-//                    //gui.afficher(garde1[1]);
-//                    PNJ G11 = map.getPieceCourante().getListePNJ().get(0);
-//                    gui.afficher(((Garde) G11).dialogue());
-//                    gui.afficher(((Garde) G11).getQ2());
-//                    commandeLue = gui.lireCommande();
-//                    while (!commandeLue.equals("1") || commandeLue.equals("2") || commandeLue.equals("3")) {
-//                        gui.afficher("Veuillez répondre à la question posée par 1, 2 ou 3\n");
-//                        if (commandeLue.equals("2") || commandeLue.equals("3")) {
-//                            gui.afficher("Mauvais réponse, vous perdez une vie");
-//                            vie--;
-//                        } else {
-//                            //gui.afficher("Je suis le deuxième garde Armando et je vais vous poser ma question : \n");
-//                            //gui.afficher(garde2[1]);
-//                            PNJ G12 = map.getPieceCourante().getListePNJ().get(1);
-//                            gui.afficher(((Garde) G12).dialogue());
-//                            gui.afficher(((Garde) G12).getQ2());
-//                            if (commandeLue.equals("2") || commandeLue.equals("3")) {
-//                                gui.afficher("Mauvais réponse, vous perdez une vie");
-//                                vie--;
-//                            } else {
-//                                //gui.afficher("Je suis le troisième garde Noa et je vais vous poser ma question : \n");
-//                                //gui.afficher(garde3[1]);
-//                                PNJ G13 = map.getPieceCourante().getListePNJ().get(2);
-//                                gui.afficher(((Garde) G13).dialogue());
-//                                gui.afficher(((Garde) G13).getQ2());
-//                                if (commandeLue.equals("2") || commandeLue.equals("3")) {
-//                                    gui.afficher("Mauvais réponse, vous perdez une vie");
-//                                    vie--;
-//                                }
-//                            }
-//                        }
-//                    }//fin while
-//                    break;
-//                case "S":
-//                    PNJ G21 = map.getPieceCourante().getListePNJ().get(0);
-//                    gui.afficher(((Garde) G21).dialogue());
-//                    gui.afficher(((Garde) G21).getQ3());
-//                    commandeLue = gui.lireCommande();
-//                    while (!commandeLue.equals("1") || commandeLue.equals("2") || commandeLue.equals("3")) {
-//                        gui.afficher("Veuillez répondre à la question posée par 1, 2 ou 3\n");
-//                        if (commandeLue.equals("2") || commandeLue.equals("3")) {
-//                            gui.afficher("Mauvais réponse, vous perdez une vie");
-//                            vie--;
-//                        } else {
-//                            //gui.afficher("Je suis le deuxième garde Armando et je vais vous poser ma question : \n");
-//                            //gui.afficher(garde2[2]);
-//                            PNJ G22 = map.getPieceCourante().getListePNJ().get(1);
-//                            gui.afficher(((Garde) G22).dialogue());
-//                            gui.afficher(((Garde) G22).getQ3());
-//                            if (commandeLue.equals("2") || commandeLue.equals("3")) {
-//                                gui.afficher("Mauvais réponse, vous perdez une vie");
-//                                vie--;
-//                            } else {
-//                                //gui.afficher("Je suis le troisième garde Noa et je vais vous poser ma question : \n");
-//                                //gui.afficher(garde3[2]);
-//                                PNJ G31 = map.getPieceCourante().getListePNJ().get(2);
-//                                gui.afficher(((Garde) G31).dialogue());
-//                                gui.afficher(((Garde) G31).getQ3());
-//                                if (commandeLue.equals("2") || commandeLue.equals("3")) {
-//                                    gui.afficher("Mauvais réponse, vous perdez une vie");
-//                                    vie--;
-//                                }
-//                            }
-//                        }
-//                    }//fin while
-//                    break;
-//                default:
-//                    gui.afficher("");
-//                    break;
-//            }//fin switch case
-//
-//
-//            if (vie == 0) {
-//                gui.afficher("Vous avez perdu toute vos vies - - - GAME OVER\n");
-//                //re direction à faire
-//            } else {
-//                //si tout ok : débloquer sortie vers salle du boss
-//                gui.afficher("Félicitations vous avez réussi toutes les énigmes... Nous vous laissons passer" + "\n" + "Et vous souhaitons bon courage.");
-//                map.getPieceCourante().ajouteSortie(Sortie.MONTER, map.getMap()[17]);
-//            }
-//        }
+        Garde garde = (Garde) map.getPieceCourante().getListePNJ().getFirst();
+        gui.afficher(garde.dialogue(map.getLettreAleat()));
+        this.etatCommande = 6;
     }//fin parler garde
 
 
@@ -663,7 +542,7 @@ public class Jeu implements Serializable {
         if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans les catacombes")) {
             gui.afficher("Vous distinguez des inscriptions au mur...\n");
             gui.afficher("Vous vous approchez et lisez : \n");
-            gui.afficher(map.getParchemin());
+            gui.afficher(map.getInscriptionMur());
         } else if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la bibliothèque")) {
             gui.afficher(map.getLettreAleat() + "\n" + map.getNumAleat());
 

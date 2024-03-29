@@ -34,30 +34,30 @@ public class Labyrinthe extends Piece {
 
         // Link Room 2 to Room 1 from a random direction except south
         Sortie randomSortie = getRandomSortieExcept(Sortie.SUD);
-        String parchemin = "Entrez dans le labyrinthe puis : \n" + randomSortie;
+        String mur = "Entrez dans le labyrinthe puis : \n" + randomSortie;
         piecesLab[0].ajouteSortie(randomSortie, piecesLab[1]);
         piecesLab[1].ajouteSortie(getOppositeSortie(randomSortie), piecesLab[0]);
 
 
         randomSortie = getRandomSortieExcept(getOppositeSortie(randomSortie));
-        parchemin += "\n" + randomSortie;
+        mur += "\n" + randomSortie;
         piecesLab[1].ajouteSortie(randomSortie, piecesLab[2]);
         piecesLab[2].ajouteSortie(getOppositeSortie(randomSortie), piecesLab[1]);
 
         randomSortie = getRandomSortieExcept(getOppositeSortie(randomSortie));
-        parchemin += "\n" + randomSortie;
+        mur += "\n" + randomSortie;
         piecesLab[2].ajouteSortie(randomSortie, piecesLab[3]);
         piecesLab[3].ajouteSortie(getOppositeSortie(randomSortie), piecesLab[2]);
 
         randomSortie = getRandomSortieExcept(getOppositeSortie(randomSortie));
-        parchemin += "\n" + randomSortie;
+        mur += "\n" + randomSortie;
         piecesLab[3].ajouteSortie(randomSortie, piecesLab[4]);
         piecesLab[4].ajouteSortie(getOppositeSortie(randomSortie), piecesLab[3]);
 
         piecesLab[4].ajouteSortie(Sortie.MONTER, map.getMap()[21]);
-        parchemin += "\n" + "MONTER";
+        mur += "\n" + "MONTER";
 
-        map.setParchemin(parchemin);
+        map.setInscriptionMur(mur);
     }
 
     public Sortie getRandomSortieExcept(Sortie exceptSortie) {

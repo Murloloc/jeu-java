@@ -22,7 +22,7 @@ public class Map implements Serializable {
 
     private int numAleat;
 
-    private String parchemin;
+    private String inscriptionMur;
 
 
     public Map() {
@@ -31,9 +31,9 @@ public class Map implements Serializable {
 
     public void creerCarte() {
 
-        map[27] = new Piece("dans le menu", "LANCER pour commencer une nouvelle partie\nCONTINUER pour reprendre une partie sauvegardée\nQUITTER pour quitter le jeu", "Menu.jpg");
-        map[28] = new Piece("sur l'écran de victoire","Merci d'avoir joué au jeu\nQUITTER pour fermer le jeu","Victoire.jpg");
-        map[29] = new Piece("sur l'écran de défaite","Dommage :(\nCONTINUER pour relancer le jeu à votre dernière sauvegarde\nQUITTER pour fermer le jeu","Defaite.jpg");
+        map[27] = new Piece("dans le menu", "LANCER pour commencer une nouvelle par     tie\nCONTINUER pour reprendre une partie sauvegardée\nQUITTER pour quitter le jeu", "Menu.jpg");
+        map[28] = new Piece("sur l'écran de victoire", "Merci d'avoir joué au jeu\nQUITTER pour fermer le jeu", "Victoire.jpg");
+        map[29] = new Piece("sur l'écran de défaite", "Dommage :(\nCONTINUER pour relancer le jeu à votre dernière sauvegarde\nQUITTER pour fermer le jeu", "Defaite.jpg");
 
         //étage -1
         map[0] = new Piece("au centre du donjon", "C'est l'endroit où vous vous êtes réveillé, sans souvenirs", "Donjon.jpg"); //centre
@@ -165,11 +165,10 @@ public class Map implements Serializable {
         Prisonnier prisonnier = new Prisonnier("Jacques");
         Cuisinier cuisinier = new Cuisinier("Jacquelin");
         Servante servante = new Servante("Jacqueline");
-        Garde garde1 = new Garde("Rachid", "Quel est le deuxième plus grand Océan du monde ?\n1) Atlantique\n2) Pacifique\n3) Indien\n", "Dans le jeu Pokémon Version ''Noir et Blanc'', comment se nomme le Pokémon à l'apparence d'un écureuil ?\n1) Ratentif\n2) Ecurieux\n3) Squirwel\n", "Quel célèbre championnat sportif concerne le Football Américain ?\n1) Superbowl\n2) Top 14\n3) Ligue 1\n");
-        Garde garde2 = new Garde("Armando", "Parmi les catégories suivantes, laquelle a le plus petit taux d'espèces venimeuses/vénéneuses ?\n1) Araignées\n2) Serpents\n3) Champignons", "Lequel de ces 3 sports se pratique dans l'eau ?\n1) Rafting\n2) Roundnet\n3) Ringuette", "Quelle actrice joue la Black Widow dans le film éponyme sorti en 2021 ?\n 1) Scarlett Johanson\n2) Jennifer Lawrence\n3)Julian Moore\n");
-        Garde garde3 = new Garde("Noa", "Quelle plante appelle-t-on ''l'arbre à fraises'' ?\n1)Arbousier,  2)Néflier ou 3)Prunier", "Parmi les 6 personnages principaux de la série télévisée Friends, on retrouve un des trois personnages suivants : 1)Ross, 2)Stanley ou 3)Barney", "Quel personnage de jeu vidéo représente un hérisson ? 1)Sonic, 2)Yoshi ou 3)Donkey Kong");
+        Garde garde1 = new Garde("Armando", "Quel est le deuxième plus grand Océan du monde ?\n1) Atlantique\n2) Pacifique\n3) Indien\n", "Dans le jeu Pokémon Version ''Noir et Blanc'', comment se nomme le Pokémon à l'apparence d'un écureuil ?\n1) Ratentif\n2) Ecurieux\n3) Squirwel\n", "Quel célèbre championnat sportif concerne le Football Américain ?\n1) Ligue 1\n2) Top 14\n3) Superbowl\n",1,1, 3);
+        Garde garde2 = new Garde("Rachid", "Parmi les catégories suivantes, laquelle a le plus petit taux d'espèces venimeuses/vénéneuses ?\n1) Serpents\n2) Araignées\n3) Champignons", "Lequel de ces 3 sports se pratique dans l'eau ?\n1) Rafting\n2) Roundnet\n3) Ringuette\n", "Quelle actrice joue la Black Widow dans le film éponyme sorti en 2021 ?\n1) Jennifer Lawrence\n2) Scarlett Johanson\n3) Julian Moore\n",2,1,2);
+        Garde garde3 = new Garde("Noa", "Quelle plante appelle-t-on ''l'arbre à fraises'' ?\n1) Prunier \n2) Néflier \n3) Arbousier", "Parmi les 6 personnages principaux de la série télévisée Friends, on retrouve un des trois personnages suivants :\n1) Stanley\n2)Ross\3) Barney\n", "Quel personnage de jeu vidéo représente un hérisson ?\n1) Donkey Kong\n2) Yoshi\n3) Sonic\n",3,2,3);
         /*
-
         Princesse princesse = new Princesse();
         Boss boss = new Boss();
         */
@@ -258,12 +257,12 @@ public class Map implements Serializable {
         this.pieceCourante = pieceCourante;
     }
 
-    public String getParchemin() {
-        return parchemin;
+    public String getInscriptionMur() {
+        return inscriptionMur;
     }
 
-    public void setParchemin(String parchemin) {
-        this.parchemin = parchemin;
+    public void setInscriptionMur(String inscriptionMur) {
+        this.inscriptionMur = inscriptionMur;
     }
 
     public String getLettreAleat() {

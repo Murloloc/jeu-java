@@ -28,10 +28,12 @@ public enum Commande {
     ASSEOIR("AS", "AS (s'asseoir sur le trône)"),
     COMBATTRE("COM", "COM (engager le combat)"),
     FUIR("FU", "FU (prendre la fuite)"),
-    LANCER ("LANC", "LANC (lancer la partie)"),
+    LANCER("LANC", "LANC (lancer la partie)"),
     SAUVEGARDER("SAUV", "SAUV (sauvegarder la partie)"),
-    CONTINUER ("CONT", "CONT (continuer la partie)"),
-    QUITTER ("QUITTER", "QUITTER (quitter la partie)"),
+
+    CONTINUER("CONT", "CONT (continuer la partie)"),
+
+    QUITTER("QUITTER", "QUITTER (quitter la partie)"),
 
     ;
 
