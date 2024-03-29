@@ -7,15 +7,15 @@ import java.io.Serializable;
 import java.net.URL;
 
 public class GUI implements ActionListener, Serializable {
-    private Jeu jeu;
+    private final Jeu jeu;
     private JFrame fenetre;
     private JTextField entree;
     private JTextArea texte;
     private JLabel image;
 
-    public GUI(Jeu j) {
-        jeu = j;
-        creerGUI();
+    public GUI(Jeu jeu) {
+        this.jeu = jeu;
+        this.creerGUI();
     }
 
     public void afficher(String s) {
@@ -57,8 +57,8 @@ public class GUI implements ActionListener, Serializable {
         JPanel panel = new JPanel();
         image = new JLabel();
 
-        listScroller.setMaximumSize(new Dimension(920, 740));
-        listScroller.setPreferredSize(new Dimension(620, 740));
+        listScroller.setMaximumSize(new Dimension(879, 740));
+        listScroller.setPreferredSize(new Dimension(650, 740));
 
         panel.setLayout(new BorderLayout());
         panel.add(image, BorderLayout.CENTER);

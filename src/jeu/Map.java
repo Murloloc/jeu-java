@@ -18,14 +18,23 @@ public class Map implements Serializable {
 
     private Piece pieceCourante;
 
+    private String lettreAleat;
 
-    public Map(){
-        this.map = new Piece[30];
+    private int numAleat;
+
+    private String parchemin;
+
+
+    public Map() {
+        this.map = new Piece[31];
     }
 
     public void creerCarte() {
 
-        map[29] = new Piece("dans le menu","LANCER pour commencer une nouvelle partie\nCONTINUER pour reprendre une partie sauvegardée\nQUITTER pour quitter le jeu","Menu.jpg");
+        map[27] = new Piece("dans le menu", "LANCER pour commencer une nouvelle partie\nCONTINUER pour reprendre une partie sauvegardée\nQUITTER pour quitter le jeu", "Menu.jpg");
+        map[28] = new Piece("sur l'écran de victoire","Merci d'avoir joué au jeu\nQUITTER pour fermer le jeu","Victoire.jpg");
+        map[29] = new Piece("sur l'écran de défaite","Dommage :(\nCONTINUER pour relancer le jeu à votre dernière sauvegarde\nQUITTER pour fermer le jeu","Defaite.jpg");
+
         //étage -1
         map[0] = new Piece("au centre du donjon", "C'est l'endroit où vous vous êtes réveillé, sans souvenirs", "Donjon.jpg"); //centre
         map[1] = new Piece("dans la prison", "Des rochers vous bloquent ce qui semble être un chemin, peut être que le prisonnier" + "\n" + "sait ce qu'il se cache derrière", "Prison.jpg"); //est
@@ -41,7 +50,7 @@ public class Map implements Serializable {
         map[9] = new Piece("à l'escalier de droite", "Vous apercevez l'entrée du château", "EscalierDroite.jpg");
         map[10] = new Piece("dans l'armurerie", "Il y a des armes partout ! Et personne ne les surveille...", "Armurerie.jpg");
         map[11] = new Piece("dans la cuisine", "Il semblerait que quelque-chose se cache derrière ce comptoir...", "Cuisine.jpg");
-        map[26] = new Piece("dans la cuisine, derrière le comptoir", "Vous êtes face à un coffre", "Cuisine.jpg");
+        map[26] = new Piece("dans la cuisine, derrière le comptoir", "Vous êtes face à un coffre", "Comptoir.jpg");
         map[12] = new Piece("devant la chambre de la Princesse", "Cette entrée est bloquée", "EntreeChambrePrincesse.jpg");
         map[13] = new Piece("dans la galerie", "", "Galerie.jpg");
         map[14] = new Piece("devant la tour de gauche", "Cette entrée est bloquée", "EntreeTourGauche.jpg");
@@ -57,9 +66,8 @@ public class Map implements Serializable {
 
         // étage -2
         map[19] = new Piece("dans les catacombes", "Le mur est en piteux état, on dirait que quelqu'un a écrit dessus", "Catacombes.jpg");
-        Labyrinthe labyrinthe = new Labyrinthe("dans le labyrinthe", "Il fait tout noir ! Et le chemin est très étroit" + "\n" + "Il ne faudrait pas tomber dans le vide", "Labyrinthe.jpg");
-        labyrinthe.genererLabyrinthe(5);
-        map[20] = labyrinthe;
+        Labyrinthe labyrinthe = new Labyrinthe("dans le labyrinthe", "Il fait tout noir ! Et le chemin est très étroit" + "\n" + "Il ne faudrait pas tomber dans le vide", "Labyrinthe.jpg", this);
+
 
         map[21] = new Piece("à l'escalier", "Deux directions semblent se distinguer... Nord ou Sud ?", "EscalierCatacombes.jpg");
         map[22] = new Piece("dans la salle des pots", "On doit forcément trouver des ressources parmi tous ces pots...", "SalleDesPots.jpg");
@@ -69,7 +77,16 @@ public class Map implements Serializable {
 
         //sortie gagnante
 
-        map[25] = new Piece("dans la foret","Vous avez réussi à vous échapper du château, félicitations !","Foret.jpg");
+        map[25] = new Piece("dans la foret", "Vous avez réussi à vous échapper du château, félicitations !", "Foret.jpg");
+
+        //labyrinthe
+        labyrinthe.genererLabyrinthe();
+        map[20] = labyrinthe;
+
+
+        //tirage des variables aléatoires pour la biblio
+        aleat();
+
         //ajout des sorties
         // étage - 1
         map[0].ajouteSortie(Sortie.EST, map[1]);
@@ -131,13 +148,10 @@ public class Map implements Serializable {
         // étage -1
 
         map[19].ajouteSortie(Sortie.MONTER, map[1]);
-        map[19].ajouteSortie(Sortie.NORD, map[20]);
-
-        map[20].ajouteSortie(Sortie.SUD, map[19]);
-//        map[20].ajouteSortie(Sortie.OUEST, map[21]);
+        map[19].ajouteSortie(Sortie.NORD, labyrinthe.getPiecesLab()[0]);
 
         map[21].ajouteSortie(Sortie.MONTER, map[9]);
-        map[21].ajouteSortie(Sortie.EST,map[20]);
+        map[21].ajouteSortie(Sortie.DESCENDRE, labyrinthe.getPiecesLab()[4]);
         map[21].ajouteSortie(Sortie.SUD, map[22]);
 
         map[22].ajouteSortie(Sortie.NORD, map[21]);
@@ -151,9 +165,9 @@ public class Map implements Serializable {
         Prisonnier prisonnier = new Prisonnier("Jacques");
         Cuisinier cuisinier = new Cuisinier("Jacquelin");
         Servante servante = new Servante("Jacqueline");
-        Garde garde1 = new Garde("Rachid", "Quel est le deuxième plus grand Océan du monde ? 1)Atlantique, 2)Pacifique ou 3)Indien", "Dans le jeu Pokémon Version ''Noir et Blanc'', comment se nomme le Pokémon à l'apparence d'un écureuil ? 1)Ratentif, 2)Ecurieux ou 3)Squirwel", "Quel célèbre championnat sportif concerne le Football Américain : 1)Superbowl, 2)Top 14 ou 3)Ligue 1");
-        Garde garde2 = new Garde("Armando", "Parmi les catégories suivantes, laquelle a le plus petit taux d'espèces venimeuses/vénéneuses ? 1)Araignées, 2)Serpents ou 3)Champignons", "Lequel de ces 3 sports se pratique dans l'eau ? 1)Rafting, 2)Roundnet ou 3)Ringuette", "Quelle actrice joue la Black Widow dans le film éponyme sorti en 2021 ? 1)Scarlett Johanson, 2)Jennifer Lawrence ou 3)Julian Moore");
-        Garde garde3 = new Garde("Noa", "Quelle plante appelle-t-on ''l'arbre à fraises'' ? 1)Arbousier,  2)Néflier ou 3)Prunier", "Parmi les 6 personnages principaux de la série télévisée Friends, on retrouve un des trois personnages suivants : 1)Ross, 2)Stanley ou 3)Barney", "Quel personnage de jeu vidéo représente un hérisson ? 1)Sonic, 2)Yoshi ou 3)Donkey Kong");
+        Garde garde1 = new Garde("Rachid", "Quel est le deuxième plus grand Océan du monde ?\n1) Atlantique\n2) Pacifique\n3) Indien\n", "Dans le jeu Pokémon Version ''Noir et Blanc'', comment se nomme le Pokémon à l'apparence d'un écureuil ?\n1) Ratentif\n2) Ecurieux\n3) Squirwel\n", "Quel célèbre championnat sportif concerne le Football Américain ?\n1) Superbowl\n2) Top 14\n3) Ligue 1\n");
+        Garde garde2 = new Garde("Armando", "Parmi les catégories suivantes, laquelle a le plus petit taux d'espèces venimeuses/vénéneuses ?\n1) Araignées\n2) Serpents\n3) Champignons", "Lequel de ces 3 sports se pratique dans l'eau ?\n1) Rafting\n2) Roundnet\n3) Ringuette", "Quelle actrice joue la Black Widow dans le film éponyme sorti en 2021 ?\n 1) Scarlett Johanson\n2) Jennifer Lawrence\n3)Julian Moore\n");
+        Garde garde3 = new Garde("Noa", "Quelle plante appelle-t-on ''l'arbre à fraises'' ?\n1)Arbousier,  2)Néflier ou 3)Prunier", "Parmi les 6 personnages principaux de la série télévisée Friends, on retrouve un des trois personnages suivants : 1)Ross, 2)Stanley ou 3)Barney", "Quel personnage de jeu vidéo représente un hérisson ? 1)Sonic, 2)Yoshi ou 3)Donkey Kong");
         /*
 
         Princesse princesse = new Princesse();
@@ -174,10 +188,9 @@ public class Map implements Serializable {
         Item lingot = new Item("Lingot", "est très lourd");
         Item peluche = new Item("Peluche", "est très léger");
 
-        Plaque plaque1 = new Plaque(1,0);
-        Plaque plaque2 = new Plaque(2,0);
-        Plaque plaque3 = new Plaque(3,0);
-
+        Plaque plaque1 = new Plaque(1, 0);
+        Plaque plaque2 = new Plaque(2, 0);
+        Plaque plaque3 = new Plaque(3, 0);
 
         initialiserPot();
 
@@ -188,37 +201,28 @@ public class Map implements Serializable {
         map[23].ajouterItem(plaque2);
         map[23].ajouterItem(plaque3);
 
-
-
-
-
         map[3].ajouterItem(baton);
-        Item bata = new Item("Bata", "sert à construire un objet");
-        map[3].ajouterItem(bata);
-
         map[10].ajouterItem(epee);
 
-
-
-        this.pieceCourante = map[29];
+        this.pieceCourante = map[15];
     }
 
 
-    public  void initialiserPot() {
+    public void initialiserPot() {
         int[] full = new int[6];
 
         for (int i = 0; i < 6; i++) {
             full[i] = 0;
         }
 
-        Random random = new Random();
+        Random rand = new Random();
 
-        int a;
-        int b;
-        int c;
-
-        while ((a = random.nextInt(5)) == (b = random.nextInt(5)) || (a) == (c = random.nextInt(5)) || (b) == (c)) {
-        }
+        int a, b, c;
+        do {
+            a = rand.nextInt(6);
+            b = rand.nextInt(6);
+            c = rand.nextInt(6);
+        } while (a == b || a == c || b == c);
 
         full[a] = 1;
         full[b] = 1;
@@ -228,18 +232,14 @@ public class Map implements Serializable {
             map[22].ajouterItem(new Pot(i + 1, full[i]));
         }
     }
-    public String tireLettreAleat() {
-        String lettre = "";
-        // parchemin qui indique une lettre de l'alphabet variable
-        // déclaration d'un tableau de caractères contenant les lettres de l'alphabet
+
+    public void aleat() {
         String alphabet = "asr";
-        // création d'un objet Random
         Random rand = new Random();
-        // ce rand va me servir à créer un index aléatoire qui prendra une valeur entre
-        // 0 et 25
         int randomIndex = rand.nextInt(alphabet.length());
-        lettre = String.valueOf(alphabet.charAt(randomIndex));
-        return lettre;
+        this.lettreAleat = String.valueOf(alphabet.charAt(randomIndex));
+
+        this.numAleat = rand.nextInt(3) + 1;
     }
 
     public Piece[] getMap() {
@@ -256,5 +256,21 @@ public class Map implements Serializable {
 
     public void setPieceCourante(Piece pieceCourante) {
         this.pieceCourante = pieceCourante;
+    }
+
+    public String getParchemin() {
+        return parchemin;
+    }
+
+    public void setParchemin(String parchemin) {
+        this.parchemin = parchemin;
+    }
+
+    public String getLettreAleat() {
+        return lettreAleat;
+    }
+
+    public int getNumAleat() {
+        return numAleat;
     }
 }

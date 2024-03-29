@@ -65,7 +65,7 @@ public class Piece implements Serializable {
         this.sorties.remove(sortie.name());
     }
 
-    private String sorties() {
+    String sorties() {
         return sorties.keySet().toString();
     }
 
