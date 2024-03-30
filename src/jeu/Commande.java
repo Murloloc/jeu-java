@@ -18,29 +18,27 @@ public enum Commande {
     JAUNE("JAU", "JAU (choisir la clé jaune)"),
     BLEUE("BLE", "BLE (choisir la clé bleue"),
     CRAFTER("CR", "CR (crafter un item)"),
-    OUVRIR("OUV", "OUV (ouvrir le coffre"),
+    OUVRIR("OUV", "OUV (ouvrir le coffre)"),
     CASSER("CA", "CA (casser l'obstacle)"),
     ECLAIRER("ECL", "ECL (éclaire la pièce)"),
     LIRE("L", "L (lire le texte écrit)"),
     POSER("PO", "PO (poser un objet)"),
     VERIFIER("VER", "VER (vérifier les plaques de pression)"),
     INSPECTER("INS", "INS (inspecter la pièce)"),
-    ASSEOIR("AS", "AS (s'asseoir sur le trône)"),
+    ASSEOIR("SAS", "SAS (s'asseoir sur le trône)"),
     COMBATTRE("COM", "COM (engager le combat)"),
     FUIR("FU", "FU (prendre la fuite)"),
     LANCER("LANC", "LANC (lancer la partie)"),
     SAUVEGARDER("SAUV", "SAUV (sauvegarder la partie)"),
-
     CONTINUER("CONT", "CONT (continuer la partie)"),
-
     QUITTER("QUITTER", "QUITTER (quitter la partie)"),
 
     ;
 
-    private String abreviation;
-    private String description;
+    private final String abreviation;
+    private final String description;
 
-    private Commande(String c, String d) {
+    Commande(String c, String d) {
         abreviation = c;
         description = d;
     }

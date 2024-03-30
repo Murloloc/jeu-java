@@ -17,13 +17,12 @@ public class Jeu implements Serializable {
     private int var;
     private int vie;
     private Inventaire inventaire = new Inventaire();
-    private Joueur joueur = new Joueur("Tyrion", inventaire.getListeInventaire());
     private Map map = new Map();
 
     public Jeu() {
         map.creerCarte();
         this.gui = null;
-        this.etatCommande = 0;
+        this.etatCommande = 8;
         this.vie = 1;
     }
 
@@ -52,7 +51,7 @@ public class Jeu implements Serializable {
 
     public void traiterCommande(String commandeLue) {
         switch (etatCommande) {
-            case 0:
+            case 0: //commande de base
                 gui.afficher("> " + commandeLue + "\n");
                 switch (commandeLue.toUpperCase()) {
                     case "?":
@@ -82,10 +81,6 @@ public class Jeu implements Serializable {
                     case "D":
                     case "DESCENDRE":
                         allerEn("DESCENDRE");
-                        break;
-                    case "LANC":
-                    case "LANCER":
-                        lancer();
                         break;
                     case "SAUV":
                     case "SAUVEGARDER":
@@ -161,7 +156,7 @@ public class Jeu implements Serializable {
                         break;
                 }
                 break;
-            case 1:
+            case 1: //réponse au prisonnier
                 gui.afficher("> " + commandeLue + "\n");
                 switch (commandeLue.toUpperCase()) {
                     case "JAU":
@@ -175,7 +170,7 @@ public class Jeu implements Serializable {
                         break;
                 }
                 break;
-            case 2:
+            case 2: //fouiller les pots
                 gui.afficher("> " + commandeLue + "\n");
                 switch (commandeLue.toUpperCase()) {
                     case "F1":
@@ -201,7 +196,7 @@ public class Jeu implements Serializable {
                         break;
                 }
                 break;
-            case 3:
+            case 3: //choisir une plaque
                 gui.afficher("> " + commandeLue + "\n");
                 if (commandeLue.equalsIgnoreCase("1") || commandeLue.equalsIgnoreCase("2") || commandeLue.equalsIgnoreCase("3")) {
                     boolean etatPlaque = poserPlaque(Integer.parseInt(commandeLue));
@@ -218,7 +213,8 @@ public class Jeu implements Serializable {
                     this.etatCommande = 0;
                 }
                 break;
-            case 4:
+            case 4: //poser un objet sur une plaque
+                gui.afficher("> " + commandeLue + "\n");
                 switch (commandeLue.toUpperCase()) {
                     case "PELUCHE", "PIOCHE", "LINGOT":
                         poserObjetSurPlaque(var, commandeLue.toUpperCase());
@@ -229,13 +225,87 @@ public class Jeu implements Serializable {
                         break;
                 }
                 break;
-            case 5:
+            case 5: //depause
+                gui.afficher("> " + commandeLue + "\n");
                 if (commandeLue.equalsIgnoreCase("DEPAUSE")) {
                     depause();
                 }
                 break;
+            case 6: //répondre à un garde
+                gui.afficher("> " + commandeLue + "\n");
+                switch (commandeLue.toUpperCase()) {
+                    case "1":
+                    case "2":
+                    case "3":
+                        //parlerGarde(commandeLue.toUpperCase());
+                        break;
+                    default:
+                        gui.afficher("Commande invalide\n");
+                        break;
+                }
+                break;
+            case 7: //combat contre le boss
+                gui.afficher("> " + commandeLue + "\n");
+                switch (commandeLue.toUpperCase()) {
+                    case "COM":
+                    case "COMBATTRE":
+                        //combattre();
+                        break;
+                    case "FU":
+                    case "FUIR":
+                        //fuir();
+                        break;
+                    default:
+                        gui.afficher("Commande invalide\n");
+                        break;
+                }
+                break;
+            case 8: //menu
+                gui.afficher("> " + commandeLue + "\n");
+                switch (commandeLue.toUpperCase()) {
+                    case "CONT":
+                    case "CONTINUER":
+                        continuer();
+                        break;
+                    case "LANCER":
+                    case "LANC":
+                        lancer();
+                        break;
+                    case "QUITTER":
+                        terminer();
+                        break;
+                    default:
+                        gui.afficher("Commande invalide\n");
+                        break;
+                }
+                break;
+            case 9: //Victoire
+                gui.afficher("> " + commandeLue + "\n");
+                switch (commandeLue.toUpperCase()) {
+                    case "QUITTER":
+                        terminer();
+                        break;
+                    default:
+                        gui.afficher("Commande invalide\n");
+                        break;
+                }
+                break;
+            case 10: //Defaite
+                gui.afficher("> " + commandeLue + "\n");
+                switch (commandeLue.toUpperCase()) {
+                    case "CONT":
+                    case "CONTINUER":
+                        continuer();
+                        break;
+                    case "QUITTER":
+                        terminer();
+                        break;
+                    default:
+                        gui.afficher("Commande invalide\n");
+                        break;
+                }
+                break;
         }
-
     }
 
     private void afficherAide() {
@@ -346,17 +416,17 @@ public class Jeu implements Serializable {
             }
 
         } else if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle des gardes")) {
-            parlerGarde();
+            //parlerGarde();
         } else {
             gui.afficher("Il n'y a personne avec qui parler");
         }
     }
 
-    private void parlerGarde() {
-        Garde garde = (Garde) map.getPieceCourante().getListePNJ().getFirst();
-        gui.afficher(garde.dialogue(map.getLettreAleat()));
-        this.etatCommande = 6;
-    }//fin parler garde
+//    private void parlerGarde() {
+//        Garde garde = (Garde) map.getPieceCourante().getListePNJ().getFirst();
+//        gui.afficher(garde.dialogue(map.getLettreAleat()));
+//        this.etatCommande = 6;
+//    }//fin parler garde
 
 
     private void donnerCle(String commandeLue) {
@@ -610,7 +680,14 @@ public class Jeu implements Serializable {
                 gui.afficheImage(map.getPieceCourante().nomImage());
             } else {
                 gui.afficher("Les objets posés ne sont pas dans le bon ordre\n");
-                //remettre les plaques à 0
+                plaque1.setEtat(0);
+                plaque2.setEtat(0);
+                plaque3.setEtat(0);
+                inventaire.ajouterInventaire(plaque1.getItem());
+                inventaire.ajouterInventaire(plaque2.getItem());
+                inventaire.ajouterInventaire(plaque3.getItem());
+                gui.afficher("Les objets ont été remis dans votre inventaire\n");
+
             }
         } else {
             gui.afficher("Il vous manque des objets sur les plaques\n");
@@ -666,6 +743,7 @@ public class Jeu implements Serializable {
     private void gagner() {
         gui.afficher("Vous avez gagné la partie\nFéliciations !!!");
         gui.afficheImage("Victoire.jpg");
+        this.etatCommande = 9;
     }
 
     private void perdre() {
@@ -673,7 +751,7 @@ public class Jeu implements Serializable {
         map.setPieceCourante(map.getMap()[29]);
         gui.afficher(map.getPieceCourante().descriptionLongue());
         gui.afficheImage(map.getPieceCourante().nomImage());
-        this.etatCommande = 5;
+        this.etatCommande = 10;
     }
 
     private void terminer() {

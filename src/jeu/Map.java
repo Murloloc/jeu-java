@@ -31,7 +31,7 @@ public class Map implements Serializable {
 
     public void creerCarte() {
 
-        map[27] = new Piece("dans le menu", "LANCER pour commencer une nouvelle par     tie\nCONTINUER pour reprendre une partie sauvegardée\nQUITTER pour quitter le jeu", "Menu.jpg");
+        map[27] = new Piece("dans le menu", "LANCER pour commencer une nouvelle partie\nCONTINUER pour reprendre une partie sauvegardée\nQUITTER pour quitter le jeu", "Menu.jpg");
         map[28] = new Piece("sur l'écran de victoire", "Merci d'avoir joué au jeu\nQUITTER pour fermer le jeu", "Victoire.jpg");
         map[29] = new Piece("sur l'écran de défaite", "Dommage :(\nCONTINUER pour relancer le jeu à votre dernière sauvegarde\nQUITTER pour fermer le jeu", "Defaite.jpg");
 
