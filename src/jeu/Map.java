@@ -32,8 +32,8 @@ public class Map implements Serializable {
     public void creerCarte() {
 
         map[27] = new Piece("dans le menu", "LANCER pour commencer une nouvelle partie\nCONTINUER pour reprendre une partie sauvegardée\nQUITTER pour quitter le jeu", "Menu.jpg");
-        map[28] = new Piece("sur l'écran de victoire", "Merci d'avoir joué au jeu\nQUITTER pour fermer le jeu", "Victoire.jpg");
-        map[29] = new Piece("sur l'écran de défaite", "Dommage :(\nCONTINUER pour relancer le jeu à votre dernière sauvegarde\nQUITTER pour fermer le jeu", "Defaite.jpg");
+        map[25] = new Piece("sur l'écran de victoire", "Merci d'avoir joué au jeu\nQUITTER pour fermer le jeu", "Victoire.jpg");
+        map[28] = new Piece("sur l'écran de défaite", "Dommage :(\nCONTINUER pour relancer le jeu à votre dernière sauvegarde\nQUITTER pour fermer le jeu", "Defaite.jpg");
 
         //étage -1
         map[0] = new Piece("au centre du donjon", "C'est l'endroit où vous vous êtes réveillé, sans souvenirs", "Donjon.jpg"); //centre
@@ -43,11 +43,11 @@ public class Map implements Serializable {
         map[4] = new Piece("dans la salle des coffres", "Vous voyez un coffre jaune et un coffre bleu vérouillés, une clé doit sûrement se cacher" + "\n" + "quelque-part...", "SalleDesCoffres.jpg"); //sud
 
         // RDC
-        map[5] = new Piece("à l'escalier de gauche", "Vous apercevez l'entrée du château", "EscalierGauche.jpg");
+        map[5] = new Piece("à l'escalier de gauche", "\nLa grille de l'escalier s'est refermée derrière vous\nIl n'est plus possible de descendre\nVous apercevez l'entrée du château", "EscalierGauche.jpg");
         map[6] = new Piece("à l'entrée du château", "C'est l'entrée du château ! Comment faire pour s'échapper...", "EntreeChateau.jpg");
         map[7] = new Piece("dans la bibliothèque", "Peut-être que des informations utiles sont gardées ici", "Bibliotheque.jpg");
         map[8] = new Piece("dans la salle du trône", "On aperçoit le trône du Roi, cela serait osé de s'asseoir dessus en son absence...", "SalleDuTrone.jpg");
-        map[9] = new Piece("à l'escalier de droite", "Vous apercevez l'entrée du château", "EscalierDroite.jpg");
+        map[9] = new Piece("à l'escalier de droite", "\nLa grille de l'escalier s'est refermée derrière vous\nIl n'est plus possible de descendre\nVous apercevez l'entrée du château", "EscalierDroite.jpg");
         map[10] = new Piece("dans l'armurerie", "Il y a des armes partout ! Et personne ne les surveille...", "Armurerie.jpg");
         map[11] = new Piece("dans la cuisine", "Il semblerait que quelque-chose se cache derrière ce comptoir...", "Cuisine.jpg");
         map[26] = new Piece("dans la cuisine, derrière le comptoir", "Vous êtes face à un coffre", "Comptoir.jpg");
@@ -73,11 +73,9 @@ public class Map implements Serializable {
         map[22] = new Piece("dans la salle des pots", "On doit forcément trouver des ressources parmi tous ces pots...", "SalleDesPots.jpg");
 
         // étage -3
-        map[23] = new Piece("dans la grotte", "Il y a trois plaques de pression" + "\n" + "Si on les regarde de gauche à droite, elles sont de plus en plus épaisses" + "\n" + "Essayez-donc de poser des objets de plus en plus lourds dans ce même ordre\nTapez VERIF quand vous pensez avoir fini\n", "Grotte.jpg");
+        map[23] = new Piece("dans la grotte", "Il y a trois plaques de pression" + "\n" + "Si on les regarde de gauche à droite, elles sont de plus en plus épaisses" + "\n" + "Essayez-donc de poser des objets de plus en plus lourds dans ce même ordre\nTapez VERIF quand vous pensez avoir fini", "Grotte.jpg");
 
-        //sortie gagnante
 
-        map[25] = new Piece("dans la foret", "Vous avez réussi à vous échapper du château, félicitations !", "Foret.jpg");
 
         //labyrinthe
         labyrinthe.genererLabyrinthe();
@@ -99,7 +97,6 @@ public class Map implements Serializable {
         map[4].ajouteSortie(Sortie.OUEST, map[3]);
 
         //rdc
-        map[5].ajouteSortie(Sortie.DESCENDRE, map[2]);
         map[5].ajouteSortie(Sortie.EST, map[6]);
         map[5].ajouteSortie(Sortie.NORD, map[7]);
 
@@ -136,17 +133,14 @@ public class Map implements Serializable {
         map[15].ajouteSortie(Sortie.NORD, map[14]);
 
         //tour 1G
-        map[16].ajouteSortie(Sortie.SUD, map[14]);
-        map[16].ajouteSortie(Sortie.NORD, map[17]);
+        map[16].ajouteSortie(Sortie.DESCENDRE, map[14]);
 
-        map[17].ajouteSortie(Sortie.SUD, map[16]);
+        map[17].ajouteSortie(Sortie.DESCENDRE, map[16]);
 
         //tour 1D
-
         map[18].ajouteSortie(Sortie.DESCENDRE, map[12]);
 
         // étage -1
-
         map[19].ajouteSortie(Sortie.MONTER, map[1]);
         map[19].ajouteSortie(Sortie.NORD, labyrinthe.getPiecesLab()[0]);
 
@@ -157,21 +151,16 @@ public class Map implements Serializable {
         map[22].ajouteSortie(Sortie.NORD, map[21]);
 
         // étage -2
-
         map[23].ajouteSortie(Sortie.MONTER, map[22]);
 
         //ajout des personnages
-
-        Prisonnier prisonnier = new Prisonnier("Jacques");
-        Cuisinier cuisinier = new Cuisinier("Jacquelin");
-        Servante servante = new Servante("Jacqueline");
-        Garde garde1 = new Garde("Armando", "Quel est le deuxième plus grand Océan du monde ?\n1) Atlantique\n2) Pacifique\n3) Indien\n", "Dans le jeu Pokémon Version ''Noir et Blanc'', comment se nomme le Pokémon à l'apparence d'un écureuil ?\n1) Ratentif\n2) Ecurieux\n3) Squirwel\n", "Quel célèbre championnat sportif concerne le Football Américain ?\n1) Ligue 1\n2) Top 14\n3) Superbowl\n",1,1, 3);
-        Garde garde2 = new Garde("Rachid", "Parmi les catégories suivantes, laquelle a le plus petit taux d'espèces venimeuses/vénéneuses ?\n1) Serpents\n2) Araignées\n3) Champignons", "Lequel de ces 3 sports se pratique dans l'eau ?\n1) Rafting\n2) Roundnet\n3) Ringuette\n", "Quelle actrice joue la Black Widow dans le film éponyme sorti en 2021 ?\n1) Jennifer Lawrence\n2) Scarlett Johanson\n3) Julian Moore\n",2,1,2);
-        Garde garde3 = new Garde("Noa", "Quelle plante appelle-t-on ''l'arbre à fraises'' ?\n1) Prunier \n2) Néflier \n3) Arbousier", "Parmi les 6 personnages principaux de la série télévisée Friends, on retrouve un des trois personnages suivants :\n1) Stanley\n2)Ross\3) Barney\n", "Quel personnage de jeu vidéo représente un hérisson ?\n1) Donkey Kong\n2) Yoshi\n3) Sonic\n",3,2,3);
-        /*
-        Princesse princesse = new Princesse();
-        Boss boss = new Boss();
-        */
+        Prisonnier prisonnier = new Prisonnier("Marc");
+        Cuisinier cuisinier = new Cuisinier("Marcel");
+        Servante servante = new Servante("Marie");
+        Garde garde1 = new Garde("Armando", "Quel est le deuxième plus grand Océan du monde ?\n1) Atlantique\n2) Pacifique\n3) Indien\n", "Dans le jeu Pokémon Version ''Noir et Blanc'', comment se nomme le Pokémon à l'apparence d'un écureuil ?\n1) Ratentif\n2) Ecurieux\n3) Squirwel\n", "Quel célèbre championnat sportif concerne le Football Américain ?\n1) Ligue 1\n2) Top 14\n3) Superbowl\n", "1", "1", "3");
+        Garde garde2 = new Garde("Rachid", "Parmi les catégories suivantes, laquelle a le plus petit taux d'espèces venimeuses/vénéneuses ?\n1) Serpents\n2) Araignées\n3) Champignons", "Lequel de ces 3 sports se pratique dans l'eau ?\n1) Rafting\n2) Roundnet\n3) Ringuette\n", "Quelle actrice joue la Black Widow dans le film éponyme sorti en 2021 ?\n1) Jennifer Lawrence\n2) Scarlett Johanson\n3) Julian Moore\n", "2", "1", "2");
+        Garde garde3 = new Garde("Noa", "Quelle plante appelle-t-on ''l'arbre à fraises'' ?\n1) Prunier \n2) Néflier \n3) Arbousier", "Parmi les 6 personnages principaux de la série télévisée Friends, on retrouve un des trois personnages suivants :\n1) Stanley\n2) Ross\n3) Barney\n", "Quel personnage de jeu vidéo représente un hérisson ?\n1) Donkey Kong\n2) Yoshi\n3) Sonic\n", "3", "2", "3");
+        //Princesse princesse = new Princesse();
 
         map[1].ajouterPNJ(prisonnier);
         map[6].ajouterPNJ(cuisinier);
@@ -181,15 +170,19 @@ public class Map implements Serializable {
         map[16].ajouterPNJ(garde3);
 
         //ajout des objets
-
         Item baton = new Item("Baton", "sert à construire un objet");
         Item epee = new Item("Epée", "sert à vous défendre");
         Item lingot = new Item("Lingot", "est très lourd");
         Item peluche = new Item("Peluche", "est très léger");
+        Item cleDuChateau = new Item("Clé du château", "sert à ouvrir la porte du château");
 
         Plaque plaque1 = new Plaque(1, 0);
         Plaque plaque2 = new Plaque(2, 0);
         Plaque plaque3 = new Plaque(3, 0);
+
+        map[3].ajouterItem(baton);
+        map[10].ajouterItem(epee);
+        map[17].ajouterItem(cleDuChateau);
 
         initialiserPot();
 
@@ -200,12 +193,8 @@ public class Map implements Serializable {
         map[23].ajouterItem(plaque2);
         map[23].ajouterItem(plaque3);
 
-        map[3].ajouterItem(baton);
-        map[10].ajouterItem(epee);
-
         this.pieceCourante = map[27];
     }
-
 
     public void initialiserPot() {
         int[] full = new int[6];
@@ -213,9 +202,7 @@ public class Map implements Serializable {
         for (int i = 0; i < 6; i++) {
             full[i] = 0;
         }
-
         Random rand = new Random();
-
         int a, b, c;
         do {
             a = rand.nextInt(6);

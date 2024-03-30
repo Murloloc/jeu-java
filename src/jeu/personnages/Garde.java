@@ -5,14 +5,14 @@ import java.io.Serializable;
 public class Garde extends PNJ implements Serializable {
 
     private String question1;
-    private int reponse1;
+    private String reponse1;
     private String question2;
-    private int reponse2;
+    private String reponse2;
     private String question3;
-    private int reponse3;
+    private String reponse3;
 
 
-    public Garde(String nom, String q1, String q2, String q3, int r1, int r2, int r3) {
+    public Garde(String nom, String q1, String q2, String q3, String r1, String r2, String r3) {
         super(nom);
         this.etat = 0;
         this.question1 = q1;
@@ -24,15 +24,22 @@ public class Garde extends PNJ implements Serializable {
     }
 
     public String dialogue(String lettre) {
-        return switch (lettre) {
+        return switch (lettre.toUpperCase()) {
             case "A" -> "Bonjour je suis le garde " + this.nom + "\nVoici ma question : \n" +this.question1;
             case "R" -> "Bonjour je suis le garde " + this.nom + "\nVoici ma question : \n" +this.question2;
             case "S" -> "Bonjour je suis le garde " + this.nom + "\nVoici ma question : \n" +this.question3;
             default -> "Pas de question correspondante.";
         };
-
     }
 
+    public String getReponse(String lettre) {
+        return switch (lettre.toUpperCase()) {
+            case "A" -> this.reponse1;
+            case "R" -> this.reponse2;
+            case "S" -> this.reponse3;
+            default -> "Pas de réponse correspondante.";
+        };
+    }
     public String getQ1() {
         return this.question1;
     }

@@ -23,7 +23,7 @@ public class Jeu implements Serializable {
         map.creerCarte();
         this.gui = null;
         this.etatCommande = 8;
-        this.vie = 1;
+        this.vie = 3;
     }
 
     public GUI getGUI() {
@@ -41,10 +41,8 @@ public class Jeu implements Serializable {
     }
 
     private void afficherMessageDeBienvenue() {
-        gui.afficher("Bienvenue !");
-        gui.afficher();
-        gui.afficher("Tapez '?' pour obtenir de l'aide");
-        gui.afficher();
+        gui.afficher("Bienvenue !\n");
+        gui.afficher("Tapez '?' pour obtenir de l'aide\n");
         afficherLocalisation();
         gui.afficheImage(map.getPieceCourante().nomImage());
     }
@@ -135,9 +133,6 @@ public class Jeu implements Serializable {
                     case "VERIF":
                     case "VERIFIER":
                         verifierPlaques();
-                        break;
-                    case "DEBUG":
-                        debug();
                         break;
                     case "INS":
                     case "INSPECTER":
@@ -237,7 +232,7 @@ public class Jeu implements Serializable {
                     case "1":
                     case "2":
                     case "3":
-                        //parlerGarde(commandeLue.toUpperCase());
+                        parlerGarde(commandeLue);
                         break;
                     default:
                         gui.afficher("Commande invalide\n");
@@ -249,11 +244,11 @@ public class Jeu implements Serializable {
                 switch (commandeLue.toUpperCase()) {
                     case "COM":
                     case "COMBATTRE":
-                        //combattre();
+                        combattre();
                         break;
                     case "FU":
                     case "FUIR":
-                        //fuir();
+                        fuir();
                         break;
                     default:
                         gui.afficher("Commande invalide\n");
@@ -281,13 +276,10 @@ public class Jeu implements Serializable {
                 break;
             case 9: //Victoire
                 gui.afficher("> " + commandeLue + "\n");
-                switch (commandeLue.toUpperCase()) {
-                    case "QUITTER":
-                        terminer();
-                        break;
-                    default:
-                        gui.afficher("Commande invalide\n");
-                        break;
+                if (commandeLue.equalsIgnoreCase("QUITTER")) {
+                    terminer();
+                } else {
+                    gui.afficher("Commande invalide\n");
                 }
                 break;
             case 10: //Defaite
@@ -329,13 +321,18 @@ public class Jeu implements Serializable {
             }
         } else {
             map.setPieceCourante(nouvelle);
-            if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 1") || Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 2") || Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 3") || Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 4") || Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 5")) {
+            if (Objects.equals(map.getPieceCourante().getNomPiece(), "sur l'écran de victoire")) {
+                gagner();
+            } else if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 1") || Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 2") || Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 3") || Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 4") || Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 5")) {
                 gui.afficher("Vous êtes " + map.getPieceCourante().getNomPiece());
                 gui.afficheImage(map.getPieceCourante().nomImage());
             } else {
                 gui.afficher(map.getPieceCourante().descriptionLongue());
                 gui.afficher();
                 gui.afficheImage(map.getPieceCourante().nomImage());
+                if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle du Boss")) {
+                    this.etatCommande = 7;
+                }
             }
         }
     }
@@ -347,6 +344,7 @@ public class Jeu implements Serializable {
             map.setPieceCourante(map.getMap()[0]);
             this.gui.afficheImage(this.map.getPieceCourante().nomImage());
             this.gui.afficher(this.map.getPieceCourante().descriptionLongue());
+            this.etatCommande = 0;
         } else {
             gui.afficher("Le jeu est déjà lancé");
         }
@@ -383,6 +381,7 @@ public class Jeu implements Serializable {
             this.gui.afficheImage(this.map.getPieceCourante().nomImage());
             this.gui.afficher(this.map.getPieceCourante().descriptionLongue());
             this.inventaire = object1.inventaire;
+            this.etatCommande = object1.etatCommande;
         } catch (ClassNotFoundException cnfe) {
             System.err.println("Erreur : classe non-trouvée");
         } catch (EOFException eofe) {
@@ -407,26 +406,55 @@ public class Jeu implements Serializable {
 
     private void parler() {
         if (!map.getPieceCourante().getListePNJ().isEmpty()) {
-            for (PNJ pnj : map.getPieceCourante().getListePNJ()) {
-                gui.afficher(pnj.dialogue());
-                if (pnj instanceof Prisonnier && pnj.getEtat() == 0) {
-                    gui.afficher("JAU pour la clé Jaune\nBLE pour la clé Bleue");
-                    etatCommande = 1;
+            if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle des gardes")) {
+                parlerGarde();
+            } else {
+                for (PNJ pnj : map.getPieceCourante().getListePNJ()) {
+                    gui.afficher(pnj.dialogue());
+                    if (pnj instanceof Prisonnier && pnj.getEtat() == 0) {
+                        gui.afficher("JAU pour la clé Jaune\nBLE pour la clé Bleue");
+                        this.etatCommande = 1;
+                    }
                 }
             }
-
-        } else if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle des gardes")) {
-            //parlerGarde();
         } else {
             gui.afficher("Il n'y a personne avec qui parler");
         }
     }
 
-//    private void parlerGarde() {
-//        Garde garde = (Garde) map.getPieceCourante().getListePNJ().getFirst();
-//        gui.afficher(garde.dialogue(map.getLettreAleat()));
-//        this.etatCommande = 6;
-//    }//fin parler garde
+    private void parlerGarde() {
+        Garde garde = (Garde) map.getPieceCourante().getListePNJ().getFirst();
+        gui.afficher(garde.dialogue(map.getLettreAleat()));
+        this.etatCommande = 6;
+    }//fin parler garde
+
+    private void parlerGarde(String commandeLue) {
+        Garde garde = (Garde) map.getPieceCourante().getListePNJ().getFirst();
+        if (Objects.equals(commandeLue, garde.getReponse(map.getLettreAleat()))) {
+            gui.afficher("Bonne réponse\n");
+            map.getPieceCourante().retirerPNJ(garde);
+            gui.afficher("Vous avez réussi à passer le garde\nLe garde " + garde.getNom() + " est parti\n");
+            if (!map.getPieceCourante().getListePNJ().isEmpty()) {
+                parler();
+            } else {
+                gui.afficher("Vous avez répondu corectement à toutes les questions\n");
+                gui.afficher("Vous pouvez monter les escaliers\n");
+                map.getPieceCourante().ajouteSortie(Sortie.MONTER, map.getMap()[17]);
+                map.getPieceCourante().setDescription("Il n'y a plus de garde");
+//                map.getPieceCourante().setNomImage("SalleDesGardesSansGarde.jpg");
+//                gui.afficheImage(map.getPieceCourante().nomImage());
+                this.etatCommande = 0;
+            }
+        } else {
+            gui.afficher("Mauvaise réponse\n");
+            gui.afficher("Vous perdez une vie\n");
+            gui.afficher("Il vous reste " + this.vie + " vie(s)\n");
+            this.vie--;
+            if (!checkVie()) {
+                parler();
+            }
+        }
+    }
 
 
     private void donnerCle(String commandeLue) {
@@ -472,7 +500,7 @@ public class Jeu implements Serializable {
         }
         if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans le couloir") && map.getPieceCourante().estVideDObjet()) {
             map.getPieceCourante().setNomImage("CouloirFouille.jpg");
-            gui.afficheImage("CouloirFouille.jpg");
+            gui.afficheImage(map.getPieceCourante().nomImage());
         }
     }
 
@@ -482,50 +510,50 @@ public class Jeu implements Serializable {
 
     private void ouvrirCoffre() {
         int etat = 0;
-        if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle des coffres")) {
-            if (inventaire.getListeInventaire().isEmpty()) {
-                gui.afficher("Il vous faudrait une clé afin de pouvoir ouvrir un de ces coffres \n");
-            } else {
-                Item tempj = inventaire.getItemByName("Clé Jaune");
-                if (tempj != null) {
-                    inventaire.retirerInventaire(tempj);
-                    inventaire.ajouterInventaire(new Item("Tête de pioche", "combiné avec un baton je peux peut être en faire une pioche afin de casser les rochers"));
-                    gui.afficher("Le coffre jaune a été ouvert\n");
-                    gui.afficher("La tête de pioche a été ajouté à l'inventaire\n");
-                    map.getPieceCourante().setNomPiece("dans la salle des coffres (ouverts)");
-                    map.getPieceCourante().setDescription("Il n'y a plus rien à faire ici");
-                    map.getPieceCourante().setNomImage("SalleDesCoffresSansJaune.jpg");
-                    gui.afficheImage("SalleDesCoffresSansJaune.jpg");
-                    etat = 1;
-                }
-                Item tempb = inventaire.getItemByName("Clé Bleue");
-                if (tempb != null) {
-                    inventaire.retirerInventaire(tempb);
-                    inventaire.ajouterInventaire(new Item("Charbon", "combiné avec un baton je peux peut être en faire une torche afin d'éclaire l'escalier"));
-                    gui.afficher("Le coffre bleu a été ouvert\n");
-                    gui.afficher("Du charbon a été ajouté à l'inventaire\n");
-                    map.getPieceCourante().setNomPiece("dans la salle des coffres (ouverts)");
-                    map.getPieceCourante().setDescription("Il n'y a plus rien à faire ici");
-                    map.getPieceCourante().setNomImage("SalleDesCoffresSansBleujpg");
-                    gui.afficheImage("SalleDesCoffresSansBleu.jpg");
-                    etat = 1;
-                }
-                if (etat == 0) {
+        switch (map.getPieceCourante().getNomPiece()) {
+            case "dans la salle des coffres" -> {
+                if (inventaire.getListeInventaire().isEmpty()) {
                     gui.afficher("Il vous faudrait une clé afin de pouvoir ouvrir un de ces coffres \n");
+                } else {
+                    Item tempj = inventaire.getItemByName("Clé Jaune");
+                    if (tempj != null) {
+                        inventaire.retirerInventaire(tempj);
+                        inventaire.ajouterInventaire(new Item("Tête de pioche", "combiné avec un baton je peux peut être en faire une pioche afin de casser les rochers"));
+                        gui.afficher("Le coffre jaune a été ouvert\n");
+                        gui.afficher("La tête de pioche a été ajouté à l'inventaire\n");
+                        map.getPieceCourante().setNomPiece("dans la salle des coffres (ouverts)");
+                        map.getPieceCourante().setDescription("Il n'y a plus rien à faire ici");
+                        map.getPieceCourante().setNomImage("SalleDesCoffresSansJaune.jpg");
+                        gui.afficheImage(map.getPieceCourante().nomImage());
+                        etat = 1;
+                    }
+                    Item tempb = inventaire.getItemByName("Clé Bleue");
+                    if (tempb != null) {
+                        inventaire.retirerInventaire(tempb);
+                        inventaire.ajouterInventaire(new Item("Charbon", "combiné avec un baton je peux peut être en faire une torche afin d'éclaire l'escalier"));
+                        gui.afficher("Le coffre bleu a été ouvert\n");
+                        gui.afficher("Du charbon a été ajouté à l'inventaire\n");
+                        map.getPieceCourante().setNomPiece("dans la salle des coffres (ouverts)");
+                        map.getPieceCourante().setDescription("Il n'y a plus rien à faire ici");
+                        map.getPieceCourante().setNomImage("SalleDesCoffresSansBleujpg");
+                        gui.afficheImage(map.getPieceCourante().nomImage());
+                        etat = 1;
+                    }
+                    if (etat == 0) {
+                        gui.afficher("Il vous faudrait une clé afin de pouvoir ouvrir un de ces coffres \n");
+                    }
                 }
             }
-        } else if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle des coffres (ouverts)")) {
-            gui.afficher("Vous avez déjà ouvert un coffre");
-
-        } else if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la cuisine, derrière le comptoir")) {
-            inventaire.ajouterInventaire(new Item("Clé de la chambre", "Elle doit pouvoir ouvrir la grille en haut à droite"));
-            gui.afficher("La clé de la chambre a été ajoutée à l'inventaire\n");
-            map.getPieceCourante().setNomPiece("dans la cuisine, derrière le comptoir, le coffre est vide");
-            map.getPieceCourante().setDescription("Il n'y a plus rien à faire ici");
-        } else if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la cuisine, derrière le comptoir, le coffre est vide")) {
-            gui.afficher("Vous avez déjà ouvert le coffre");
-        } else {
-            gui.afficher("Il n'y a rien à ouvrir ici");
+            case "dans la salle des coffres (ouverts)" -> gui.afficher("Vous avez déjà ouvert un coffre");
+            case "dans la cuisine, derrière le comptoir" -> {
+                inventaire.ajouterInventaire(new Item("Clé de la chambre", "Elle doit pouvoir ouvrir la grille en haut à droite"));
+                gui.afficher("La clé de la chambre a été ajoutée à l'inventaire\n");
+                map.getPieceCourante().setNomPiece("dans la cuisine, derrière le comptoir, le coffre est vide");
+                map.getPieceCourante().setDescription("Il n'y a plus rien à faire ici");
+            }
+            case "dans la cuisine, derrière le comptoir, le coffre est vide" ->
+                    gui.afficher("Vous avez déjà ouvert le coffre");
+            case null, default -> gui.afficher("Il n'y a rien à ouvrir ici");
         }
     }
 
@@ -580,9 +608,10 @@ public class Jeu implements Serializable {
                 Item torchePresent = inventaire.getItemByName("Torche");
                 if (torchePresent != null) {
                     map.getPieceCourante().setNomImage("EscalierEclaire.jpg");
-                    gui.afficheImage("EscalierEclaire.jpg");
+                    gui.afficheImage(map.getPieceCourante().nomImage());
                     map.getPieceCourante().ajouteSortie(Sortie.MONTER, map.getMap()[5]);
-                    gui.afficher("Vous avez débloqué la sortie monter");
+                    gui.afficher("Vous posez la torche sur le porte-torche\nVous avez débloqué la sortie monter\n");
+                    inventaire.retirerInventaire(torchePresent);
                 } else gui.afficher("Vous ne possédez pas la ressource pour réaliser cette action\n");
             }
         } else {
@@ -598,7 +627,7 @@ public class Jeu implements Serializable {
                 Item piochePresent = inventaire.getItemByName("Pioche");
                 if (piochePresent != null) {
                     map.getPieceCourante().setNomImage("PrisonCassee.jpg");
-                    gui.afficheImage("PrisonCassee.jpg");
+                    gui.afficheImage(map.getPieceCourante().nomImage());
                     map.getPieceCourante().ajouteSortie(Sortie.DESCENDRE, map.getMap()[19]);
                     gui.afficher("Vous avez débloqué la sortie descendre\n");
                 } else gui.afficher("Vous ne possédez pas d'outil pour réaliser cette action\n");
@@ -614,7 +643,8 @@ public class Jeu implements Serializable {
             gui.afficher("Vous vous approchez et lisez : \n");
             gui.afficher(map.getInscriptionMur());
         } else if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la bibliothèque")) {
-            gui.afficher(map.getLettreAleat() + "\n" + map.getNumAleat());
+            gui.afficher("Vous lisez le parchemin\nLa lettre : " + map.getLettreAleat() + "\nLe chiffre : " + map.getNumAleat());
+            gui.afficher("\nQu'est ce que cela peut bien signifier ?\n");
 
         } else gui.afficher("Vous ne pouvez pas utiliser cette commande ici");
     }
@@ -678,6 +708,7 @@ public class Jeu implements Serializable {
                 gui.afficher("Vous avez débloqué la sortie descendre\n");
                 map.getPieceCourante().setNomImage("GrotteOuverte.jpg");
                 gui.afficheImage(map.getPieceCourante().nomImage());
+                map.getPieceCourante().ajouteSortie(Sortie.DESCENDRE, map.getMap()[25]);
             } else {
                 gui.afficher("Les objets posés ne sont pas dans le bon ordre\n");
                 plaque1.setEtat(0);
@@ -716,13 +747,24 @@ public class Jeu implements Serializable {
                 Item cleRDC = inventaire.getItemByName("Clé de la chambre");
                 if (cleRDC != null) {
                     map.getPieceCourante().ajouteSortie(Sortie.MONTER, map.getMap()[18]);
-                    gui.afficher("Vous avez débloqué la sortie monter");
+                    gui.afficher("Vous avez débloqué la sortie monter\n");
                     map.getPieceCourante().setNomImage("EntreeChambrePrincesseOuverte.jpg");
+                    gui.afficheImage(map.getPieceCourante().nomImage());
                 } else gui.afficher("Il vous faudrait une clé pour ouvrir cette grille\n");
             }
-        }
-        //si pas dans la pièce courante :
-        else gui.afficher("Vous ne pouvez pas utiliser cette commande ici\n");
+        } else if (Objects.equals(map.getPieceCourante().getNomPiece(), "à l'entrée du château")) {
+            if (inventaire.getListeInventaire().isEmpty()) {
+                gui.afficher("Vous ne possédez pas la clé pour réaliser cette action\n");
+            } else {
+                Item cleChateau = inventaire.getItemByName("Clé du château");
+                if (cleChateau != null) {
+                    map.getPieceCourante().ajouteSortie(Sortie.DESCENDRE, map.getMap()[25]);
+                    gui.afficher("Vous avez débloqué la sortie descendre\n");
+                    map.getPieceCourante().setNomImage("EntreeChateauOuverte.jpg");
+                    gui.afficheImage(map.getPieceCourante().nomImage());
+                } else gui.afficher("Il vous faudrait une clé pour ouvrir cette grille\n");
+            }
+        } else gui.afficher("Vous ne pouvez pas utiliser cette commande ici\n");
     }
 
 
@@ -733,21 +775,63 @@ public class Jeu implements Serializable {
         } else gui.afficher("Vous ne pouvez pas utiliser cette commande ici\n");
     }
 
-    private void checkVie() {
-        if (this.vie == 0) {
-            gui.afficher("Vous avez perdu toute vos vies - - - GAME OVER\n");
-            perdre();
+    private void fuir() {
+        if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle du Boss")) {
+            Item epeePresent = inventaire.getItemByName("Epée");
+            if (epeePresent != null) {
+                gui.afficher("Vous décidez de fuir..." + "\n" + "Vous prenez vos jambes à votre cou et courrez le plus vite possible." + "\n" + "Dans votre élan, vous faites tomber votre épée et trébuchez dessus !" + "\n" + "Le monstre vous attrape et vous dévore\n");
+                perdre();
+            } else {
+                gui.afficher("Vous avez fui et êtes de retour dans la salle des gardes\n");
+                allerEn("DESCENDRE");
+                this.etatCommande = 0;
+            }
+        } else {
+            gui.afficher("Vous ne pouvez pas utiliser cette commande ici\n");
         }
     }
 
+    private void combattre() {
+        if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle du Boss")) {
+            Item epeePresent = inventaire.getItemByName("Epée");
+            if (epeePresent != null) {
+                gui.afficher("Vous avez décidé de combattre le boss\n");
+                gui.afficher("Vous lui assénez un coup d'épee, il semble affaibli !\n");
+                gui.afficher("Le monstre contre-attaque, il vous blesse à la jambe\n");
+                gui.afficher("En vous relevant vous envoyez un autre coup d'épée, le Boss tombe au sol\n");
+                gui.afficher("Vous foncez vers lui et le poignardez de toutes vos forces. Vous avez réussi !\n");
+                gui.afficher("Vous appercevez une clé au fond de la pièce\n");
+                map.getPieceCourante().setDescription("Le Boss était le gardien de la clé\n");
+                map.getPieceCourante().setNomPiece("SalleDuBossMort.jpg");
+                gui.afficheImage(map.getPieceCourante().nomImage());
+                this.etatCommande = 0;
+            } else {
+                gui.afficher("Vous tentez de combattre le Boss à sans armes, il vous tue en un seul coup\n");
+                perdre();
+            }
+        } else {
+            gui.afficher("Vous ne pouvez pas utiliser cette commande ici\n");
+        }
+    }
+
+    private boolean checkVie() {
+        if (this.vie == 0) {
+            gui.afficher("Vous avez perdu toute vos vies\n");
+            perdre();
+            return true;
+        }
+        return false;
+    }
+
     private void gagner() {
-        gui.afficher("Vous avez gagné la partie\nFéliciations !!!");
-        gui.afficheImage("Victoire.jpg");
+        gui.afficher("\nVous avez gagné la partie\nFéliciations !!!\n");
+        gui.afficher(map.getPieceCourante().toString());
+        gui.afficheImage(map.getPieceCourante().nomImage());
         this.etatCommande = 9;
     }
 
     private void perdre() {
-        gui.afficher("Vous avez perdu la partie - - - GAME OVER\n");
+        gui.afficher("\nVous avez perdu la partie - - - GAME OVER\n");
         map.setPieceCourante(map.getMap()[29]);
         gui.afficher(map.getPieceCourante().descriptionLongue());
         gui.afficheImage(map.getPieceCourante().nomImage());
@@ -766,13 +850,4 @@ public class Jeu implements Serializable {
         };
         new Timer(delai, action).start();
     }
-
-    private void debug() {
-        if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la grotte")) {
-            Plaque plaque = map.getPieceCourante().getPlaqueByNum(1);
-            System.out.println(plaque.getNum());
-        }
-    }
-
-
 } //fin de la classe

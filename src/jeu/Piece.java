@@ -50,7 +50,7 @@ public class Piece implements Serializable {
     }
 
     public String toString() {
-        return ("Vous êtes " + this.nomPiece + ".\n" + this.description);
+        return ("Vous êtes " + this.nomPiece + "\n" + this.description + "\n");
     }
 
     public String descriptionLongue() {
