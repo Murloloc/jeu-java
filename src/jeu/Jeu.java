@@ -22,7 +22,7 @@ public class Jeu implements Serializable {
     public Jeu() {
         map.creerCarte();
         this.gui = null;
-        this.etatCommande = 0;
+        this.etatCommande = 8;
         this.vie = 3;
     }
 

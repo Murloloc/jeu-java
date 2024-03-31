@@ -190,7 +190,7 @@ public class Map implements Serializable {
         map[23].ajouterItem(plaque2);
         map[23].ajouterItem(plaque3);
 
-        this.pieceCourante = map[15];
+        this.pieceCourante = map[27];
     }
 
     public void initialiserPot() {
