@@ -429,13 +429,13 @@ public class Jeu implements Serializable {
     }
 
     private void parlerGarde() {
-        Garde garde = (Garde) map.getPieceCourante().getListePNJ().getFirst();
+        Garde garde = (Garde) map.getPieceCourante().getListePNJ().get(0);
         gui.afficher(garde.dialogue(map.getLettreAleat()));
         this.etatCommande = 6;
     }//fin parler garde
 
     private void parlerGarde(String commandeLue) {
-        Garde garde = (Garde) map.getPieceCourante().getListePNJ().getFirst();
+        Garde garde = (Garde) map.getPieceCourante().getListePNJ().get(0);
         if (Objects.equals(commandeLue, garde.getReponse(map.getLettreAleat()))) {
             gui.afficher("Bonne réponse\n");
             map.getPieceCourante().retirerPNJ(garde);
@@ -559,7 +559,7 @@ public class Jeu implements Serializable {
             }
             case "dans la cuisine, derrière le comptoir, le coffre est vide" ->
                     gui.afficher("Vous avez déjà ouvert le coffre");
-            case null, default -> gui.afficher("Il n'y a rien à ouvrir ici");
+            default -> gui.afficher("Il n'y a rien à ouvrir ici");
         }
     }
 
