@@ -13,9 +13,9 @@ public class Piece implements Serializable {
     private String nomPiece;
     private String description;
     private String nomImage;
-    private ArrayList<PNJ> listePNJ;
-    private ArrayList<Item> listeItem;
-    private HashMap<String, Piece> sorties;
+    private final ArrayList<PNJ> listePNJ;
+    private final ArrayList<Item> listeItem;
+    private final HashMap<String, Piece> sorties;
 
     public Piece(String nomPiece, String description, String image) {
         this.nomPiece = nomPiece;
@@ -42,9 +42,6 @@ public class Piece implements Serializable {
         this.nomPiece = nomPiece;
     }
 
-    public String getDescription() {
-        return description;
-    }
     public void setDescription(String description) {
         this.description = description;
     }
@@ -61,9 +58,7 @@ public class Piece implements Serializable {
         this.sorties.put(sortie.name(), pieceVoisine);
     }
 
-    public void supprimerSortie(Sortie sortie) {
-        this.sorties.remove(sortie.name());
-    }
+
 
     String sorties() {
         return sorties.keySet().toString();

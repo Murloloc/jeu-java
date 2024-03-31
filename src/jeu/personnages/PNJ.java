@@ -13,9 +13,6 @@ public abstract class PNJ implements Serializable {
         this.etat = 0;
     }
 
-    public PNJ() {
-    }
-
     public String getNom() {
         return nom;
     }

@@ -35,11 +35,6 @@ public class GUI implements ActionListener, Serializable {
         }
     }
 
-    public void enable(boolean ok) {
-        entree.setEditable(ok);
-        if (!ok)
-            entree.getCaret().setBlinkRate(0);
-    }
 
     public void fermer() {
         fenetre.dispose();
@@ -47,7 +42,6 @@ public class GUI implements ActionListener, Serializable {
 
     private void creerGUI() {
 
-        Dimension tailleEcran = Toolkit.getDefaultToolkit().getScreenSize();
         fenetre = new JFrame("Jeu");
         entree = new JTextField(34);
         texte = new JTextArea();

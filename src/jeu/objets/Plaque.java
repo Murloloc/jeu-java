@@ -1,7 +1,7 @@
 package jeu.objets;
 
 public class Plaque extends Item {
-    private int num;
+    private final int num;
     private int etat;
     private Item item;
 
@@ -16,10 +16,6 @@ public class Plaque extends Item {
 
     public int getEtat() {
         return etat;
-    }
-
-    public void setNum(int num) {
-        this.num = num;
     }
 
     public void setEtat(int etat) {

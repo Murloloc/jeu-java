@@ -3,18 +3,14 @@ package jeu;
 import jeu.objets.Item;
 import jeu.objets.Plaque;
 import jeu.objets.Pot;
-import jeu.personnages.Cuisinier;
-import jeu.personnages.Garde;
-import jeu.personnages.Prisonnier;
-import jeu.personnages.Servante;
+import jeu.personnages.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Map implements Serializable {
 
-    private Piece[] map;
+    private final Piece[] map;
 
     private Piece pieceCourante;
 
@@ -73,7 +69,7 @@ public class Map implements Serializable {
         map[22] = new Piece("dans la salle des pots", "On doit forcément trouver des ressources parmi tous ces pots...", "SalleDesPots.jpg");
 
         // étage -3
-        map[23] = new Piece("dans la grotte", "Il y a trois plaques de pression" + "\n" + "Si on les regarde de gauche à droite, elles sont de plus en plus épaisses" + "\n" + "Essayez-donc de poser des objets de plus en plus lourds dans ce même ordre\nTapez VERIF quand vous pensez avoir fini", "Grotte.jpg");
+        map[23] = new Piece("dans la grotte", "Il y a trois plaques de pression\nSi on les regarde de gauche à droite, elles sont de plus en plus épaisses\nEssayez-donc de poser des objets de plus en plus lourds dans ce même ordre\nTapez VERIF quand vous pensez avoir fini", "Grotte.jpg");
 
 
 
@@ -160,7 +156,7 @@ public class Map implements Serializable {
         Garde garde1 = new Garde("Armando", "Quel est le deuxième plus grand Océan du monde ?\n1) Atlantique\n2) Pacifique\n3) Indien\n", "Dans le jeu Pokémon Version ''Noir et Blanc'', comment se nomme le Pokémon à l'apparence d'un écureuil ?\n1) Ratentif\n2) Ecurieux\n3) Squirwel\n", "Quel célèbre championnat sportif concerne le Football Américain ?\n1) Ligue 1\n2) Top 14\n3) Superbowl\n", "1", "1", "3");
         Garde garde2 = new Garde("Rachid", "Parmi les catégories suivantes, laquelle a le plus petit taux d'espèces venimeuses/vénéneuses ?\n1) Serpents\n2) Araignées\n3) Champignons", "Lequel de ces 3 sports se pratique dans l'eau ?\n1) Rafting\n2) Roundnet\n3) Ringuette\n", "Quelle actrice joue la Black Widow dans le film éponyme sorti en 2021 ?\n1) Jennifer Lawrence\n2) Scarlett Johanson\n3) Julian Moore\n", "2", "1", "2");
         Garde garde3 = new Garde("Noa", "Quelle plante appelle-t-on ''l'arbre à fraises'' ?\n1) Prunier \n2) Néflier \n3) Arbousier", "Parmi les 6 personnages principaux de la série télévisée Friends, on retrouve un des trois personnages suivants :\n1) Stanley\n2) Ross\n3) Barney\n", "Quel personnage de jeu vidéo représente un hérisson ?\n1) Donkey Kong\n2) Yoshi\n3) Sonic\n", "3", "2", "3");
-        //Princesse princesse = new Princesse();
+        Princesse princesse = new Princesse("Marion");
 
         map[1].ajouterPNJ(prisonnier);
         map[6].ajouterPNJ(cuisinier);
@@ -168,6 +164,7 @@ public class Map implements Serializable {
         map[16].ajouterPNJ(garde1);
         map[16].ajouterPNJ(garde2);
         map[16].ajouterPNJ(garde3);
+        map[18].ajouterPNJ(princesse);
 
         //ajout des objets
         Item baton = new Item("Baton", "sert à construire un objet");
@@ -193,7 +190,7 @@ public class Map implements Serializable {
         map[23].ajouterItem(plaque2);
         map[23].ajouterItem(plaque3);
 
-        this.pieceCourante = map[27];
+        this.pieceCourante = map[15];
     }
 
     public void initialiserPot() {
@@ -230,10 +227,6 @@ public class Map implements Serializable {
 
     public Piece[] getMap() {
         return map;
-    }
-
-    public void setMap(Piece[] map) {
-        this.map = map;
     }
 
     public Piece getPieceCourante() {

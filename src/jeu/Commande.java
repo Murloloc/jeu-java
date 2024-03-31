@@ -1,6 +1,5 @@
 package jeu;
 
-import javax.swing.plaf.OptionPaneUI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,19 +55,4 @@ public enum Commande {
         return resultat;
     }
 
-    public static List<String> toutesLesAbreviations() {
-        ArrayList<String> resultat = new ArrayList<String>();
-        for (Commande c : values()) {
-            resultat.add(c.abreviation);
-        }
-        return resultat;
-    }
-
-    public static List<String> tousLesNoms() {
-        ArrayList<String> resultat = new ArrayList<String>();
-        for (Commande c : values()) {
-            resultat.add(c.name());
-        }
-        return resultat;
-    }
 }//fin de l'enum

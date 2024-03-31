@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Inventaire implements Serializable {
 
-    private ArrayList<Item> listeInventaire;
+    private final ArrayList<Item> listeInventaire;
 
     public Inventaire() {
         this.listeInventaire = new ArrayList<Item>();

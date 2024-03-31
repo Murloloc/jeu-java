@@ -2,9 +2,8 @@ package jeu.objets;
 
 public class Pot extends Item {
 
-    private int num;
+    private final int num;
     private int etat;
-
 
     public Pot(int num, int etat) {
         this.num = num;
@@ -22,7 +21,6 @@ public class Pot extends Item {
     public void setEtat(int etat) {
         this.etat = etat;
     }
-
 
 
 }

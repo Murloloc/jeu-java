@@ -22,13 +22,11 @@ public class Jeu implements Serializable {
     public Jeu() {
         map.creerCarte();
         this.gui = null;
-        this.etatCommande = 8;
+        this.etatCommande = 0;
         this.vie = 3;
     }
 
-    public GUI getGUI() {
-        return gui;
-    }
+
 
     public void setGUI(GUI g) {
         gui = g;
@@ -226,13 +224,17 @@ public class Jeu implements Serializable {
                     depause();
                 }
                 break;
-            case 6: //répondre à un garde
+            case 6: //répondre à un garde ou donner la potion
                 gui.afficher("> " + commandeLue + "\n");
                 switch (commandeLue.toUpperCase()) {
                     case "1":
                     case "2":
                     case "3":
-                        parlerGarde(commandeLue);
+                        if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle des gardes")) {
+                            parlerGarde(commandeLue);
+                        } else {
+                            donnerPotion(commandeLue);
+                        }
                         break;
                     default:
                         gui.afficher("Commande invalide\n");
@@ -414,6 +416,10 @@ public class Jeu implements Serializable {
                     if (pnj instanceof Prisonnier && pnj.getEtat() == 0) {
                         gui.afficher("JAU pour la clé Jaune\nBLE pour la clé Bleue");
                         this.etatCommande = 1;
+                    }
+                    if (pnj instanceof Princesse) {
+                        gui.afficher("\nQuelle potion voulez vous donner à la Princesse ?\nTapez 1 2 ou 3\n");
+                        this.etatCommande = 6;
                     }
                 }
             }
@@ -779,7 +785,7 @@ public class Jeu implements Serializable {
         if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle du Boss")) {
             Item epeePresent = inventaire.getItemByName("Epée");
             if (epeePresent != null) {
-                gui.afficher("Vous décidez de fuir..." + "\n" + "Vous prenez vos jambes à votre cou et courrez le plus vite possible." + "\n" + "Dans votre élan, vous faites tomber votre épée et trébuchez dessus !" + "\n" + "Le monstre vous attrape et vous dévore\n");
+                gui.afficher("Vous décidez de fuir...\nVous prenez vos jambes à votre cou et courrez le plus vite possible.\nDans votre élan, vous faites tomber votre épée et trébuchez dessus !\nLe monstre vous attrape et vous dévore\n");
                 perdre();
             } else {
                 gui.afficher("Vous avez fui et êtes de retour dans la salle des gardes\n");
@@ -814,6 +820,17 @@ public class Jeu implements Serializable {
         }
     }
 
+    private void donnerPotion(String commandeLue){
+        if (commandeLue.equals(String.valueOf(map.getNumAleat()))){
+            gui.afficher("\nVous avez choisi la bonne potion, la Princesse est désormais libre\nVous vous enfuyez du château par son balcon\n");
+            map.setPieceCourante(map.getMap()[25]);
+            gagner();
+        } else {
+            gui.afficher("\nVous avez choisi la mauvaise potion, la Princesse est morte\nVous buvez les deux autres potions et mourrez avec elle\n");
+            perdre();
+        }
+    }
+
     private boolean checkVie() {
         if (this.vie == 0) {
             gui.afficher("Vous avez perdu toute vos vies\n");
@@ -832,7 +849,7 @@ public class Jeu implements Serializable {
 
     private void perdre() {
         gui.afficher("\nVous avez perdu la partie - - - GAME OVER\n");
-        map.setPieceCourante(map.getMap()[29]);
+        map.setPieceCourante(map.getMap()[28]);
         gui.afficher(map.getPieceCourante().descriptionLongue());
         gui.afficheImage(map.getPieceCourante().nomImage());
         this.etatCommande = 10;

@@ -2,16 +2,10 @@ package jeu;
 
 import java.util.Random;
 
-import jeu.Jeu;
-
-import jeu.Map;
-
 public class Labyrinthe extends Piece {
 
-    private Piece[] piecesLab;
-    private Map map;
-
-
+    private final Piece[] piecesLab;
+    private final Map map;
 
     public Labyrinthe(String nomPiece, String description, String image, Map map) {
         super(nomPiece, description, image);

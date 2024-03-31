@@ -1,20 +1,14 @@
 package jeu.personnages;
 
-import jeu.GUI;
-import jeu.Jeu;
-import jeu.objets.Inventaire;
-
 import java.io.Serializable;
 
 public class Prisonnier extends PNJ implements Serializable {
-
 
     public Prisonnier(String nom) {
         super(nom);
         this.etat = 0;
 
     }
-
 
     public String dialogue() {
         if (this.etat == 0) {
