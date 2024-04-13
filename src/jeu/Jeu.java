@@ -314,6 +314,11 @@ public class Jeu implements Serializable {
             if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 1") || Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 2") || Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 3") || Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 4") || Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 5")) {
                 this.vie--;
                 gui.afficher("\nPas de sortie " + direction + "\nVous perdez une vie");
+                if (this.vie > 1) {
+                    gui.afficher("Il vous reste " + this.vie + " vies");
+                } else {
+                    gui.afficher("Il vous reste " + this.vie + " vie");
+                }
                 gui.afficher();
                 checkVie();
             } else {
