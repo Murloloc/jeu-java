@@ -335,7 +335,7 @@ public class Jeu implements Serializable {
                     this.etatCommande = 7;
                 }
                 if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle du boss (mort)")) {
-                    this.etatCommande = 7;
+                    this.etatCommande = 0;
                 }
             }
         }
@@ -355,19 +355,24 @@ public class Jeu implements Serializable {
     }
 
     private void sauvegarder() {
-        Jeu object = this;
-        File fichier = new File("save.ser");
 
-        try {
-            FileOutputStream file = new FileOutputStream(fichier);
-            ObjectOutputStream out = new ObjectOutputStream(file);
-            out.writeObject(object);
-            out.close();
-            file.close();
-            gui.afficher("Sauvegarde réussie");
-        } catch (IOException ioe) {
-            System.err.println("Erreur d'E/S.");
-            ioe.printStackTrace(System.err);
+        if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 1") || Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 2") || Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 3") || Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 4") || Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 5")) {
+            gui.afficher("Sauvegarde impossible dans le labyrinthe");
+        } else {
+            Jeu object = this;
+            File fichier = new File("save.ser");
+
+            try {
+                FileOutputStream file = new FileOutputStream(fichier);
+                ObjectOutputStream out = new ObjectOutputStream(file);
+                out.writeObject(object);
+                out.close();
+                file.close();
+                gui.afficher("Sauvegarde réussie");
+            } catch (IOException ioe) {
+                System.err.println("Erreur d'E/S.");
+                ioe.printStackTrace(System.err);
+            }
         }
     }
 
@@ -386,6 +391,7 @@ public class Jeu implements Serializable {
             this.gui.afficher(this.map.getPieceCourante().descriptionLongue());
             this.inventaire = object1.inventaire;
             this.etatCommande = object1.etatCommande;
+            this.vie = object1.vie;
         } catch (ClassNotFoundException cnfe) {
             System.err.println("Erreur : classe non-trouvée");
         } catch (EOFException eofe) {
@@ -455,9 +461,9 @@ public class Jeu implements Serializable {
             }
         } else {
             gui.afficher("\nMauvaise réponse\n");
+            this.vie--;
             gui.afficher("Vous perdez une vie\n");
             gui.afficher("Il vous reste " + this.vie + " vie(s)\n");
-            this.vie--;
             if (!checkVie()) {
                 parler();
             }
