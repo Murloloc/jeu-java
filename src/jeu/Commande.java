@@ -3,6 +3,9 @@ package jeu;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Cette énumération sert à regrouper les commandes réalisables
+ */
 public enum Commande {
     AIDE("?", "? (aide)"),
     SAUVEGARDER("SAUV", "SAUV (sauvegarder la partie)"),
@@ -33,17 +36,31 @@ public enum Commande {
     private final String abreviation;
     private final String description;
 
+    /**
+     * Constructeur
+     *
+     * @param c
+     * @param d
+     */
     Commande(String c, String d) {
         abreviation = c;
         description = d;
     }
 
+    /**
+     * @return
+     */
     @Override
     public String toString() {
         return name();
     }
 
-    public static List<String> toutesLesDescriptions() { //Renvoie le nom les abreviations et les descriptions des commandes
+    /**
+     * Renvoie le nom les abreviations et les descriptions des commandes
+     *
+     * @return
+     */
+    public static List<String> toutesLesDescriptions() {
         ArrayList<String> resultat = new ArrayList<String>();
         for (Commande c : values()) {
             resultat.add("\n" + c.name() + " : " + c.description);

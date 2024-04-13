@@ -11,6 +11,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * Cette classe définit toutes les règles du jeu et permet d'y jouer
+ */
 public class Jeu implements Serializable {
     private GUI gui;
     private int etatCommande;
@@ -19,7 +22,10 @@ public class Jeu implements Serializable {
     private Inventaire inventaire = new Inventaire();
     private Map map = new Map();
 
-    public Jeu() { //Constructeur de la classe Jeu
+    /**
+     * Constructeur de la classe Jeu
+     */
+    public Jeu() {
         map.creerCarte();
         this.gui = null;
         this.etatCommande = 8;
@@ -28,6 +34,7 @@ public class Jeu implements Serializable {
 
     /**
      * Setter de GUI
+     *
      * @param g
      */
     public void setGUI(GUI g) {
@@ -55,6 +62,7 @@ public class Jeu implements Serializable {
 
     /**
      * Traite la commande lue
+     *
      * @param commandeLue
      */
     public void traiterCommande(String commandeLue) {
@@ -314,14 +322,22 @@ public class Jeu implements Serializable {
         }
     }
 
-    private void afficherAide() { //Affiche la liste des commandes
+    /**
+     * Affiche la liste des commandes
+     */
+    private void afficherAide() {
         gui.afficher("Etes-vous perdu ?\n");
         gui.afficher("Les commandes autorisées sont :\n");
         gui.afficher(Commande.toutesLesDescriptions().toString());
         gui.afficher("\n\nVous pouvez utiliser le nom ou l'abréviation\n");
     }
 
-    private void allerEn(String direction) { //Traite le déplacement du joueur
+    /**
+     * Traite le déplacement du joueur
+     *
+     * @param direction
+     */
+    private void allerEn(String direction) {
         Piece nouvelle = map.getPieceCourante().obtientSortie(direction);
         if (nouvelle == null) {
             if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 1") || Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 2") || Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 3") || Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 4") || Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 5")) {
@@ -359,7 +375,10 @@ public class Jeu implements Serializable {
         }
     }
 
-    private void lancer() { //Lance la partie
+    /**
+     * Lance la partie
+     */
+    private void lancer() {
         if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans le menu")) {
             gui.afficher("Vous avez lancé le jeu\n");
             gui.afficher("Après avoir été fait prisonnier vous vous retrouvez au milieu d'un donjon\n");
@@ -372,7 +391,10 @@ public class Jeu implements Serializable {
         }
     }
 
-    private void sauvegarder() { //Sauvegarde la partie
+    /**
+     * Sauvegarde la partie
+     */
+    private void sauvegarder() {
 
         if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 1") || Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 2") || Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 3") || Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 4") || Objects.equals(map.getPieceCourante().getNomPiece(), "dans la room 5")) {
             gui.afficher("Sauvegarde impossible dans le labyrinthe");
@@ -394,7 +416,10 @@ public class Jeu implements Serializable {
         }
     }
 
-    private void continuer() { //Reprend la partie à la dernière sauvegarde
+    /**
+     * Reprend la partie à la dernière sauvegarde
+     */
+    private void continuer() {
         Jeu object1;
         String filename = "save.ser";
         try {
@@ -421,18 +446,27 @@ public class Jeu implements Serializable {
         }
     }
 
-    private void pause() { //Met le jeu en pause
+    /**
+     * Met le jeu en pause
+     */
+    private void pause() {
         this.etatCommande = 5;
         gui.afficher("Le jeu est en pause. Entrez depause pour continuer\n");
         this.etatCommande = 5;
     }
 
-    private void depause() { //Retire la pause et reprend le jeu
+    /**
+     * Retire la pause et reprend le jeu
+     */
+    private void depause() {
         this.etatCommande = 0;
         gui.afficher("Le jeu reprend\n");
     }
 
-    private void parler() { //Declenche le dialogue du premier PNJ de la pièce courante
+    /**
+     * Declenche le dialogue du premier PNJ de la pièce courante
+     */
+    private void parler() {
         if (!map.getPieceCourante().getListePNJ().isEmpty()) {
             if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle des gardes")) {
                 parlerGarde();
@@ -454,13 +488,21 @@ public class Jeu implements Serializable {
         }
     }
 
-    private void parlerGarde() { //Declenche le dialogue avec le premier garde de la pièce courante
+    /**
+     * Declenche le dialogue avec le premier garde de la pièce courante
+     */
+    private void parlerGarde() {
         Garde garde = (Garde) map.getPieceCourante().getListePNJ().get(0);
         gui.afficher(garde.dialogue(map.getLettreAleat()));
         this.etatCommande = 6;
     }
 
-    private void parlerGarde(String commandeLue) { //Reponse à la question du garde
+    /**
+     * Reponse à la question du garde
+     *
+     * @param commandeLue
+     */
+    private void parlerGarde(String commandeLue) {
         Garde garde = (Garde) map.getPieceCourante().getListePNJ().get(0);
         if (Objects.equals(commandeLue, garde.getReponse(map.getLettreAleat()))) {
             gui.afficher("\nBonne réponse\n");
@@ -493,7 +535,12 @@ public class Jeu implements Serializable {
     }
 
 
-    private void donnerCle(String commandeLue) { //Donne la cle choisie par le joueur
+    /**
+     * Donne la cle choisie par le joueur
+     *
+     * @param commandeLue
+     */
+    private void donnerCle(String commandeLue) {
         if (commandeLue.equals("JAU") || commandeLue.equals("JAUNE")) {
             inventaire.ajouterInventaire(new Item("Clé Jaune", "Sert à dévérouiller le coffre jaune"));
             for (PNJ pnj : map.getPieceCourante().getListePNJ()) {
@@ -516,7 +563,10 @@ public class Jeu implements Serializable {
         this.etatCommande = 0;
     }
 
-    private void fouiller() { //Fouille la piece
+    /**
+     * Fouille la piece
+     */
+    private void fouiller() {
         if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle des pots")) {
             gui.afficher("\nQuel pot voulez fouiller : F1 F2 F3 F4 F5 F6");
             this.etatCommande = 2;
@@ -540,11 +590,17 @@ public class Jeu implements Serializable {
         }
     }
 
-    private void consulterInventaire() { //Affiche l'inventaire
+    /**
+     * Affiche l'inventaire
+     */
+    private void consulterInventaire() {
         gui.afficher(inventaire.afficherInventaire());
     }
 
-    private void ouvrirCoffre() { //Ouvre un coffre
+    /**
+     * Ouvre un coffre
+     */
+    private void ouvrirCoffre() {
         int etat = 0;
         switch (map.getPieceCourante().getNomPiece()) {
             case "dans la salle des coffres" -> {
@@ -593,7 +649,10 @@ public class Jeu implements Serializable {
         }
     }
 
-    private void crafter() { //Crafter un objet
+    /**
+     * Crafter un objet
+     */
+    private void crafter() {
         if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans le couloir")) {
             Item batonPresent = inventaire.getItemByName("Baton");
             Item teteDePiochePresent = inventaire.getItemByName("Tête de pioche");
@@ -636,7 +695,10 @@ public class Jeu implements Serializable {
         }
     }
 
-    private void eclairer() { //Eclaire la piece
+    /**
+     * Eclaire la piece
+     */
+    private void eclairer() {
         if (Objects.equals(map.getPieceCourante().getNomPiece(), "à l'escalier Nord")) {
             if (inventaire.getListeInventaire().isEmpty()) {
                 gui.afficher("Vous ne possédez pas d'outil pour réaliser cette action\n");
@@ -655,7 +717,10 @@ public class Jeu implements Serializable {
         }
     }
 
-    private void casser() { //Casse les rochers de la piece
+    /**
+     * Casse les rochers de la piece
+     */
+    private void casser() {
         if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la prison")) {
             if (inventaire.getListeInventaire().isEmpty()) {
                 gui.afficher("Vous ne possédez pas d'outil pour réaliser cette action\n");
@@ -673,7 +738,10 @@ public class Jeu implements Serializable {
         }
     }
 
-    private void lire() { //Lis les indications de la piece
+    /**
+     * Lit les indications de la piece
+     */
+    private void lire() {
         if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans les catacombes")) {
             gui.afficher("Vous distinguez des inscriptions au mur...\n");
             gui.afficher("Vous vous approchez et lisez : \n");
@@ -685,7 +753,12 @@ public class Jeu implements Serializable {
         } else gui.afficher("Vous ne pouvez pas utiliser cette commande ici");
     }
 
-    private void fouillerPot(int num) { //Fouille le pot du numéro choisi
+    /**
+     * Fouille le pot du numéro choisi
+     *
+     * @param num
+     */
+    private void fouillerPot(int num) {
         Pot temp = map.getPieceCourante().getPotByNum(num);
         if (temp.getEtat() == 1) {
             inventaire.ajouterInventaire(new Item("Baton" + num, "Sert à crafter une échelle"));
@@ -697,7 +770,10 @@ public class Jeu implements Serializable {
         this.etatCommande = 0;
     }
 
-    private void poser() { //Pose un item
+    /**
+     * Pose un item
+     */
+    private void poser() {
         if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la grotte")) {
             gui.afficher("Sur quel plaque voulez vous poser un item ? Tapez 1 2 3\n");
             this.etatCommande = 3;
@@ -717,11 +793,23 @@ public class Jeu implements Serializable {
         }
     }
 
-    private boolean poserPlaque(int num) { //Choisie la plaque sur laquelle poser un item
+    /**
+     * Choisie la plaque sur laquelle poser un item
+     *
+     * @param num
+     * @return
+     */
+    private boolean poserPlaque(int num) {
         return map.getPieceCourante().getPlaqueByNum(num).getEtat() == 1;
     }
 
-    private void poserObjetSurPlaque(int num, String commandeLue) { //Pose l'objet choisi sur la plaque choisie
+    /**
+     * Inspecte la piece pour reveler un passage secret
+     *
+     * @param num
+     * @param commandeLue
+     */
+    private void poserObjetSurPlaque(int num, String commandeLue) {
         Item item = inventaire.getItemByName(commandeLue);
         if (item == null) {
             gui.afficher("Vous n'avez pas cet item dans l'inventaire\n");
@@ -734,7 +822,10 @@ public class Jeu implements Serializable {
         this.etatCommande = 0;
     }
 
-    private void verifierPlaques() { //Verifie la combinaison des plaques
+    /**
+     * Inspecte la piece pour reveler un passage secret
+     */
+    private void verifierPlaques() {
         Plaque plaque1 = map.getPieceCourante().getPlaqueByNum(1);
         Plaque plaque2 = map.getPieceCourante().getPlaqueByNum(2);
         Plaque plaque3 = map.getPieceCourante().getPlaqueByNum(3);
@@ -761,7 +852,10 @@ public class Jeu implements Serializable {
         }
     }
 
-    private void inspecter() { //Inspecte la piece pour reveler un passage secret
+    /**
+     * Inspecte la piece pour reveler un passage secret
+     */
+    private void inspecter() {
         if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle à manger")) {
             map.getPieceCourante().ajouteSortie(Sortie.DESCENDRE, map.getMap()[26]);
             map.getMap()[26].ajouteSortie(Sortie.DESCENDRE, map.getMap()[15]);
@@ -775,7 +869,10 @@ public class Jeu implements Serializable {
         }
     }
 
-    private void deverrouiller() { //Deverouille une grille fermée
+    /**
+     * Deverouille une grille fermée
+     */
+    private void deverrouiller() {
         if (Objects.equals(map.getPieceCourante().getNomPiece(), "devant la chambre de la Princesse")) {
             if (inventaire.getListeInventaire().isEmpty()) {
                 gui.afficher("Vous ne possédez pas la clé pour réaliser cette action\n");
@@ -806,14 +903,20 @@ public class Jeu implements Serializable {
     }
 
 
-    private void sAsseoir() { //S'asseoir sur le trone
+    /**
+     * S'asseoir sur le trone
+     */
+    private void sAsseoir() {
         if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle du trône")) {
             gui.afficher("Vous vous êtes assis sur le trône et des gardes vous ont repéré et renvoyé au donjon\n");
             perdre();
         } else gui.afficher("Vous ne pouvez pas utiliser cette commande ici\n");
     }
 
-    private void fuir() { //Fuir le combat du boss
+    /**
+     * Fuir le combat du boss
+     */
+    private void fuir() {
         if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle du Boss")) {
             Item epeePresent = inventaire.getItemByName("Epée");
             if (epeePresent != null) {
@@ -829,7 +932,10 @@ public class Jeu implements Serializable {
         }
     }
 
-    private void combattre() { //Combattre le boss
+    /**
+     * Combattre le boss
+     */
+    private void combattre() {
         if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle du Boss")) {
             Item epeePresent = inventaire.getItemByName("Epée");
             if (epeePresent != null) {
@@ -853,7 +959,12 @@ public class Jeu implements Serializable {
         }
     }
 
-    private void donnerPotion(String commandeLue) { //Donne la potion choisie à la Princesse
+    /**
+     * Donne la potion choisie à la Princesse
+     *
+     * @param commandeLue
+     */
+    private void donnerPotion(String commandeLue) {
         if (commandeLue.equals(String.valueOf(map.getNumAleat()))) {
             gui.afficher("\nVous avez choisi la bonne potion, la Princesse est désormais libre\nVous vous enfuyez du château par son balcon\n");
             map.setPieceCourante(map.getMap()[25]);
@@ -864,7 +975,12 @@ public class Jeu implements Serializable {
         }
     }
 
-    private boolean checkVie() { //Verifie le nombre de vie du joueur
+    /**
+     * Verifie le nombre de vie du joueur
+     *
+     * @return
+     */
+    private boolean checkVie() {
         if (this.vie == 0) {
             gui.afficher("Vous avez perdu toute vos vies\n");
             perdre();
@@ -873,14 +989,20 @@ public class Jeu implements Serializable {
         return false;
     }
 
-    private void gagner() { //Gagner le partie
+    /**
+     * Gagner le partie
+     */
+    private void gagner() {
         gui.afficher("\nVous avez gagné la partie\nFéliciations !!!\n");
         gui.afficher(map.getPieceCourante().toString());
         gui.afficheImage(map.getPieceCourante().nomImage());
         this.etatCommande = 9;
     }
 
-    private void perdre() { //Perdre la partie
+    /**
+     * Perdre la partie
+     */
+    private void perdre() {
         gui.afficher("\nVous avez perdu la partie - - - GAME OVER\n");
         map.setPieceCourante(map.getMap()[28]);
         gui.afficher(map.getPieceCourante().descriptionLongue());
@@ -888,7 +1010,10 @@ public class Jeu implements Serializable {
         this.etatCommande = 10;
     }
 
-    private void terminer() { //Quitter le jeu
+    /**
+     * Quitter le jeu
+     */
+    private void terminer() {
         gui.afficher("Au revoir...\n");
         gui.afficher("Fermeture du jeu dans 3 secondes");
 
