@@ -26,6 +26,7 @@ public enum Commande {
     INSPECTER("INS", "INS (inspecter la pièce)"),
     ASSEOIR("SAS", "SAS (s'asseoir sur le trône)"),
     LANCER("LANC", "LANC (lancer la partie)"),
+    DEVEROUILLER("DEV", "DEV (ouvrir une grille"),
 
     ;
 

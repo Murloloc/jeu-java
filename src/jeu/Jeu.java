@@ -315,7 +315,7 @@ public class Jeu implements Serializable {
                 this.vie--;
                 gui.afficher("\nPas de sortie " + direction + "\nVous perdez une vie");
                 if (this.vie > 1) {
-                    gui.afficher("Il vous reste " + this.vie + " vies");
+                    gui.afficher("\nIl vous reste " + this.vie + " vies");
                 } else {
                     gui.afficher("Il vous reste " + this.vie + " vie");
                 }
@@ -468,7 +468,11 @@ public class Jeu implements Serializable {
             gui.afficher("\nMauvaise réponse\n");
             this.vie--;
             gui.afficher("Vous perdez une vie\n");
-            gui.afficher("Il vous reste " + this.vie + " vie(s)\n");
+            if (this.vie > 1) {
+                gui.afficher("Il vous reste " + this.vie + " vies\n");
+            } else {
+                gui.afficher("Il vous reste " + this.vie + " vie\n");
+            }
             if (!checkVie()) {
                 parler();
             }
@@ -769,6 +773,7 @@ public class Jeu implements Serializable {
                     gui.afficher("Vous avez débloqué la sortie monter\n");
                     map.getPieceCourante().setNomImage("EntreeChambrePrincesseOuverte.jpg");
                     gui.afficheImage(map.getPieceCourante().nomImage());
+                    inventaire.retirerInventaire(cleRDC);
                 } else gui.afficher("Il vous faudrait une clé pour ouvrir cette grille\n");
             }
         } else if (Objects.equals(map.getPieceCourante().getNomPiece(), "à l'entrée du château")) {
@@ -781,6 +786,7 @@ public class Jeu implements Serializable {
                     gui.afficher("Vous avez débloqué la sortie descendre\n");
                     map.getPieceCourante().setNomImage("EntreeChateauOuverte.jpg");
                     gui.afficheImage(map.getPieceCourante().nomImage());
+                    inventaire.retirerInventaire(cleChateau);
                 } else gui.afficher("Il vous faudrait une clé pour ouvrir cette grille\n");
             }
         } else gui.afficher("Vous ne pouvez pas utiliser cette commande ici\n");
