@@ -27,7 +27,6 @@ public class Jeu implements Serializable {
     }
 
 
-
     public void setGUI(GUI g) {
         gui = g;
         afficherMessageDeBienvenue();
@@ -432,7 +431,7 @@ public class Jeu implements Serializable {
         Garde garde = (Garde) map.getPieceCourante().getListePNJ().get(0);
         gui.afficher(garde.dialogue(map.getLettreAleat()));
         this.etatCommande = 6;
-    }//fin parler garde
+    }
 
     private void parlerGarde(String commandeLue) {
         Garde garde = (Garde) map.getPieceCourante().getListePNJ().get(0);
@@ -541,7 +540,7 @@ public class Jeu implements Serializable {
                         gui.afficher("Du charbon a été ajouté à l'inventaire\n");
                         map.getPieceCourante().setNomPiece("dans la salle des coffres (ouverts)");
                         map.getPieceCourante().setDescription("Il n'y a plus rien à faire ici");
-                        map.getPieceCourante().setNomImage("SalleDesCoffresSansBleujpg");
+                        map.getPieceCourante().setNomImage("SalleDesCoffresSansBleu.jpg");
                         gui.afficheImage(map.getPieceCourante().nomImage());
                         etat = 1;
                     }
@@ -649,7 +648,7 @@ public class Jeu implements Serializable {
             gui.afficher("Vous vous approchez et lisez : \n");
             gui.afficher(map.getInscriptionMur());
         } else if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la bibliothèque")) {
-            gui.afficher("Vous lisez le parchemin\nLa lettre : " + map.getLettreAleat() + "\nLe chiffre : " + map.getNumAleat());
+            gui.afficher("Vous lisez le parchemin\nLa réponse commence par : " + map.getLettreAleat() + "\nLa potion : " + map.getNumAleat());
             gui.afficher("\nQu'est ce que cela peut bien signifier ?\n");
 
         } else gui.afficher("Vous ne pouvez pas utiliser cette commande ici");
@@ -808,7 +807,7 @@ public class Jeu implements Serializable {
                 gui.afficher("Vous foncez vers lui et le poignardez de toutes vos forces. Vous avez réussi !\n");
                 gui.afficher("Vous appercevez une clé au fond de la pièce\n");
                 map.getPieceCourante().setDescription("Le Boss était le gardien de la clé\n");
-                map.getPieceCourante().setNomPiece("SalleDuBossMort.jpg");
+                map.getPieceCourante().setNomImage("SalleDuBossMort.jpg");
                 gui.afficheImage(map.getPieceCourante().nomImage());
                 this.etatCommande = 0;
             } else {
@@ -820,8 +819,8 @@ public class Jeu implements Serializable {
         }
     }
 
-    private void donnerPotion(String commandeLue){
-        if (commandeLue.equals(String.valueOf(map.getNumAleat()))){
+    private void donnerPotion(String commandeLue) {
+        if (commandeLue.equals(String.valueOf(map.getNumAleat()))) {
             gui.afficher("\nVous avez choisi la bonne potion, la Princesse est désormais libre\nVous vous enfuyez du château par son balcon\n");
             map.setPieceCourante(map.getMap()[25]);
             gagner();
