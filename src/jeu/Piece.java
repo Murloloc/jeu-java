@@ -17,7 +17,14 @@ public class Piece implements Serializable {
     private final ArrayList<Item> listeItem;
     private final HashMap<String, Piece> sorties;
 
-    public Piece(String nomPiece, String description, String image) { //Constructeur de la classe Piece
+    /**
+     * Constructeur de la classe Piece
+     *
+     * @param nomPiece
+     * @param description
+     * @param image
+     */
+    public Piece(String nomPiece, String description, String image) {
         this.nomPiece = nomPiece;
         this.description = description;
         this.nomImage = image;
@@ -26,41 +33,84 @@ public class Piece implements Serializable {
         this.sorties = new HashMap<>();
     }
 
-    public String nomImage() { //Getter de nomImage
+    /**
+     * Getter de nomImage
+     *
+     * @return
+     */
+    public String nomImage() {
         return nomImage;
     }
 
-    public void setNomImage(String nomImage) { //Setter de nomImage
+    /**
+     * Setter de nomImage
+     *
+     * @param nomImage
+     */
+    public void setNomImage(String nomImage) {
         this.nomImage = nomImage;
     }
 
-    public String getNomPiece() { //Getter de nomPiece
+    /**
+     * Getter de nomPiece
+     *
+     * @return
+     */
+    public String getNomPiece() {
         return nomPiece;
     }
 
-    public void setNomPiece(String nomPiece) { //Setter de nomPiece
+    /**
+     * Setter de nomPiece
+     *
+     * @param nomPiece
+     */
+    public void setNomPiece(String nomPiece) {
         this.nomPiece = nomPiece;
     }
 
-    public void setDescription(String description) { //Setter de description
+    /**
+     * Setter de description
+     *
+     * @param description
+     */
+    public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     * @return
+     */
     public String toString() {
         return ("Vous êtes " + this.nomPiece + "\n" + this.description + "\n");
     }
 
-    public String descriptionLongue() { //Affiche les sorties possible sous forme de chaine
+    /**
+     * Affiche les sorties possible sous forme de chaine
+     *
+     * @return
+     */
+    public String descriptionLongue() {
         return this + "\nSorties : " + sorties();
     }
 
-    public void ajouteSortie(Sortie sortie, Piece pieceVoisine) { //Ajoute les sorties
+    /**
+     * Ajoute les sorties
+     *
+     * @param sortie
+     * @param pieceVoisine
+     */
+    public void ajouteSortie(Sortie sortie, Piece pieceVoisine) {
         this.sorties.put(sortie.name(), pieceVoisine);
     }
 
 
-
-    String sorties() { //Retourne les sorties sous forme de chaine
+    /**
+     * Retourne les sorties sous forme de chaine
+     *
+     * @return
+     */
+    String sorties() {
         return sorties.keySet().toString();
     }
 
