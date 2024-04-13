@@ -8,20 +8,20 @@ public abstract class PNJ implements Serializable {
 
     public int etat;
 
-    public PNJ(String nom) {
+    public PNJ(String nom) { //Constructeur de la classe PNJ
         this.nom = nom;
         this.etat = 0;
     }
 
-    public String getNom() {
+    public String getNom() { //Getter du nom
         return nom;
     }
 
-    public int getEtat() {
+    public int getEtat() { //Getter de l'etat
         return etat;
     }
 
-    public void setEtat(int etat) {
+    public void setEtat(int etat) { //Setter de l'etat
         this.etat = etat;
     }
 
@@ -30,7 +30,7 @@ public abstract class PNJ implements Serializable {
         return ("Je suis " + this.nom);
     }
 
-    public String dialogue() {
+    public String dialogue() { //Affichage du dialogue
         return toString();
     }
 

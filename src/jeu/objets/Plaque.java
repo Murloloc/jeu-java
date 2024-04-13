@@ -5,28 +5,28 @@ public class Plaque extends Item {
     private int etat;
     private Item item;
 
-    public Plaque(int num, int etat) {
+    public Plaque(int num, int etat) { //Constructeur de la classe Plaque
         this.num = num;
         this.etat = etat;
     }
 
-    public int getNum() {
+    public int getNum() { //Getter du num
         return num;
     }
 
-    public int getEtat() {
+    public int getEtat() { //Getter de l'etat
         return etat;
     }
 
-    public void setEtat(int etat) {
+    public void setEtat(int etat) { //Setter de l'etat
         this.etat = etat;
     }
 
-    public void setItem(Item item) {
+    public void setItem(Item item) { //Setter de l'item
         this.item = item;
     }
 
-    public Item getItem() {
+    public Item getItem() { //Getter de l'item
         return this.item;
     }
 }

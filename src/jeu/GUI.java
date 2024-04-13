@@ -13,21 +13,21 @@ public class GUI implements ActionListener, Serializable {
     private JTextArea texte;
     private JLabel image;
 
-    public GUI(Jeu jeu) {
+    public GUI(Jeu jeu) { //Constructeur de la classe GUI
         this.jeu = jeu;
         this.creerGUI();
     }
 
-    public void afficher(String s) {
+    public void afficher(String s) { //Affiche le texte sur la fenetre de texte
         texte.append(s);
         texte.setCaretPosition(texte.getDocument().getLength());
     }
 
-    public void afficher() {
+    public void afficher() { //Affiche un saut de ligne sur la fenetre de texte
         afficher("\n");
     }
 
-    public void afficheImage(String nomImage) {
+    public void afficheImage(String nomImage) { //Affiche une image sur la fenetre d'image
         URL imageURL = this.getClass().getClassLoader().getResource("jeu/images/" + nomImage);
         if (imageURL != null) {
             image.setIcon(new ImageIcon(imageURL));
@@ -36,11 +36,11 @@ public class GUI implements ActionListener, Serializable {
     }
 
 
-    public void fermer() {
+    public void fermer() { //Ferme la fenetre de jeu
         fenetre.dispose();
     }
 
-    private void creerGUI() {
+    private void creerGUI() { //Initialise la fenetre du GUI
 
         fenetre = new JFrame("Jeu");
         entree = new JTextField(34);
@@ -75,16 +75,16 @@ public class GUI implements ActionListener, Serializable {
         entree.requestFocusInWindow();
     }
 
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e) { //Traite l'action du joueur dans la fenetre d'entree de texte
         executerCommande();
     }
 
-    private void executerCommande() {
+    private void executerCommande() { //Execute l'entree du joueur dans la fenetre de texte
         jeu.traiterCommande(lireCommande());
         entree.setText("");
     }
 
-    public String lireCommande() {
+    public String lireCommande() { //Lis la commande du joueur dans la fenetre de texte
         return entree.getText();
     }
 

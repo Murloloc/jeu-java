@@ -12,7 +12,7 @@ public class Garde extends PNJ implements Serializable {
     private final String reponse3;
 
 
-    public Garde(String nom, String q1, String q2, String q3, String r1, String r2, String r3) {
+    public Garde(String nom, String q1, String q2, String q3, String r1, String r2, String r3) { //Constructeur de la classe Garde
         super(nom);
         this.etat = 0;
         this.question1 = q1;
@@ -23,7 +23,7 @@ public class Garde extends PNJ implements Serializable {
         this.reponse3 = r3;
     }
 
-    public String dialogue(String lettre) {
+    public String dialogue(String lettre) { //Dialogue du garde
         return switch (lettre.toUpperCase()) {
             case "A" -> "\nBonjour je suis le garde " + this.nom + "\nVoici ma question : \n" + this.question1;
             case "R" -> "\nBonjour je suis le garde " + this.nom + "\nVoici ma question : \n" + this.question2;
@@ -32,7 +32,7 @@ public class Garde extends PNJ implements Serializable {
         };
     }
 
-    public String getReponse(String lettre) {
+    public String getReponse(String lettre) { //Getter de la reponse du garde
         return switch (lettre.toUpperCase()) {
             case "A" -> this.reponse1;
             case "R" -> this.reponse2;

@@ -8,19 +8,19 @@ public class Item implements Serializable {
     private String description;
 
 
-    public Item(String nom, String description) {
+    public Item(String nom, String description) { // Constructeur de la classe Item
         this.nom = nom;
         this.description = description;
     }
 
-    public Item() {
+    public Item() { // Constructeur vide de la classe Item
     }
 
-    public String getNom() {
+    public String getNom() { //Getter du nom
         return nom;
     }
 
-    public String getDescription() {
+    public String getDescription() { // Getter de la description
         return description;
     }
 

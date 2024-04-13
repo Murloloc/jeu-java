@@ -25,7 +25,7 @@ public class Map implements Serializable {
         this.map = new Piece[31];
     }
 
-    public void creerCarte() {
+    public void creerCarte() { //Creer la carte
 
         map[27] = new Piece("dans le menu", "LANCER pour commencer une nouvelle partie\nCONTINUER pour reprendre une partie sauvegardée\nQUITTER pour quitter le jeu", "Menu.jpg");
         map[25] = new Piece("sur l'écran de victoire", "Merci d'avoir joué au jeu\nQUITTER pour fermer le jeu", "Victoire.jpg");
@@ -193,7 +193,7 @@ public class Map implements Serializable {
         this.pieceCourante = map[27];
     }
 
-    public void initialiserPot() {
+    public void initialiserPot() { //Initialisation des pots de manière aléatoire
         int[] full = new int[6];
 
         for (int i = 0; i < 6; i++) {
@@ -216,7 +216,7 @@ public class Map implements Serializable {
         }
     }
 
-    public void aleat() {
+    public void aleat() { //Tirer de manière aléatoire une lettre et un chiffre
         String alphabet = "asr";
         Random rand = new Random();
         int randomIndex = rand.nextInt(alphabet.length());
@@ -225,31 +225,31 @@ public class Map implements Serializable {
         this.numAleat = rand.nextInt(3) + 1;
     }
 
-    public Piece[] getMap() {
+    public Piece[] getMap() { //Getter de map
         return map;
     }
 
-    public Piece getPieceCourante() {
+    public Piece getPieceCourante() { //Getter de pieceCourante
         return pieceCourante;
     }
 
-    public void setPieceCourante(Piece pieceCourante) {
+    public void setPieceCourante(Piece pieceCourante) { //Setter de pieceCourante
         this.pieceCourante = pieceCourante;
     }
 
-    public String getInscriptionMur() {
+    public String getInscriptionMur() { //Getter de inscriptionMur
         return inscriptionMur;
     }
 
-    public void setInscriptionMur(String inscriptionMur) {
+    public void setInscriptionMur(String inscriptionMur) { //Setter de inscriptionMur
         this.inscriptionMur = inscriptionMur;
     }
 
-    public String getLettreAleat() {
+    public String getLettreAleat() { //Getter de lettreAleat
         return lettreAleat;
     }
 
-    public int getNumAleat() {
+    public int getNumAleat() { //Getter de numAleat
         return numAleat;
     }
 }

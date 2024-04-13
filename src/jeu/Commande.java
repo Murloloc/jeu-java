@@ -43,7 +43,7 @@ public enum Commande {
         return name();
     }
 
-    public static List<String> toutesLesDescriptions() {
+    public static List<String> toutesLesDescriptions() { //Renvoie le nom les abreviations et les descriptions des commandes
         ArrayList<String> resultat = new ArrayList<String>();
         for (Commande c : values()) {
             resultat.add("\n" + c.name() + " : " + c.description);
