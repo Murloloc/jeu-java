@@ -25,10 +25,10 @@ public class Garde extends PNJ implements Serializable {
 
     public String dialogue(String lettre) {
         return switch (lettre.toUpperCase()) {
-            case "A" -> "Bonjour je suis le garde " + this.nom + "\nVoici ma question : \n" + this.question1;
-            case "R" -> "Bonjour je suis le garde " + this.nom + "\nVoici ma question : \n" + this.question2;
-            case "S" -> "Bonjour je suis le garde " + this.nom + "\nVoici ma question : \n" + this.question3;
-            default -> "Pas de question correspondante.";
+            case "A" -> "\nBonjour je suis le garde " + this.nom + "\nVoici ma question : \n" + this.question1;
+            case "R" -> "\nBonjour je suis le garde " + this.nom + "\nVoici ma question : \n" + this.question2;
+            case "S" -> "\nBonjour je suis le garde " + this.nom + "\nVoici ma question : \n" + this.question3;
+            default -> "\nPas de question correspondante.";
         };
     }
 
@@ -37,7 +37,7 @@ public class Garde extends PNJ implements Serializable {
             case "A" -> this.reponse1;
             case "R" -> this.reponse2;
             case "S" -> this.reponse3;
-            default -> "Pas de réponse correspondante.";
+            default -> "\nPas de réponse correspondante.";
         };
     }
 

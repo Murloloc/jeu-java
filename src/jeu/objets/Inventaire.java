@@ -31,7 +31,7 @@ public class Inventaire implements Serializable {
     public String afficherInventaire() {
         String chaine = this.toString();
         if (this.getListeInventaire().isEmpty())
-            return "L'inventaire est vide";
+            return "L'inventaire est vide\n";
         else
             for (Item item : this.getListeInventaire())
                 chaine = chaine + item.getNom() + " : " + item.getDescription() + "\n";

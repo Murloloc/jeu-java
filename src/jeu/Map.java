@@ -40,7 +40,7 @@ public class Map implements Serializable {
 
         // RDC
         map[5] = new Piece("à l'escalier de gauche", "\nLa grille de l'escalier est fermée\nIl n'est plus possible de descendre\nVous apercevez l'entrée du château", "EscalierGauche.jpg");
-        map[6] = new Piece("à l'entrée du château", "C'est l'entrée du château ! Comment faire pour s'échapper...", "EntreeChateau.jpg");
+        map[6] = new Piece("à l'entrée du château", "Comment faire pour s'échapper ?", "EntreeChateau.jpg");
         map[7] = new Piece("dans la bibliothèque", "Peut-être que des informations utiles sont gardées ici", "Bibliotheque.jpg");
         map[8] = new Piece("dans la salle du trône", "On aperçoit le trône du Roi, cela serait osé de s'asseoir dessus en son absence...", "SalleDuTrone.jpg");
         map[9] = new Piece("à l'escalier de droite", "\nLa grille de l'escalier s'est refermée derrière vous\nIl n'est plus possible de descendre\nVous apercevez l'entrée du château", "EscalierDroite.jpg");

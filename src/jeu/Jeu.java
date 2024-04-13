@@ -436,14 +436,14 @@ public class Jeu implements Serializable {
     private void parlerGarde(String commandeLue) {
         Garde garde = (Garde) map.getPieceCourante().getListePNJ().get(0);
         if (Objects.equals(commandeLue, garde.getReponse(map.getLettreAleat()))) {
-            gui.afficher("Bonne réponse\n");
+            gui.afficher("\nBonne réponse\n");
             map.getPieceCourante().retirerPNJ(garde);
-            gui.afficher("Vous avez réussi à passer le garde\nLe garde " + garde.getNom() + " est parti\n");
+            gui.afficher("\nVous avez réussi à passer le garde\nLe garde " + garde.getNom() + " est parti\n");
             if (!map.getPieceCourante().getListePNJ().isEmpty()) {
                 parler();
             } else {
-                gui.afficher("Vous avez répondu corectement à toutes les questions\n");
-                gui.afficher("Vous pouvez monter les escaliers\n");
+                gui.afficher("\nVous avez répondu corectement à toutes les questions\n");
+                gui.afficher("\nVous pouvez monter les escaliers\n");
                 map.getPieceCourante().ajouteSortie(Sortie.MONTER, map.getMap()[17]);
                 map.getPieceCourante().setDescription("Il n'y a plus de garde");
 //                map.getPieceCourante().setNomImage("SalleDesGardesSansGarde.jpg");
@@ -451,7 +451,7 @@ public class Jeu implements Serializable {
                 this.etatCommande = 0;
             }
         } else {
-            gui.afficher("Mauvaise réponse\n");
+            gui.afficher("\nMauvaise réponse\n");
             gui.afficher("Vous perdez une vie\n");
             gui.afficher("Il vous reste " + this.vie + " vie(s)\n");
             this.vie--;
@@ -523,7 +523,7 @@ public class Jeu implements Serializable {
                     Item tempj = inventaire.getItemByName("Clé Jaune");
                     if (tempj != null) {
                         inventaire.retirerInventaire(tempj);
-                        inventaire.ajouterInventaire(new Item("Tête de pioche", "combiné avec un baton je peux peut être en faire une pioche afin de casser les rochers"));
+                        inventaire.ajouterInventaire(new Item("Tête de pioche", "combinée avec un baton je peux peut être en faire une pioche"));
                         gui.afficher("Le coffre jaune a été ouvert\n");
                         gui.afficher("La tête de pioche a été ajouté à l'inventaire\n");
                         map.getPieceCourante().setNomPiece("dans la salle des coffres (ouverts)");
@@ -535,7 +535,7 @@ public class Jeu implements Serializable {
                     Item tempb = inventaire.getItemByName("Clé Bleue");
                     if (tempb != null) {
                         inventaire.retirerInventaire(tempb);
-                        inventaire.ajouterInventaire(new Item("Charbon", "combiné avec un baton je peux peut être en faire une torche afin d'éclaire l'escalier"));
+                        inventaire.ajouterInventaire(new Item("Charbon", "combiné avec un baton je peux peut être en faire une torche"));
                         gui.afficher("Le coffre bleu a été ouvert\n");
                         gui.afficher("Du charbon a été ajouté à l'inventaire\n");
                         map.getPieceCourante().setNomPiece("dans la salle des coffres (ouverts)");
@@ -677,7 +677,7 @@ public class Jeu implements Serializable {
                 map.getPieceCourante().ajouteSortie(Sortie.DESCENDRE, map.getMap()[23]);
                 map.getPieceCourante().setNomImage("SalleDesPotsEchelle.jpg");
                 gui.afficheImage(map.getPieceCourante().nomImage());
-                gui.afficher("\nVous avez posé l'échelle sur et pouvez maintenant descendre");
+                gui.afficher("\nVous avez posé l'échelle et pouvez maintenant descendre");
             } else {
                 gui.afficher("\nVous n'avez pas d'objet vous permettant de descendre");
             }
