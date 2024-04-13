@@ -2,15 +2,29 @@ package jeu.personnages;
 
 import java.io.Serializable;
 
+/**
+ * Cette classe sert à créer un PNJ étant une prisonnier
+ */
+
 public class Prisonnier extends PNJ implements Serializable {
 
-    public Prisonnier(String nom) { //Constructeur de la classe Prisonnier
+    /**
+     * Constructeur de la classe Prisonnier
+     *
+     * @param nom
+     */
+    public Prisonnier(String nom) {
         super(nom);
         this.etat = 0;
 
     }
 
-    public String dialogue() { //Dialogue du prisonnier
+    /**
+     * Dialogue du prisonnier
+     *
+     * @return
+     */
+    public String dialogue() {
         if (this.etat == 0) {
             return (this + ", je suis ici depuis des années.\nJ'ai essayé de m'échapper sans jamais avoir réussi.\nDans mes tentatives j'ai trouvé une clé bleue et une clé jaune mais\naucune d'elle ne dévérouille ma cellule\nJe vais t'en donner une, essaye de trouver ce qu'elle dévérouille.\n");
         } else {
@@ -18,12 +32,21 @@ public class Prisonnier extends PNJ implements Serializable {
         }
     }
 
-    public String dialogueJaune() { //Dialogue du prisionnier quand le choix est la clé jaune
+    /**
+     * Dialogue du prisionnier quand le choix est la clé jaune
+     *
+     * @return
+     */
+    public String dialogueJaune() {
         return "\nTiens voici la clé Jaune";
-
     }
 
-    public String dialogueBleu() { //Dialogue du prisonnier qaund le choix est la clé bleue
+    /**
+     * Dialogue du prisonnier qaund le choix est la clé bleue
+     *
+     * @return
+     */
+    public String dialogueBleu() {
         return "\nTiens voici la clé Bleue";
     }
 

@@ -2,35 +2,67 @@ package jeu.personnages;
 
 import java.io.Serializable;
 
+/**
+ * Cette classe abstraite sert à modéliser les propriétes et méthodes d'un PNJ
+ */
+
 public abstract class PNJ implements Serializable {
 
     public String nom;
 
     public int etat;
 
-    public PNJ(String nom) { //Constructeur de la classe PNJ
+    /**
+     * Constructeur de la classe PNJ
+     *
+     * @param nom
+     */
+    public PNJ(String nom) {
         this.nom = nom;
         this.etat = 0;
     }
 
-    public String getNom() { //Getter du nom
+    /**
+     * Getter du nom
+     *
+     * @return
+     */
+    public String getNom() {
         return nom;
     }
 
-    public int getEtat() { //Getter de l'etat
+    /**
+     * Getter de l'etat
+     *
+     * @return
+     */
+    public int getEtat() {
         return etat;
     }
 
-    public void setEtat(int etat) { //Setter de l'etat
+    /**
+     * Setter de l'etat
+     *
+     * @param etat
+     */
+    public void setEtat(int etat) {
         this.etat = etat;
     }
 
+    /**
+     * @return
+     */
     @Override
     public String toString() {
         return ("Je suis " + this.nom);
     }
 
-    public String dialogue() { //Affichage du dialogue
+    /**
+     * Affichage du dialogue
+     *
+     * @return
+     */
+    public String dialogue() {
         return toString();
     }
 
