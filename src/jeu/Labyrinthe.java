@@ -7,14 +7,14 @@ public class Labyrinthe extends Piece {
     private final Piece[] piecesLab;
     private final Map map;
 
-    public Labyrinthe(String nomPiece, String description, String image, Map map) {
+    public Labyrinthe(String nomPiece, String description, String image, Map map) { //Constructeur de la classe Labyrinthe
         super(nomPiece, description, image);
         this.piecesLab = new Piece[5];
         this.map = map;
 
     }
 
-    public void genererLabyrinthe() {
+    public void genererLabyrinthe() { //Genere le labyrinthe
 
         piecesLab[0] = new Piece("dans la room 1", "", "Labyrinthe.jpg");
         piecesLab[1] = new Piece("dans la room 2", "", "Labyrinthe.jpg");
@@ -54,7 +54,7 @@ public class Labyrinthe extends Piece {
         map.setInscriptionMur(mur);
     }
 
-    public Sortie getRandomSortieExcept(Sortie exceptSortie) {
+    public Sortie getRandomSortieExcept(Sortie exceptSortie) { //Renvoie les sorties de chaque piece (generees aleatoirement)
         Sortie[] allSorties = {Sortie.NORD, Sortie.SUD, Sortie.EST, Sortie.OUEST};
         Sortie randomSortie;
         do {
@@ -63,7 +63,7 @@ public class Labyrinthe extends Piece {
         return randomSortie;
     }
 
-    public Sortie getOppositeSortie(Sortie sortie) {
+    public Sortie getOppositeSortie(Sortie sortie) { //Renvoie la direction opposee a chaque sortie du labyrinthe
         return switch (sortie) {
             case NORD -> Sortie.SUD;
             case SUD -> Sortie.NORD;
@@ -73,11 +73,11 @@ public class Labyrinthe extends Piece {
         };
     }
 
-    public Piece[] getPiecesLab() {
+    public Piece[] getPiecesLab() { //Getter de piecesLab
         return piecesLab;
     }
 
-    public String descriptionLongue() {
+    public String descriptionLongue() { //Redefinition afin de ne pas montrer les sorties possibles dans le labyrinthe
         return this + "\nSorties : ????";
     }
 

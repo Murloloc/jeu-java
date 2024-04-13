@@ -27,7 +27,7 @@ public class Jeu implements Serializable {
     }
 
 
-    public void setGUI(GUI g) { //setter de GUI
+    public void setGUI(GUI g) { //Setter de GUI
         gui = g;
         afficherMessageDeBienvenue();
     }
@@ -46,7 +46,7 @@ public class Jeu implements Serializable {
 
     public void traiterCommande(String commandeLue) { //Traite la commande lue
         switch (etatCommande) {
-            case 0: //commande de base
+            case 0: //Commande de base
                 gui.afficher("> " + commandeLue + "\n");
                 switch (commandeLue.toUpperCase()) {
                     case "?":
@@ -148,7 +148,7 @@ public class Jeu implements Serializable {
                         break;
                 }
                 break;
-            case 1: //réponse au prisonnier
+            case 1: //Reponse au prisonnier
                 gui.afficher("> " + commandeLue + "\n");
                 switch (commandeLue.toUpperCase()) {
                     case "JAU":
@@ -162,7 +162,7 @@ public class Jeu implements Serializable {
                         break;
                 }
                 break;
-            case 2: //fouiller les pots
+            case 2: //Fouiller les pots
                 gui.afficher("> " + commandeLue + "\n");
                 switch (commandeLue.toUpperCase()) {
                     case "F1":
@@ -188,7 +188,7 @@ public class Jeu implements Serializable {
                         break;
                 }
                 break;
-            case 3: //choisir une plaque
+            case 3: //Choisir une plaque
                 gui.afficher("> " + commandeLue + "\n");
                 if (commandeLue.equalsIgnoreCase("1") || commandeLue.equalsIgnoreCase("2") || commandeLue.equalsIgnoreCase("3")) {
                     boolean etatPlaque = poserPlaque(Integer.parseInt(commandeLue));
@@ -205,7 +205,7 @@ public class Jeu implements Serializable {
                     this.etatCommande = 0;
                 }
                 break;
-            case 4: //poser un objet sur une plaque
+            case 4: //Poser un objet sur une plaque
                 gui.afficher("> " + commandeLue + "\n");
                 switch (commandeLue.toUpperCase()) {
                     case "PELUCHE", "PIOCHE", "LINGOT":
@@ -217,13 +217,13 @@ public class Jeu implements Serializable {
                         break;
                 }
                 break;
-            case 5: //depause
+            case 5: //Depause
                 gui.afficher("> " + commandeLue + "\n");
                 if (commandeLue.equalsIgnoreCase("DEPAUSE")) {
                     depause();
                 }
                 break;
-            case 6: //répondre à un garde ou donner la potion
+            case 6: //Repondre à un garde ou donner la potion
                 gui.afficher("> " + commandeLue + "\n");
                 switch (commandeLue.toUpperCase()) {
                     case "1":
@@ -240,7 +240,7 @@ public class Jeu implements Serializable {
                         break;
                 }
                 break;
-            case 7: //combat contre le boss
+            case 7: //Combat contre le boss
                 gui.afficher("> " + commandeLue + "\n");
                 switch (commandeLue.toUpperCase()) {
                     case "COM":
@@ -256,7 +256,7 @@ public class Jeu implements Serializable {
                         break;
                 }
                 break;
-            case 8: //menu
+            case 8: //Menu
                 gui.afficher("> " + commandeLue + "\n");
                 switch (commandeLue.toUpperCase()) {
                     case "CONT":
@@ -447,7 +447,7 @@ public class Jeu implements Serializable {
         this.etatCommande = 6;
     }
 
-    private void parlerGarde(String commandeLue) { //Réponse à la question du garde
+    private void parlerGarde(String commandeLue) { //Reponse à la question du garde
         Garde garde = (Garde) map.getPieceCourante().getListePNJ().get(0);
         if (Objects.equals(commandeLue, garde.getReponse(map.getLettreAleat()))) {
             gui.afficher("\nBonne réponse\n");
@@ -480,7 +480,7 @@ public class Jeu implements Serializable {
     }
 
 
-    private void donnerCle(String commandeLue) { //Donne la clé choisie par le joueur
+    private void donnerCle(String commandeLue) { //Donne la cle choisie par le joueur
         if (commandeLue.equals("JAU") || commandeLue.equals("JAUNE")) {
             inventaire.ajouterInventaire(new Item("Clé Jaune", "Sert à dévérouiller le coffre jaune"));
             for (PNJ pnj : map.getPieceCourante().getListePNJ()) {
@@ -503,7 +503,7 @@ public class Jeu implements Serializable {
         this.etatCommande = 0;
     }
 
-    private void fouiller() { //Fouille la pièce
+    private void fouiller() { //Fouille la piece
         if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle des pots")) {
             gui.afficher("\nQuel pot voulez fouiller : F1 F2 F3 F4 F5 F6");
             this.etatCommande = 2;
@@ -623,7 +623,7 @@ public class Jeu implements Serializable {
         }
     }
 
-    private void eclairer() { //Eclaire la pièce
+    private void eclairer() { //Eclaire la piece
         if (Objects.equals(map.getPieceCourante().getNomPiece(), "à l'escalier Nord")) {
             if (inventaire.getListeInventaire().isEmpty()) {
                 gui.afficher("Vous ne possédez pas d'outil pour réaliser cette action\n");
@@ -642,7 +642,7 @@ public class Jeu implements Serializable {
         }
     }
 
-    private void casser() { //Casse les rochers de la pièce
+    private void casser() { //Casse les rochers de la piece
         if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la prison")) {
             if (inventaire.getListeInventaire().isEmpty()) {
                 gui.afficher("Vous ne possédez pas d'outil pour réaliser cette action\n");
@@ -660,7 +660,7 @@ public class Jeu implements Serializable {
         }
     }
 
-    private void lire() { //Lis les indications de la pièce
+    private void lire() { //Lis les indications de la piece
         if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans les catacombes")) {
             gui.afficher("Vous distinguez des inscriptions au mur...\n");
             gui.afficher("Vous vous approchez et lisez : \n");
