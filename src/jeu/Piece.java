@@ -9,6 +9,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Cette classe vise à créer des pièces qui composeront la map
+ */
 public class Piece implements Serializable {
     private String nomPiece;
     private String description;
@@ -114,36 +117,78 @@ public class Piece implements Serializable {
         return sorties.keySet().toString();
     }
 
-    public Piece obtientSortie(String direction) { //Retourne les sorties possibles de la piece
+    /**
+     * Retourne les sorties possibles de la piece
+     *
+     * @param direction
+     * @return
+     */
+    public Piece obtientSortie(String direction) {
         return sorties.get(direction);
     }
 
-    public void ajouterPNJ(PNJ pnj) { //Ajoute un PNJ dans liste PNJ
+    /**
+     * Ajoute un PNJ dans liste PNJ
+     *
+     * @param pnj
+     */
+    public void ajouterPNJ(PNJ pnj) {
         this.getListePNJ().add(pnj);
     }
 
-    public void retirerPNJ(PNJ pnj) { //Retire un PNJ dans listePNJ
+    /**
+     * Retire un PNJ dans listePNJ
+     *
+     * @param pnj
+     */
+    public void retirerPNJ(PNJ pnj) {
         this.getListePNJ().remove(pnj);
     }
 
-    public ArrayList<PNJ> getListePNJ() { //Renvoie listePNJ
+    /**
+     * Renvoie listePNJ
+     *
+     * @return
+     */
+    public ArrayList<PNJ> getListePNJ() {
         return listePNJ;
     }
 
-    public void ajouterItem(Item item) { //Ajoute un item dans listeItem
+    /**
+     * Ajoute un item dans listeItem
+     *
+     * @param item
+     */
+    public void ajouterItem(Item item) {
         this.getListeItem().add(item);
     }
 
-    public void retirerItem(Item item) { //Retire un item dans listeItem
+    /**
+     * Retire un item dans listeItem
+     *
+     * @param item
+     */
+    public void retirerItem(Item item) {
         this.getListeItem().remove(item);
 
     }
 
-    public ArrayList<Item> getListeItem() { //Getter de listItem
+    /**
+     * Getter de listItem
+     *
+     * @return
+     */
+    public ArrayList<Item> getListeItem() {
         return listeItem;
     }
 
-    public Pot getPotByNum(int num) { //Renvoie un pot selon son numéro
+    /**
+     * Renvoie un pot selon son numéro
+     *
+     * @param num
+     * @return
+     */
+    public Pot getPotByNum(int num) {
         Pot var = null;
         for (Item item : this.listeItem) {
             if (item instanceof Pot) {
@@ -155,7 +200,13 @@ public class Piece implements Serializable {
         return var;
     }
 
-    public Plaque getPlaqueByNum(int num) { //Renvoie une plaque selon son numéro
+    /**
+     * Renvoie une plaque selon son numéro
+     *
+     * @param num
+     * @return
+     */
+    public Plaque getPlaqueByNum(int num) {
         Plaque var = null;
         for (Item item : this.listeItem) {
             if (item instanceof Plaque) {
@@ -168,7 +219,12 @@ public class Piece implements Serializable {
         return var;
     }
 
-    public boolean estVideDObjet() { //Renvoie vraie si la pièce est vide d'Item (et seulement d'objet de la classe Item pas ses classes filles)
+    /**
+     * Renvoie vraie si la pièce est vide d'Item (et seulement d'objet de la classe Item pas ses classes filles)
+     *
+     * @return
+     */
+    public boolean estVideDObjet() {
         boolean a = true;
         for (Item item : this.listeItem) {
             if (item.getClass() == Item.class) {
