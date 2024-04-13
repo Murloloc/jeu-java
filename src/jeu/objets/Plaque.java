@@ -1,32 +1,67 @@
 package jeu.objets;
 
+/**
+ * Cette classe vise à créer des plaques sur lesquelles un item peut être posé afin de résoudre une énigme
+ */
+
 public class Plaque extends Item {
     private final int num;
     private int etat;
     private Item item;
 
-    public Plaque(int num, int etat) { //Constructeur de la classe Plaque
+    /**
+     * Constructeur de la classe Plaque
+     *
+     * @param num
+     * @param etat
+     */
+    public Plaque(int num, int etat) {
         this.num = num;
         this.etat = etat;
     }
 
-    public int getNum() { //Getter du num
+    /**
+     * Getter du num
+     *
+     * @return
+     */
+    public int getNum() {
         return num;
     }
 
-    public int getEtat() { //Getter de l'etat
+    /**
+     * Getter de l'etat
+     *
+     * @return
+     */
+    public int getEtat() {
         return etat;
     }
 
-    public void setEtat(int etat) { //Setter de l'etat
+    /**
+     * Setter de l'etat
+     *
+     * @param etat
+     */
+    public void setEtat(int etat) {
         this.etat = etat;
     }
 
-    public void setItem(Item item) { //Setter de l'item
+    /**
+     * Setter de l'item
+     *
+     * @param item
+     */
+    public void setItem(Item item) {
         this.item = item;
     }
 
-    public Item getItem() { //Getter de l'item
+    /**
+     * Getter de l'item
+     *
+     * @return
+     */
+    public Item getItem() {
         return this.item;
     }
 }
