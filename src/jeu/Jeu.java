@@ -334,6 +334,9 @@ public class Jeu implements Serializable {
                 if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle du Boss")) {
                     this.etatCommande = 7;
                 }
+                if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle du boss (mort)")) {
+                    this.etatCommande = 7;
+                }
             }
         }
     }
@@ -807,6 +810,7 @@ public class Jeu implements Serializable {
                 gui.afficher("Vous foncez vers lui et le poignardez de toutes vos forces. Vous avez réussi !\n");
                 gui.afficher("Vous appercevez une clé au fond de la pièce\n");
                 map.getPieceCourante().setDescription("Le Boss était le gardien de la clé\n");
+                map.getPieceCourante().setNomPiece("dans la salle du boss (mort)");
                 map.getPieceCourante().setNomImage("SalleDuBossMort.jpg");
                 gui.afficheImage(map.getPieceCourante().nomImage());
                 this.etatCommande = 0;
