@@ -748,7 +748,7 @@ public class Jeu implements Serializable {
         }
     }
 
-    private void inspecter() { //Inspecte la pièce pour révéler un passage secret
+    private void inspecter() { //Inspecte la piece pour reveler un passage secret
         if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle à manger")) {
             map.getPieceCourante().ajouteSortie(Sortie.DESCENDRE, map.getMap()[26]);
             map.getMap()[26].ajouteSortie(Sortie.DESCENDRE, map.getMap()[15]);
