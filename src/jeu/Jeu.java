@@ -390,7 +390,7 @@ public class Jeu implements Serializable {
             object1 = (Jeu) in.readObject();
             in.close();
             file.close();
-            gui.afficher("Reprise sauvegarde\n");
+            gui.afficher("Reprise de la sauvegarde\n");
             this.map = object1.map;
             this.gui.afficheImage(this.map.getPieceCourante().nomImage());
             this.gui.afficher(this.map.getPieceCourante().descriptionLongue());
@@ -795,7 +795,7 @@ public class Jeu implements Serializable {
 
     private void sAsseoir() {
         if (Objects.equals(map.getPieceCourante().getNomPiece(), "dans la salle du trône")) {
-            gui.afficher("Vous vous êtes assis sur le trône et des gardes vous ont repéré et renvoyer au donjon\n");
+            gui.afficher("Vous vous êtes assis sur le trône et des gardes vous ont repéré et renvoyé au donjon\n");
             perdre();
         } else gui.afficher("Vous ne pouvez pas utiliser cette commande ici\n");
     }
