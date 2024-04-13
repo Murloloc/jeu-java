@@ -2,28 +2,53 @@ package jeu.objets;
 
 import java.io.Serializable;
 
+/**
+ * Cette classe vise à créer des items afin de les utiliser pour résoudre des énigmes et avancer dans le jeu
+ */
 public class Item implements Serializable {
 
     private String nom;
     private String description;
 
-
-    public Item(String nom, String description) { // Constructeur de la classe Item
+    /**
+     * Constructeur de la classe Item
+     *
+     * @param nom
+     * @param description
+     */
+    public Item(String nom, String description) {
         this.nom = nom;
         this.description = description;
     }
 
-    public Item() { // Constructeur vide de la classe Item
+    /**
+     * Constructeur vide de la classe Item
+     */
+    public Item() {
     }
 
-    public String getNom() { //Getter du nom
+    /**
+     * Getter du nom
+     *
+     * @return
+     */
+    public String getNom() {
         return nom;
     }
 
-    public String getDescription() { // Getter de la description
+
+    /**
+     * Getter de la description
+     *
+     * @return
+     */
+    public String getDescription() {
         return description;
     }
 
+    /**
+     * @return
+     */
     @Override
     public String toString() {
         return this.nom;

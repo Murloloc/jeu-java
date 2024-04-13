@@ -26,25 +26,38 @@ public class Jeu implements Serializable {
         this.vie = 3;
     }
 
-
-    public void setGUI(GUI g) { //Setter de GUI
+    /**
+     * Setter de GUI
+     * @param g
+     */
+    public void setGUI(GUI g) {
         gui = g;
         afficherMessageDeBienvenue();
     }
 
-    private void afficherLocalisation() { //Affiche la localisation actuelle
+    /**
+     * Affiche la localisation actuelle
+     */
+    private void afficherLocalisation() {
         gui.afficher(map.getPieceCourante().descriptionLongue());
         gui.afficher();
     }
 
-    private void afficherMessageDeBienvenue() { //Affiche le message de bienvenue
+    /**
+     * Affiche le message de bienvenue
+     */
+    private void afficherMessageDeBienvenue() {
         gui.afficher("Bienvenue !\n");
         gui.afficher("Tapez '?' pour obtenir de l'aide\n");
         afficherLocalisation();
         gui.afficheImage(map.getPieceCourante().nomImage());
     }
 
-    public void traiterCommande(String commandeLue) { //Traite la commande lue
+    /**
+     * Traite la commande lue
+     * @param commandeLue
+     */
+    public void traiterCommande(String commandeLue) {
         switch (etatCommande) {
             case 0: //Commande de base
                 gui.afficher("> " + commandeLue + "\n");

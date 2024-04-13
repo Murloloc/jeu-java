@@ -3,23 +3,45 @@ package jeu.objets;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Cette classe vise a créer un inventaire afin de pouvoir stocker des items
+ */
+
 public class Inventaire implements Serializable {
 
     private final ArrayList<Item> listeInventaire;
 
-    public Inventaire() { //Constructeur de la classe Inventaire
+    /**
+     * Constructeur de la classe Inventaire
+     */
+    public Inventaire() {
         this.listeInventaire = new ArrayList<Item>();
     }
 
-    public void ajouterInventaire(Item item) { // Ajouter un item dans l'inventaire
+    /**
+     * Ajouter un item dans l'inventaire
+     *
+     * @param item
+     */
+    public void ajouterInventaire(Item item) {
         this.getListeInventaire().add(item);
     }
 
-    public void retirerInventaire(Item item) { // Retirer un item dans l'inventaire
+    /**
+     * Retirer un item dans l'inventaire
+     *
+     * @param item
+     */
+    public void retirerInventaire(Item item) {
         this.getListeInventaire().remove(item);
     }
 
-    public ArrayList<Item> getListeInventaire() { //Getter de listeInventaire
+    /**
+     * Getter de listeInventaire
+     *
+     * @return
+     */
+    public ArrayList<Item> getListeInventaire() {
         return this.listeInventaire;
     }
 
@@ -28,7 +50,12 @@ public class Inventaire implements Serializable {
         return "\nInventaire : \n";
     }
 
-    public String afficherInventaire() { // Affichage de l'inventaire
+    /**
+     * Affichage de l'inventaire
+     *
+     * @return
+     */
+    public String afficherInventaire() {
         String chaine = this.toString();
         if (this.getListeInventaire().isEmpty())
             return "L'inventaire est vide\n";
@@ -38,7 +65,13 @@ public class Inventaire implements Serializable {
         return chaine;
     }
 
-    public Item getItemByName(String nom) { // Retourne un item dans l'inventaire en fonction de son nom
+    /**
+     * Retourne un item dans l'inventaire en fonction de son nom
+     *
+     * @param nom
+     * @return
+     */
+    public Item getItemByName(String nom) {
         Item var = null;
         for (Item item : this.listeInventaire) {
             if (item.getNom().equalsIgnoreCase(nom)) {
