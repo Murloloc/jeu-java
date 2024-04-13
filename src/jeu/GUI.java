@@ -6,6 +6,9 @@ import java.awt.event.*;
 import java.io.Serializable;
 import java.net.URL;
 
+/**
+ * Cette classe sert à gérer l'interface graphique du jeu
+ */
 public class GUI implements ActionListener, Serializable {
     private final Jeu jeu;
     private JFrame fenetre;
@@ -13,21 +16,39 @@ public class GUI implements ActionListener, Serializable {
     private JTextArea texte;
     private JLabel image;
 
-    public GUI(Jeu jeu) { //Constructeur de la classe GUI
+    /**
+     * Constructeur de la classe GUI
+     *
+     * @param jeu
+     */
+    public GUI(Jeu jeu) {
         this.jeu = jeu;
         this.creerGUI();
     }
 
-    public void afficher(String s) { //Affiche le texte sur la fenetre de texte
+    /**
+     * Affiche le texte sur la fenetre de texte
+     *
+     * @param s
+     */
+    public void afficher(String s) {
         texte.append(s);
         texte.setCaretPosition(texte.getDocument().getLength());
     }
 
-    public void afficher() { //Affiche un saut de ligne sur la fenetre de texte
+    /**
+     * Affiche un saut de ligne sur la fenetre de texte
+     */
+    public void afficher() {
         afficher("\n");
     }
 
-    public void afficheImage(String nomImage) { //Affiche une image sur la fenetre d'image
+    /**
+     * Affiche une image sur la fenetre d'image
+     *
+     * @param nomImage
+     */
+    public void afficheImage(String nomImage) {
         URL imageURL = this.getClass().getClassLoader().getResource("jeu/images/" + nomImage);
         if (imageURL != null) {
             image.setIcon(new ImageIcon(imageURL));
@@ -35,12 +56,17 @@ public class GUI implements ActionListener, Serializable {
         }
     }
 
-
-    public void fermer() { //Ferme la fenetre de jeu
+    /**
+     * Ferme la fenetre de jeu
+     */
+    public void fermer() {
         fenetre.dispose();
     }
 
-    private void creerGUI() { //Initialise la fenetre du GUI
+    /**
+     * Initialise la fenetre du GUI
+     */
+    private void creerGUI() {
 
         fenetre = new JFrame("Jeu");
         entree = new JTextField(34);
@@ -75,16 +101,29 @@ public class GUI implements ActionListener, Serializable {
         entree.requestFocusInWindow();
     }
 
-    public void actionPerformed(ActionEvent e) { //Traite l'action du joueur dans la fenetre d'entree de texte
+    /**
+     * Traite l'action du joueur dans la fenetre d'entree de texte
+     *
+     * @param e the event to be processed
+     */
+    public void actionPerformed(ActionEvent e) {
         executerCommande();
     }
 
-    private void executerCommande() { //Execute l'entree du joueur dans la fenetre de texte
+    /**
+     * Execute l'entree du joueur dans la fenetre de texte
+     */
+    private void executerCommande() {
         jeu.traiterCommande(lireCommande());
         entree.setText("");
     }
 
-    public String lireCommande() { //Lis la commande du joueur dans la fenetre de texte
+    /**
+     * Lit la commande du joueur dans la fenetre de texte
+     *
+     * @return
+     */
+    public String lireCommande() {
         return entree.getText();
     }
 
