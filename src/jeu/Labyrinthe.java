@@ -2,19 +2,34 @@ package jeu;
 
 import java.util.Random;
 
+/**
+ * Cette classe vise à créer un labyrinthe généré aléatoirement afin de l'ajouter dans la map
+ */
+
 public class Labyrinthe extends Piece {
 
     private final Piece[] piecesLab;
     private final Map map;
 
-    public Labyrinthe(String nomPiece, String description, String image, Map map) { //Constructeur de la classe Labyrinthe
+    /**
+     * Constructeur de la classe Labyrinthe
+     *
+     * @param nomPiece
+     * @param description
+     * @param image
+     * @param map
+     */
+    public Labyrinthe(String nomPiece, String description, String image, Map map) {
         super(nomPiece, description, image);
         this.piecesLab = new Piece[5];
         this.map = map;
 
     }
 
-    public void genererLabyrinthe() { //Genere le labyrinthe
+    /**
+     * Genere le labyrinthe
+     */
+    public void genererLabyrinthe() {
 
         piecesLab[0] = new Piece("dans la room 1", "", "Labyrinthe.jpg");
         piecesLab[1] = new Piece("dans la room 2", "", "Labyrinthe.jpg");
@@ -54,7 +69,13 @@ public class Labyrinthe extends Piece {
         map.setInscriptionMur(mur);
     }
 
-    public Sortie getRandomSortieExcept(Sortie exceptSortie) { //Renvoie les sorties de chaque piece (generees aleatoirement)
+    /**
+     * Renvoie les sorties de chaque piece (generees aleatoirement)
+     *
+     * @param exceptSortie
+     * @return
+     */
+    public Sortie getRandomSortieExcept(Sortie exceptSortie) {
         Sortie[] allSorties = {Sortie.NORD, Sortie.SUD, Sortie.EST, Sortie.OUEST};
         Sortie randomSortie;
         do {
@@ -63,7 +84,13 @@ public class Labyrinthe extends Piece {
         return randomSortie;
     }
 
-    public Sortie getOppositeSortie(Sortie sortie) { //Renvoie la direction opposee a chaque sortie du labyrinthe
+    /**
+     * Renvoie la direction opposee a chaque sortie du labyrinthe
+     *
+     * @param sortie
+     * @return
+     */
+    public Sortie getOppositeSortie(Sortie sortie) {
         return switch (sortie) {
             case NORD -> Sortie.SUD;
             case SUD -> Sortie.NORD;
@@ -73,11 +100,21 @@ public class Labyrinthe extends Piece {
         };
     }
 
-    public Piece[] getPiecesLab() { //Getter de piecesLab
+    /**
+     * Getter de piecesLab
+     *
+     * @return
+     */
+    public Piece[] getPiecesLab() {
         return piecesLab;
     }
 
-    public String descriptionLongue() { //Redefinition afin de ne pas montrer les sorties possibles dans le labyrinthe
+    /**
+     * Redefinition afin de ne pas montrer les sorties possibles dans le labyrinthe
+     *
+     * @return
+     */
+    public String descriptionLongue() {
         return this + "\nSorties : ????";
     }
 

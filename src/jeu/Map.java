@@ -8,6 +8,9 @@ import jeu.personnages.*;
 import java.io.Serializable;
 import java.util.Random;
 
+/**
+ * Cette classe vise à créer la map du jeu
+ */
 public class Map implements Serializable {
 
     private final Piece[] map;
@@ -25,7 +28,10 @@ public class Map implements Serializable {
         this.map = new Piece[31];
     }
 
-    public void creerCarte() { //Creer la carte
+    /**
+     * Creer la carte
+     */
+    public void creerCarte() {
 
         map[27] = new Piece("dans le menu", "LANCER pour commencer une nouvelle partie\nCONTINUER pour reprendre une partie sauvegardée\nQUITTER pour quitter le jeu", "Menu.jpg");
         map[25] = new Piece("sur l'écran de victoire", "Merci d'avoir joué au jeu\nQUITTER pour fermer le jeu", "Victoire.jpg");
@@ -35,7 +41,7 @@ public class Map implements Serializable {
         map[0] = new Piece("au centre du donjon", "C'est l'endroit où vous vous êtes réveillé, sans souvenirs", "Donjon.jpg");
         map[1] = new Piece("dans la prison", "Des rochers vous bloquent ce qui semble être un chemin, peut être que le prisonnier" + "\n" + "sait ce qu'il se cache derrière", "Prison.jpg");
         map[2] = new Piece("à l'escalier Nord", "Il fait trop noir pour monter ces escaliers", "EscalierNord.jpg");
-        map[3] = new Piece("dans le couloir", "Peut-être que quelque-chose se cache dans ces vieux pots...\nIl y a une table de craft dans la pièce","Couloir.jpg");
+        map[3] = new Piece("dans le couloir", "Peut-être que quelque-chose se cache dans ces vieux pots...\nIl y a une table de craft dans la pièce", "Couloir.jpg");
         map[4] = new Piece("dans la salle des coffres", "Vous voyez un coffre jaune et un coffre bleu vérouillés.\nUne clé doit sûrement se cacher quelque-part...", "SalleDesCoffres.jpg");
 
         // RDC
@@ -70,7 +76,6 @@ public class Map implements Serializable {
 
         // étage -3
         map[23] = new Piece("dans la grotte", "Il y a trois plaques de pression\nSi on les regarde de gauche à droite, elles sont de plus en plus épaisses\nEssayez-donc de poser des objets de plus en plus lourds dans ce même ordre\nTapez VERIF quand vous pensez avoir fini", "Grotte.jpg");
-
 
 
         //labyrinthe
@@ -193,7 +198,10 @@ public class Map implements Serializable {
         this.pieceCourante = map[27];
     }
 
-    public void initialiserPot() { //Initialisation des pots de manière aléatoire
+    /**
+     * Initialisation des pots de manière aléatoire
+     */
+    public void initialiserPot() {
         int[] full = new int[6];
 
         for (int i = 0; i < 6; i++) {
@@ -216,7 +224,10 @@ public class Map implements Serializable {
         }
     }
 
-    public void aleat() { //Tirer de manière aléatoire une lettre et un chiffre
+    /**
+     * Tirer de manière aléatoire une lettre et un chiffre
+     */
+    public void aleat() {
         String alphabet = "asr";
         Random rand = new Random();
         int randomIndex = rand.nextInt(alphabet.length());
@@ -225,31 +236,66 @@ public class Map implements Serializable {
         this.numAleat = rand.nextInt(3) + 1;
     }
 
-    public Piece[] getMap() { //Getter de map
+    /**
+     * Getter de map
+     *
+     * @return
+     */
+    public Piece[] getMap() {
         return map;
     }
 
-    public Piece getPieceCourante() { //Getter de pieceCourante
+    /**
+     * Getter de pieceCourante
+     *
+     * @return
+     */
+    public Piece getPieceCourante() {
         return pieceCourante;
     }
 
-    public void setPieceCourante(Piece pieceCourante) { //Setter de pieceCourante
+    /**
+     * Setter de pieceCourante
+     *
+     * @param pieceCourante
+     */
+    public void setPieceCourante(Piece pieceCourante) {
         this.pieceCourante = pieceCourante;
     }
 
-    public String getInscriptionMur() { //Getter de inscriptionMur
+    /**
+     * Getter de inscriptionMur
+     *
+     * @return
+     */
+    public String getInscriptionMur() {
         return inscriptionMur;
     }
 
-    public void setInscriptionMur(String inscriptionMur) { //Setter de inscriptionMur
+    /**
+     * Setter de inscriptionMur
+     *
+     * @param inscriptionMur
+     */
+    public void setInscriptionMur(String inscriptionMur) {
         this.inscriptionMur = inscriptionMur;
     }
 
-    public String getLettreAleat() { //Getter de lettreAleat
+    /**
+     * Getter de lettreAleat
+     *
+     * @return
+     */
+    public String getLettreAleat() {
         return lettreAleat;
     }
 
-    public int getNumAleat() { //Getter de numAleat
+    /**
+     * Getter de numAleat
+     *
+     * @return
+     */
+    public int getNumAleat() {
         return numAleat;
     }
 }
