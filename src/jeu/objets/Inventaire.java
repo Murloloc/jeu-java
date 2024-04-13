@@ -25,11 +25,11 @@ public class Inventaire implements Serializable {
 
     @Override
     public String toString() {
-        return "Inventaire : \n";
+        return "\nInventaire : \n";
     }
 
     public String afficherInventaire() {
-        String chaine = toString();
+        String chaine = this.toString();
         if (this.getListeInventaire().isEmpty())
             return "L'inventaire est vide";
         else

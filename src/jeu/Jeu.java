@@ -305,7 +305,7 @@ public class Jeu implements Serializable {
         gui.afficher("Etes-vous perdu ?\n");
         gui.afficher("Les commandes autorisées sont :\n");
         gui.afficher(Commande.toutesLesDescriptions().toString());
-        gui.afficher("\nVous pouvez utiliser le nom ou l'abréviation");
+        gui.afficher("\n\nVous pouvez utiliser le nom ou l'abréviation\n");
     }
 
     private void allerEn(String direction) {
@@ -465,22 +465,22 @@ public class Jeu implements Serializable {
     private void donnerCle(String commandeLue) {
         if (commandeLue.equals("JAU") || commandeLue.equals("JAUNE")) {
             inventaire.ajouterInventaire(new Item("Clé Jaune", "Sert à dévérouiller le coffre jaune"));
-            gui.afficher("\nLa clé Jaune a été ajouté à l'inventaire");
             for (PNJ pnj : map.getPieceCourante().getListePNJ()) {
                 if (pnj.getEtat() == 0) {
                     gui.afficher(((Prisonnier) pnj).dialogueJaune());
                     pnj.setEtat(1);
                 }
             }
+            gui.afficher("\nLa clé Jaune a été ajouté à l'inventaire");
         } else {
             inventaire.ajouterInventaire(new Item("Clé Bleue", "Sert à dévérouiller le coffre bleu"));
-            gui.afficher("\nLa clé Bleue a été ajouté à l'inventaire");
             for (PNJ pnj : map.getPieceCourante().getListePNJ()) {
                 if (pnj.getEtat() == 0) {
                     gui.afficher(((Prisonnier) pnj).dialogueBleu());
                     pnj.setEtat(1);
                 }
             }
+            gui.afficher("\nLa clé Bleue a été ajouté à l'inventaire");
         }
         this.etatCommande = 0;
     }
@@ -490,7 +490,7 @@ public class Jeu implements Serializable {
             gui.afficher("\nQuel pot voulez fouiller : F1 F2 F3 F4 F5 F6");
             this.etatCommande = 2;
         } else if (map.getPieceCourante().estVideDObjet()) {
-            gui.afficher("\nIl n'y a pas d'item à récupérer dans cette pièce");
+            gui.afficher("\nIl n'y a pas d'item à récupérer dans cette pièce\n");
         } else {
             Item stock = null;
             for (Item item : map.getPieceCourante().getListeItem()) {

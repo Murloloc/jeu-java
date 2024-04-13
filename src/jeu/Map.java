@@ -32,14 +32,14 @@ public class Map implements Serializable {
         map[28] = new Piece("sur l'écran de défaite", "Dommage :(\nCONTINUER pour relancer le jeu à votre dernière sauvegarde\nQUITTER pour fermer le jeu", "Defaite.jpg");
 
         //étage -1
-        map[0] = new Piece("au centre du donjon", "C'est l'endroit où vous vous êtes réveillé, sans souvenirs", "Donjon.jpg"); //centre
-        map[1] = new Piece("dans la prison", "Des rochers vous bloquent ce qui semble être un chemin, peut être que le prisonnier" + "\n" + "sait ce qu'il se cache derrière", "Prison.jpg"); //est
-        map[2] = new Piece("à l'escalier Nord", "Il fait trop noir pour monter ces escaliers", "EscalierNord.jpg"); //nord
-        map[3] = new Piece("dans le couloir", "Peut-être que quelque-chose se cache dans ces vieux pots...", "Couloir.jpg"); //ouest
-        map[4] = new Piece("dans la salle des coffres", "Vous voyez un coffre jaune et un coffre bleu vérouillés, une clé doit sûrement se cacher" + "\n" + "quelque-part...", "SalleDesCoffres.jpg"); //sud
+        map[0] = new Piece("au centre du donjon", "C'est l'endroit où vous vous êtes réveillé, sans souvenirs", "Donjon.jpg");
+        map[1] = new Piece("dans la prison", "Des rochers vous bloquent ce qui semble être un chemin, peut être que le prisonnier" + "\n" + "sait ce qu'il se cache derrière", "Prison.jpg");
+        map[2] = new Piece("à l'escalier Nord", "Il fait trop noir pour monter ces escaliers", "EscalierNord.jpg");
+        map[3] = new Piece("dans le couloir", "Peut-être que quelque-chose se cache dans ces vieux pots...\nIl y a une table de craft dans la pièce","Couloir.jpg");
+        map[4] = new Piece("dans la salle des coffres", "Vous voyez un coffre jaune et un coffre bleu vérouillés.\nUne clé doit sûrement se cacher quelque-part...", "SalleDesCoffres.jpg");
 
         // RDC
-        map[5] = new Piece("à l'escalier de gauche", "\nLa grille de l'escalier s'est refermée derrière vous\nIl n'est plus possible de descendre\nVous apercevez l'entrée du château", "EscalierGauche.jpg");
+        map[5] = new Piece("à l'escalier de gauche", "\nLa grille de l'escalier est fermée\nIl n'est plus possible de descendre\nVous apercevez l'entrée du château", "EscalierGauche.jpg");
         map[6] = new Piece("à l'entrée du château", "C'est l'entrée du château ! Comment faire pour s'échapper...", "EntreeChateau.jpg");
         map[7] = new Piece("dans la bibliothèque", "Peut-être que des informations utiles sont gardées ici", "Bibliotheque.jpg");
         map[8] = new Piece("dans la salle du trône", "On aperçoit le trône du Roi, cela serait osé de s'asseoir dessus en son absence...", "SalleDuTrone.jpg");
@@ -51,7 +51,7 @@ public class Map implements Serializable {
         map[13] = new Piece("dans la galerie", "", "Galerie.jpg");
         map[14] = new Piece("devant la tour de gauche", "Cette entrée est bloquée", "EntreeTourGauche.jpg");
         map[15] = new Piece("dans la salle à manger", "La cheminée est étrangement propre", "SalleAManger.jpg");
-        map[24] = new Piece("dans la cuisine, derrière le comptoir", "Vous êtes face à un coffre", "");
+        map[24] = new Piece("dans la cuisine, derrière le comptoir", "Vous êtes face à un coffre", "Comptoir.jpg");
 
         // tour 1G
         map[16] = new Piece("dans la salle des gardes", "Les gardes ont l'air féroces, on dirait qu'ils bloquent l'accès Nord", "SalleDesGardes.jpg");
@@ -65,8 +65,8 @@ public class Map implements Serializable {
         Labyrinthe labyrinthe = new Labyrinthe("dans le labyrinthe", "Il fait tout noir ! Et le chemin est très étroit" + "\n" + "Il ne faudrait pas tomber dans le vide", "Labyrinthe.jpg", this);
 
 
-        map[21] = new Piece("à l'escalier", "Deux directions semblent se distinguer... Nord ou Sud ?", "EscalierCatacombes.jpg");
-        map[22] = new Piece("dans la salle des pots", "On doit forcément trouver des ressources parmi tous ces pots...", "SalleDesPots.jpg");
+        map[21] = new Piece("à l'escalier", "Deux directions semblent se distinguer...", "EscalierCatacombes.jpg");
+        map[22] = new Piece("dans la salle des pots", "On doit forcément trouver des ressources parmi tous ces pots...\nIl y a une table de craft dans la pièce", "SalleDesPots.jpg");
 
         // étage -3
         map[23] = new Piece("dans la grotte", "Il y a trois plaques de pression\nSi on les regarde de gauche à droite, elles sont de plus en plus épaisses\nEssayez-donc de poser des objets de plus en plus lourds dans ce même ordre\nTapez VERIF quand vous pensez avoir fini", "Grotte.jpg");
